@@ -2,18 +2,6 @@
 
 The ATM 2.0 system is a concept for an automated teller machine with biometric authentication.
 
-# Components
-
-The following components are contained in this repository.
-
-## Client
-
-blah
-
-## Server
-
-blah
-
 # Repository Guidelines
 
 ## Feature Branches
@@ -27,3 +15,15 @@ No code should be directly committed to the "develop" branch. Code should only b
 ## The "master" Branch
 
 No code should be directly committed to the "master" branch. Code should only be merged into "master" from the develop branch when a release point has been reached.
+
+# Components
+
+The following components are contained in this repository.
+
+## Client
+
+The client application runs on the ATM itself and displays the user interface.
+
+## Server
+
+The server application forms the core of the backend.
