@@ -1,0 +1,2 @@
+C:\Users\Anthony\Development\cs307\atm2\server\AtmServer\bin\Debug\AtmServer.exe.config
+C:\Users\Anthony\Development\cs307\atm2\server\bin\Debug\AtmServer.exe.config
