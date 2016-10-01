@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AtmServer
 {
-    class Program
+    class ServerController
     {
         static void Main(string[] args)
         {
