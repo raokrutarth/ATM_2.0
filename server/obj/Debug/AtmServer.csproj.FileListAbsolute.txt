@@ -1,2 +1,8 @@
 C:\Users\Anthony\Development\cs307\atm2\server\AtmServer\bin\Debug\AtmServer.exe.config
 C:\Users\Anthony\Development\cs307\atm2\server\bin\Debug\AtmServer.exe.config
+D:\CS 307\ATM_2.0\server\bin\Debug\AtmServer.exe.config
+D:\CS 307\ATM_2.0\server\bin\Debug\AtmServer.exe
+D:\CS 307\ATM_2.0\server\bin\Debug\AtmServer.pdb
+D:\CS 307\ATM_2.0\server\obj\Debug\AtmServer.csprojResolveAssemblyReference.cache
+D:\CS 307\ATM_2.0\server\obj\Debug\AtmServer.exe
+D:\CS 307\ATM_2.0\server\obj\Debug\AtmServer.pdb
