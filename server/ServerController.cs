@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AtmServer
@@ -10,16 +11,24 @@ namespace AtmServer
     {
         static void Main(string[] args)
         {
-            int i = 0;
-            while(true)
+            int i = 9;
+            int loop = 15;
+            while(loop > 0)
             {
                 Console.WriteLine("Testing...");
-                //String line = Console.ReadLine();
-                Console.WriteLine("fib(" + i +") : "  + fib(i++));
+                Thread nt = new Thread(() => printFib(i++) );
+                nt.Start();
+                String line = Console.ReadLine();     
+                           
             }
         }
 
-        static int fib(int n)
+        static void printFib(int n)
+        {
+            Console.WriteLine("fib(" + n + ") : " + fib(n));
+        }       
+
+        static long fib(int n)
         {
             if (n <= 1)
                 return 1;
