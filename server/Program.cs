@@ -10,6 +10,21 @@ namespace AtmServer
     {
         static void Main(string[] args)
         {
+            int i = 0;
+            while(true)
+            {
+                Console.WriteLine("Testing...");
+                //String line = Console.ReadLine();
+                Console.WriteLine("fib(" + i +") : "  + fib(i++));
+            }
+        }
+
+        static int fib(int n)
+        {
+            if (n <= 1)
+                return 1;
+            else
+                return fib(n - 1) + fib(n - 2);
         }
     }
 }
