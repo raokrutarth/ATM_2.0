@@ -15,7 +15,7 @@ namespace AtmServer
         }
         void serveClient()
         {
-            /// begin handshake protocol
+            /// identify client ID
             /// assign new TCP communicator object
             /// assign new DBcomm object
             /// terminate connection when needed
