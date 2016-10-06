@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ATM {
 	// State object for receiving data from remote device.
-	private class StateObject {
+	class TCPStateObject {
 		// Client socket.
 		public Socket workSocket = null;
 		// Size of receive buffer.
@@ -19,7 +19,8 @@ namespace ATM {
 
 	public class ServerConnection {
 		// The port number for the remote device.
-		private const int port = 11000;
+		private int port = 11000;
+        private string hostName = "google.com";
 
 		// ManualResetEvent instances signal completion.
 		private static ManualResetEvent connectDone = 
@@ -38,7 +39,7 @@ namespace ATM {
 				// Establish the remote endpoint for the socket.
 				// The name of the 
 				// remote device is "host.contoso.com".
-				IPHostEntry ipHostInfo = Dns.Resolve("host.contoso.com");
+				IPHostEntry ipHostInfo = Dns.GetHostEntry(hostName);
 				IPAddress ipAddress = ipHostInfo.AddressList[0];
 				IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
@@ -92,11 +93,11 @@ namespace ATM {
 		private static void Receive(Socket client) {
 			try {
 				// Create the state object.
-				StateObject state = new StateObject();
+				TCPStateObject state = new TCPStateObject();
 				state.workSocket = client;
 
 				// Begin receiving the data from the remote device.
-				client.BeginReceive( state.buffer, 0, StateObject.BufferSize, 0,
+				client.BeginReceive( state.buffer, 0, TCPStateObject.BUFFER_SIZE, 0,
 					new AsyncCallback(ReceiveCallback), state);
 			} catch (Exception e) {
 				Console.WriteLine(e.ToString());
@@ -107,7 +108,7 @@ namespace ATM {
 			try {
 				// Retrieve the state object and the client socket 
 				// from the asynchronous state object.
-				StateObject state = (StateObject) ar.AsyncState;
+				TCPStateObject state = (TCPStateObject) ar.AsyncState;
 				Socket client = state.workSocket;
 
 				// Read data from the remote device.
@@ -118,7 +119,7 @@ namespace ATM {
 				state.sb.Append(Encoding.ASCII.GetString(state.buffer,0,bytesRead));
 
 					// Get the rest of the data.
-					client.BeginReceive(state.buffer,0,StateObject.BufferSize,0,
+					client.BeginReceive(state.buffer,0,TCPStateObject.BUFFER_SIZE,0,
 						new AsyncCallback(ReceiveCallback), state);
 				} else {
 					// All the data has arrived; put it in response.
@@ -157,5 +158,10 @@ namespace ATM {
 				Console.WriteLine(e.ToString());
 			}
 		}
-	}
+
+        public ServerConnection(string host, int port)
+        {
+
+        }
+    }
 }
