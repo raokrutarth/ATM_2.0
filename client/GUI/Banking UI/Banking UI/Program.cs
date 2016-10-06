@@ -18,12 +18,7 @@ namespace Banking_UI
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new welcomePage());
             Application.Run(new loginPage());
-        }
-
-        static void closeForm(Form form)
-        {
-            form.Close();
-
+            Application.Run(new FingerAuthPage());
         }
     }
 }
