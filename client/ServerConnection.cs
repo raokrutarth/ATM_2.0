@@ -19,8 +19,8 @@ namespace ATM {
 
 	public class ServerConnection {
 		// The port number for the remote device.
-		private int port = 11000;
-        private string hostName = "google.com";
+		private int port;
+        private string hostName;
 
 		// ManualResetEvent instances signal completion.
 		private static ManualResetEvent connectDone = 
@@ -159,9 +159,29 @@ namespace ATM {
 			}
 		}
 
-        public ServerConnection(string host, int port)
+        /*
+         * \brief Sends data to the server.
+         * \param dataType The data type descriptor.
+         * \param data The data itself.
+         * Returns false for failure, true for success.
+         */
+        public bool sendData(string dataType, string data)
+        {
+            return false;
+        }
+        
+        /*
+         * Registers a receive data callback function.
+         */
+        public bool registerCallback(string dataType, FUNCTIONPOINT *function)
         {
 
+        }
+
+        public ServerConnection(string host, int port)
+        {
+            this.hostName = host;
+            this.port = port;
         }
     }
 }
