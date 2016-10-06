@@ -38,23 +38,24 @@
             // 
             // bankName
             // 
+            this.bankName.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bankName.AutoSize = true;
             this.bankName.BackColor = System.Drawing.Color.Transparent;
-            this.bankName.Font = new System.Drawing.Font("Baskerville Old Face", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bankName.Font = new System.Drawing.Font("Rockwell", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bankName.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.bankName.Location = new System.Drawing.Point(342, 35);
+            this.bankName.Location = new System.Drawing.Point(315, 40);
             this.bankName.Name = "bankName";
-            this.bankName.Size = new System.Drawing.Size(194, 69);
+            this.bankName.Size = new System.Drawing.Size(184, 68);
             this.bankName.TabIndex = 0;
             this.bankName.Text = "HSBC";
-            this.bankName.Click += new System.EventHandler(this.label1_Click);
             // 
             // bankIcon
             // 
+            this.bankIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bankIcon.AutoSize = true;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
             this.bankIcon.Image = global::Banking_UI.Properties.Resources.HSVC_image1;
-            this.bankIcon.Location = new System.Drawing.Point(525, 40);
+            this.bankIcon.Location = new System.Drawing.Point(480, 45);
             this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
             this.bankIcon.Name = "bankIcon";
             this.bankIcon.Size = new System.Drawing.Size(110, 60);
@@ -62,21 +63,23 @@
             // 
             // welcomeMessage
             // 
+            this.welcomeMessage.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.welcomeMessage.AutoSize = true;
             this.welcomeMessage.BackColor = System.Drawing.Color.Transparent;
-            this.welcomeMessage.Font = new System.Drawing.Font("Arial Narrow", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.welcomeMessage.Location = new System.Drawing.Point(231, 201);
+            this.welcomeMessage.Font = new System.Drawing.Font("Rockwell", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.welcomeMessage.Location = new System.Drawing.Point(194, 163);
             this.welcomeMessage.Name = "welcomeMessage";
-            this.welcomeMessage.Size = new System.Drawing.Size(408, 57);
+            this.welcomeMessage.Size = new System.Drawing.Size(484, 54);
             this.welcomeMessage.TabIndex = 2;
             this.welcomeMessage.Text = "Welcome to ATM 2.0";
             // 
             // cardIcon
             // 
+            this.cardIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cardIcon.AutoSize = true;
             this.cardIcon.BackColor = System.Drawing.Color.Transparent;
             this.cardIcon.Image = global::Banking_UI.Properties.Resources.Card_image1;
-            this.cardIcon.Location = new System.Drawing.Point(79, 258);
+            this.cardIcon.Location = new System.Drawing.Point(159, 267);
             this.cardIcon.MinimumSize = new System.Drawing.Size(200, 200);
             this.cardIcon.Name = "cardIcon";
             this.cardIcon.Size = new System.Drawing.Size(200, 200);
@@ -84,17 +87,19 @@
             // 
             // Insert_Message
             // 
+            this.Insert_Message.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Insert_Message.AutoSize = true;
             this.Insert_Message.BackColor = System.Drawing.Color.Transparent;
-            this.Insert_Message.Font = new System.Drawing.Font("Arial Narrow", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Insert_Message.Location = new System.Drawing.Point(309, 319);
+            this.Insert_Message.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Insert_Message.Location = new System.Drawing.Point(354, 336);
             this.Insert_Message.Name = "Insert_Message";
-            this.Insert_Message.Size = new System.Drawing.Size(286, 80);
+            this.Insert_Message.Size = new System.Drawing.Size(270, 62);
             this.Insert_Message.TabIndex = 4;
             this.Insert_Message.Text = "Please insert card\r\nto begin transaction";
             // 
             // moveOn
             // 
+            this.moveOn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.moveOn.BackColor = System.Drawing.Color.Transparent;
             this.moveOn.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.moveOn.FlatAppearance.BorderSize = 0;
@@ -103,10 +108,10 @@
             this.moveOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.moveOn.Location = new System.Drawing.Point(-2, -1);
             this.moveOn.Name = "moveOn";
-            this.moveOn.Size = new System.Drawing.Size(960, 512);
+            this.moveOn.Size = new System.Drawing.Size(885, 500);
             this.moveOn.TabIndex = 5;
             this.moveOn.UseVisualStyleBackColor = false;
-            this.moveOn.Click += new System.EventHandler(this.button1_Click);
+            this.moveOn.Click += new System.EventHandler(this.moveOn_Click);
             // 
             // welcomePage
             // 
@@ -114,17 +119,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Banking_UI.Properties.Resources.Background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(958, 509);
-            this.Controls.Add(this.cardIcon);
+            this.ClientSize = new System.Drawing.Size(882, 503);
             this.Controls.Add(this.Insert_Message);
-            this.Controls.Add(this.welcomeMessage);
             this.Controls.Add(this.bankIcon);
             this.Controls.Add(this.bankName);
+            this.Controls.Add(this.cardIcon);
+            this.Controls.Add(this.welcomeMessage);
             this.Controls.Add(this.moveOn);
             this.DoubleBuffered = true;
             this.Name = "welcomePage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Welcome";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
