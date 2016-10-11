@@ -9,7 +9,9 @@ namespace AtmServer
 {
     class ServerController
     {
-        public ServerController()
+		private string accountNumber = string.Empty;
+
+		public ServerController()
         {
 
         }
@@ -28,8 +30,8 @@ namespace AtmServer
         {
             Console.WriteLine("In ServerController Main()");
             DBCommunicator dbComm = new DBCommunicator();
-            dbComm.testDb();
-            
+			//dbComm.testDb();
+			TCPCommunicator.StartListening();
         }
     }
 }

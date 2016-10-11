@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading;
 
 namespace AtmServer {
-
 	// State object for reading client data asynchronously
 	public class StateObject {
 		// Client  socket.
@@ -23,9 +22,7 @@ namespace AtmServer {
 		// Thread signal.
 		public static ManualResetEvent allDone = new ManualResetEvent(false);
 
-		public TCPCommunicator() {
-
-		}
+		public TCPCommunicator() {}
 
 		public static void StartListening() {
 			// Data buffer for incoming data.
@@ -67,13 +64,12 @@ namespace AtmServer {
 
 			Console.WriteLine("\nPress ENTER to continue...");
 			Console.Read();
-
 		}
 
 		public static void AcceptCallback(IAsyncResult ar) {
 			// Signal the main thread to continue.
 			allDone.Set();
-
+			Console.WriteLine("Setting up connection\n");
 			// Get the socket that handles the client request.
 			Socket listener = (Socket)ar.AsyncState;
 			Socket handler = listener.EndAccept(ar);
@@ -111,6 +107,8 @@ namespace AtmServer {
 						content.Length, content);
 					// Echo the data back to the client.
 					Send(handler, content);
+					//Call readCommand to determine what command is to be performed
+
 				} else {
 					// Not all data received. Get more.
 					handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
@@ -143,12 +141,6 @@ namespace AtmServer {
 			} catch (Exception e) {
 				Console.WriteLine(e.ToString());
 			}
-		}
-
-
-		public static int main(String[] args) {
-			StartListening();
-			return 0;
 		}
 	}
 }
