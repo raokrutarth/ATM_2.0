@@ -5,7 +5,9 @@ using System.Threading;
 using System.Text;
 
 
-namespace ATMClient {
+namespace ATM {
+
+	//class for the server
 	public class Server {
 		private TcpListener listener;   //object for listening for a client
 		private TcpClient client;
