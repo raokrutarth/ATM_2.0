@@ -20,6 +20,7 @@ namespace AtmServer
             /// return true on sucess
             /// 
             string connectionString = "Server=tcp:atm20customer.database.windows.net,1433;Initial Catalog=CustomerDatabase;Persist Security Info=False;User ID={your_username};Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            CreateCommand("", connectionString);
 
         }
         private static void CreateCommand(string queryString, string connectionString)
@@ -35,15 +36,12 @@ namespace AtmServer
                     connection.Open();
 
                     // 3. Pass the connection to a command object
-                    SqlCommand cmd = new SqlCommand("select * from Customers", conn);
-
+                    SqlCommand cmd = new SqlCommand("select * from Customers", connection);
                     //
                     // 4. Use the connection
                     //
-
                     // get query results
                     rdr = cmd.ExecuteReader();
-
                     // print the CustomerID of each record
                     while (rdr.Read())
                     {
@@ -59,9 +57,9 @@ namespace AtmServer
                     }
 
                     // 5. Close the connection
-                    if (conn != null)
+                    if (connection != null)
                     {
-                        conn.Close();
+                        connection.Close();
                     }
                 }
             }
