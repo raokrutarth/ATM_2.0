@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ATM {
 	// State object for receiving data from remote device.
-	private class StateObject {
+	public class StateObject {
 		// Client socket.
 		public Socket workSocket = null;
 		// Size of receive buffer.
@@ -96,7 +96,7 @@ namespace ATM {
 				state.workSocket = client;
 
 				// Begin receiving the data from the remote device.
-				client.BeginReceive( state.buffer, 0, StateObject.BufferSize, 0,
+				client.BeginReceive( state.buffer, 0, StateObject.BUFFER_SIZE, 0,
 					new AsyncCallback(ReceiveCallback), state);
 			} catch (Exception e) {
 				Console.WriteLine(e.ToString());
@@ -118,7 +118,7 @@ namespace ATM {
 				state.sb.Append(Encoding.ASCII.GetString(state.buffer,0,bytesRead));
 
 					// Get the rest of the data.
-					client.BeginReceive(state.buffer,0,StateObject.BufferSize,0,
+					client.BeginReceive(state.buffer,0,StateObject.BUFFER_SIZE, 0,
 						new AsyncCallback(ReceiveCallback), state);
 				} else {
 					// All the data has arrived; put it in response.
