@@ -26,6 +26,9 @@ namespace AtmServer
         }
         static void Main(string[] args)
         {
+            Console.WriteLine("In ServerController Main()");
+            DBCommunicator dbComm = new DBCommunicator();
+            dbComm.testDb();
             
         }
     }

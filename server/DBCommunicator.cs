@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System;
+using QC = System.Data.SqlClient;
 using System.Data.SqlClient;
 
 namespace AtmServer
@@ -10,6 +11,7 @@ namespace AtmServer
     class DBCommunicator
     {
         enum RequestType { Query, Insert, Peek};
+        string connectionString;
 
         public DBCommunicator()
         {
@@ -19,9 +21,10 @@ namespace AtmServer
             /// setup encryption
             /// return true on sucess
             /// 
-            string connectionString = "Server=tcp:atm20customer.database.windows.net,1433;Initial Catalog=CustomerDatabase;Persist Security Info=False;User ID={your_username};Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-            CreateCommand("", connectionString);
-
+            connectionString = "Server=tcp:atm20customer.database.windows.net,1433;" +
+                "Initial Catalog=CustomerDatabase;Persist Security Info=False;User ID=atm20team;" +
+                    "Password=CS307project;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;" +
+                        "Connection Timeout=30;";
         }
         private static void CreateCommand(string queryString, string connectionString)
         {
@@ -62,6 +65,19 @@ namespace AtmServer
                         connection.Close();
                     }
                 }
+            }
+        }
+
+        public void testDb()
+        {
+            Console.WriteLine("testDb called()");
+            using (var connection = new QC.SqlConnection(connectionString))
+            {
+                connection.Open();
+                Console.WriteLine("Connected successfully.");
+
+                Console.WriteLine("Press any key to finish...");
+                Console.ReadKey(true);
             }
         }
         
