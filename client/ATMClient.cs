@@ -10,9 +10,29 @@ namespace ATM {
 		private HardwareReader drivers = new HardwareReader();
 		private CurrentUser user; //this will be initialized after someone attempts a login
 
-
-		static void Main(string[] args) {
+		/*Public methods*/
+		public static void Main(string[] args) {
 
         }
+
+		/*Private methods*/
+		private bool login(string username) {
+			//check for username and PIN
+			if () {
+
+			}
+
+			//check for fingerprint match
+			if () {
+
+			}
+
+			//check for facial recognition
+			if () {
+
+			}
+
+			return false;
+		}
 	}
 }
