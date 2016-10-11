@@ -1,0 +1,8 @@
+Command format
+
+Line 1: command name
+Line 2: data
+
+Example:
+1) Login
+2) uname password
