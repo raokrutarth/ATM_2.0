@@ -191,6 +191,13 @@ namespace ATM
 		}
 
 		private void Send(Socket client, String data) {
+			// Calculate packet size.
+			int size = Encoding.ASCII.GetByteCount(data);
+			Console.WriteLine("Sending {0} bytes of data.", size);
+
+			// Prepend header to packet.
+			data = "$Size: " + size.ToString() + "\n" + data;
+
 			// Convert the string data to byte data using ASCII encoding.
 			byte[] byteData = Encoding.ASCII.GetBytes(data);
 
