@@ -16,9 +16,16 @@ namespace Banking_UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new welcomePage());
-            Application.Run(new loginPage());
-            Application.Run(new FingerAuthPage());
+            //should loop forever but for testing will be conditional
+            Boolean debug = true;
+            while (debug)
+            {
+                Application.Run(new welcomePage());
+                Application.Run(new loginPage());
+                Application.Run(new FingerAuthPage());
+                Application.Run(new MainMenu());
+                Application.Run(new Confirmation());
+            }
         }
     }
 }

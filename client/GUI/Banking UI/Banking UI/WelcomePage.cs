@@ -26,5 +26,9 @@ namespace Banking_UI
             return;
         }
 
+        private void welcomePage_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
