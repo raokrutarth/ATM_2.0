@@ -7,12 +7,12 @@ using System.Text;
 
 namespace ATM
 {
-    // This is a delegate for TCP callbacks.
-    public delegate bool TCPDataCallback(string data);
+	// This is a delegate for TCP callbacks.
+	public delegate bool TCPDataCallback(string data);
 
 	// State object for receiving data from remote device.
 	class TCPStateObject
-    {
+	{
 		public Socket workSocket = null;
 		public const int BUFFER_SIZE = 256;
 		public byte[] buffer = new byte[BUFFER_SIZE];
@@ -20,11 +20,11 @@ namespace ATM
 	}
 
 	public class ServerConnection
-    {
+	{
 		// The port number for the remote device.
 		private int port;
-        private string hostName;
-        private Dictionary<string, TCPDataCallback> callbacks;
+		private string hostName;
+		private Dictionary<string, TCPDataCallback> callbacks;
 
 		// ManualResetEvent instances signal completion.
 		private static ManualResetEvent connectDone = new ManualResetEvent(false);
@@ -34,72 +34,88 @@ namespace ATM
 		// The response from the remote device.
 		private String response = String.Empty;
 
-        /*
-         * \brief Sends data to the server.
-         * \param dataType The data type descriptor.
-         * \param data The data itself.
-         * Returns false for failure, true for success.
-         */
-        public bool sendData(string dataType, string data)
-        {
-            return false;
-        }
+		// The client socket.
+		Socket client;
 
-        /*
-         * Registers a receive data callback function.
-         */
-        public bool registerCallback(string dataType, TCPDataCallback callback)
-        {
-            this.callbacks[dataType] = callback;
-            return true;
-        }
+		/*
+		 * Creates a new ServerConnection object. This connection will remain
+		 * until the object is destroyed.
+		 * \param host The hostname or IP address of the server.
+		 * \param port The port that the server is listening on.
+		 */
+		public ServerConnection(string host, int port)
+		{
+			this.hostName = host;
+			this.port = port;
+			this.callbacks = new Dictionary<string, TCPDataCallback>();
+		}
 
-        public ServerConnection(string host, int port)
-        {
-            this.hostName = host;
-            this.port = port;
-            this.callbacks = new Dictionary<string, TCPDataCallback>();
-        }
+		/*
+		 * Destroys the TCP connection.
+		 */
+		~ServerConnection()
+		{
+			try
+			{
+				// Release the socket.
+				client.Shutdown(SocketShutdown.Both);
+				client.Close();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.ToString());
+			}
+		}
 
-        private void connect()
-        {
+		/*
+		 * \brief Sends data to the server.
+		 * \param dataType The data type descriptor.
+		 * \param data The data itself.
+		 * Returns false for failure, true for success.
+		 */
+		public bool sendData(string dataType, string data)
+		{
+			Send(client, dataType + "\n" + data + "\n");
+			sendDone.WaitOne();
+			return false;
+		}
+
+		/*
+		 * Registers a receive data callback function.
+		 */
+		public bool registerCallback(string dataType, TCPDataCallback callback)
+		{
+			this.callbacks[dataType] = callback;
+			return true;
+		}
+
+		public void connect()
+		{
 			// Connect to a remote device.
 			try
-            {
-                Console.WriteLine("connection start");
-				IPHostEntry ipHostInfo = Dns.GetHostEntry(hostName);
+			{
+				IPHostEntry ipHostInfo = Dns.Resolve(hostName);
 				IPAddress ipAddress = ipHostInfo.AddressList[0];
+				Console.WriteLine("Potential IPs: {0}", ipHostInfo.AddressList[0].ToString());
 				IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
-                Console.WriteLine("Got IP addr: {0}", ipHostInfo.AddressList[0].ToString());
+				Console.WriteLine("Using IP: {0}", ipHostInfo.AddressList[0].ToString());
 
 				// Create a TCP/IP socket.
-				Socket client = new Socket(AddressFamily.InterNetwork,
+				client = new Socket(AddressFamily.InterNetwork,
 					SocketType.Stream, ProtocolType.Tcp);
 
-                Console.WriteLine("creating socket");
+				Console.WriteLine("Creating socket.");
 				// Connect to the remote endpoint.
 				client.BeginConnect( remoteEP, 
 					new AsyncCallback(ConnectCallback), client);
 				connectDone.WaitOne();
 
-                Console.WriteLine("sending data");
-				// Send test data to the remote device.
-				Send(client,"This is a test<EOF>");
-				sendDone.WaitOne();
-
-                Console.WriteLine("receiving data");
 				// Receive the response from the remote device.
+				Console.WriteLine("Receive data.");
 				Receive(client);
-				receiveDone.WaitOne();
-
-				// Write the response to the console.
-				Console.WriteLine("Response received : {0}", response);
-
-				// Release the socket.
-				client.Shutdown(SocketShutdown.Both);
-				client.Close();
-
-			} catch (Exception e) {
+			}
+            catch (Exception e)
+            {
 				Console.WriteLine(e.ToString());
 			}
 		}
@@ -107,7 +123,7 @@ namespace ATM
 		private void ConnectCallback(IAsyncResult ar) {
 			try {
 				// Retrieve the socket from the state object.
-				Socket client = (Socket) ar.AsyncState;
+				Socket client = (Socket)ar.AsyncState;
 
 				// Complete the connection.
 				client.EndConnect(ar);
@@ -148,7 +164,7 @@ namespace ATM
 
 				if (bytesRead > 0) {
 					// There might be more data, so store the data received so far.
-				state.sb.Append(Encoding.ASCII.GetString(state.buffer,0,bytesRead));
+					state.sb.Append(Encoding.ASCII.GetString(state.buffer,0,bytesRead));
 
 					// Get the rest of the data.
 					client.BeginReceive(state.buffer,0,TCPStateObject.BUFFER_SIZE,0,
@@ -158,14 +174,14 @@ namespace ATM
 					if (state.sb.Length > 1) {
 						response = state.sb.ToString();
 
-                        Console.WriteLine("RECEIVED DATA FROM SERVER:\n{0}\n", response);
-                        /*int idx = response.IndexOf("\r\n");
-                        string type = response.Substring(0, idx);
-                        string data = response.Substring(idx, response.Length);
+						Console.WriteLine("RECEIVED DATA FROM SERVER:\n{0}\n", response);
+						/*int idx = response.IndexOf("\r\n");
+						string type = response.Substring(0, idx);
+						string data = response.Substring(idx, response.Length);
 
-                        // Call our callback here.
-                        bool success = this.callbacks[type](data);*/
-                    }
+						// Call our callback here.
+						bool success = this.callbacks[type](data);*/
+					}
 					// Signal that all bytes have been received.
 					receiveDone.Set();
 				}
@@ -198,13 +214,5 @@ namespace ATM
 				Console.WriteLine(e.ToString());
 			}
 		}
-
-        public static int Main(String[] args)
-        {
-            Console.WriteLine("Connecting...");
-            ServerConnection connection = new ServerConnection("128.210.106.57", 1100);
-            connection.connect();
-            return 0;
-        }
-    }
+	}
 }
