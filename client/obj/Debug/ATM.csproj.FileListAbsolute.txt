@@ -1,1 +1,0 @@
-C:\Users\Harold\Documents\Github\client\bin\Debug\ATMClient.exe.config
