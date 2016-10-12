@@ -38,6 +38,30 @@ namespace Banking_UI
                     thePIN.Text = "";
                     return;
                 }
+                //disables text field making the user not able to input past 4th digit
+                txtPIN.Enabled = false;
+                //Enables for future usage
+                txtPIN.Enabled = true;
+
+                if (!txtPIN.Text.Equals("1000"))
+                {
+
+                    txtPIN.Clear();
+                    WrongPINMessage.Visible = true;
+                    thePIN.Text = "";
+                    return;
+
+                }
+                //can be used if wanted by team
+                //moveOn.Visible = true;
+
+                //for now we will just close
+                Close();
+            }
+
+
+            /* This will be its own function, possibily ness. for demo purposes
+                 *  
                 if (txtPIN.Text.Equals("8080"))
                 {
                     txtPIN.Clear();
@@ -48,15 +72,9 @@ namespace Banking_UI
                 }
                 thePIN.Text = txtPIN.Text;
                 txtPIN.Text = "";
-                //disables text field making the user not able to input past 4th digit
-                txtPIN.Enabled = false;
-                //button to close page is now active
-                
-            moveOn.Visible = true;
-            }
-            //Enables for future usage
-            txtPIN.Enabled = true;
-            
+                *
+                */
+
         }
         private void moveOn_Click(object sender, EventArgs e)
         {

@@ -73,6 +73,16 @@ namespace Banking_UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bbg {
+            get {
+                object obj = ResourceManager.GetObject("bbg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Card_image {
             get {
                 object obj = ResourceManager.GetObject("Card_image", resourceCulture);
@@ -86,6 +96,16 @@ namespace Banking_UI.Properties {
         internal static System.Drawing.Bitmap Card_image1 {
             get {
                 object obj = ResourceManager.GetObject("Card_image1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fbg_image {
+            get {
+                object obj = ResourceManager.GetObject("fbg_image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

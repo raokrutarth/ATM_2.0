@@ -10,25 +10,21 @@ using System.Windows.Forms;
 
 namespace Banking_UI
 {
-    public partial class welcomePage : Form
+    public partial class Confirmation : Form
     {
-        public DialogResult OK { get; private set; }
-
-        public welcomePage()
+        public Confirmation()
         {
             InitializeComponent();
         }
 
-       
-        private void moveOn_Click(object sender, EventArgs e)
+        private void Confirmation_Load(object sender, EventArgs e)
         {
-            Close();
-            return;
+           
         }
 
-        private void welcomePage_Load(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-
+            Close();
         }
     }
 }
