@@ -12,13 +12,22 @@ namespace ATM {
 
 		/*Public methods*/
 		public static void Main(string[] args) {
+            Console.WriteLine("ATM client initializing.");
+            ServerConnection connection = new ServerConnection("192.168.1.230", 11000);
+            connection.connect();
 
+			// Main program loop.
+			while (true)
+			{
+				connection.sendData("test", "this is some test data\n1 2 3");
+				System.Threading.Thread.Sleep(5000);
+			}
         }
 
 		/*Private methods*/
 		private bool login(string username) {
 			//check for username and PIN
-			if () {
+/*			if () {
 
 			}
 
@@ -31,7 +40,7 @@ namespace ATM {
 			if () {
 
 			}
-
+*/
 			return false;
 		}
 	}
