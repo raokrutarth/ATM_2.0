@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
+﻿using System;
 using QC = System.Data.SqlClient;
 using System.Data.SqlClient;
+using System.Configuration;
+using System.IO;
 
 namespace AtmServer
 {
     class DBCommunicator
     {
+        /* Using Data model gateway design pattern */
         enum RequestType { Query, Insert, Peek};
         string connectionString;
 
@@ -21,13 +20,30 @@ namespace AtmServer
             /// setup encryption
             /// return true on sucess
             /// 
-            connectionString = "Server=tcp:atm20customer.database.windows.net,1433;" +
-                "Initial Catalog=CustomerDatabase;Persist Security Info=False;User ID=atm20team;" +
-                    "Password=CS307project;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;" +
-                        "Connection Timeout=30;";
+            connectionString = ConfigurationManager.ConnectionStrings["DBConnString"].ConnectionString;
         }
-        private static void CreateCommand(string queryString, string connectionString)
+        public void FillDB()
         {
+            // Header
+            // ID     Fname     Lname     HPIN     HFINGER     HFACE     Balance
+            string fileName = "TextFile1.txt";
+            string path = Path.Combine(Environment.CurrentDirectory, @"TestDataFiles\", fileName);
+
+            using (StreamReader reader= new StreamReader("D:\\CS 307\\ATM_2.0\\server\\TestDataFiles\\TextFile1.txt"))
+            {
+                string newContent;
+                while ( (newContent = reader.ReadLine()) != null)
+                {
+                    Console.WriteLine(newContent);                    
+                }
+                Console.ReadKey(true);
+            }
+
+
+        }
+        public void printDB()
+        {
+            string queryString = null;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -36,48 +52,46 @@ namespace AtmServer
                 SqlDataReader rdr = null;
                 try
                 {
-                    connection.Open();
-
-                    // 3. Pass the connection to a command object
+                    connection.Open();                    
                     SqlCommand cmd = new SqlCommand("select * from Customers", connection);
-                    //
-                    // 4. Use the connection
-                    //
-                    // get query results
-                    rdr = cmd.ExecuteReader();
-                    // print the CustomerID of each record
+                    rdr = cmd.ExecuteReader();                    
                     while (rdr.Read())
                     {
                         Console.WriteLine(rdr[0]);
                     }
                 }
                 finally
-                {
-                    // close the reader
+                {                    
                     if (rdr != null)
-                    {
                         rdr.Close();
-                    }
-
-                    // 5. Close the connection
                     if (connection != null)
-                    {
                         connection.Close();
-                    }
                 }
             }
         }
 
-        public void testDb()
+        public bool insert(string dataType, string data) // switch data to array/list type
+        {
+            // create insert query
+            return true;
+        }
+        public bool remove(string dataType, string data)
+        {
+            return true;
+        }
+        public string getData(string DataType, string request)
+        {
+            return null;
+        }
+        public bool testDbConnection()
         {
             Console.WriteLine("testDb called()");
             using (var connection = new QC.SqlConnection(connectionString))
             {
                 connection.Open();
-                Console.WriteLine("Connected successfully.");
-
-                Console.WriteLine("Press any key to finish...");
-                Console.ReadKey(true);
+                Console.WriteLine("DB Connected successfully.");
+                connection.Close();
+                return true;               
             }
         }
         
