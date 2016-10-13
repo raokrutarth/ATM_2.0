@@ -31,7 +31,8 @@ namespace AtmServer
             Console.WriteLine("In ServerController Main()");
             DBCommunicator dbComm = new DBCommunicator();
 			//dbComm.testDb();
-			TCPCommunicator.StartListening();
+			TCPCommunicator tcp = new TCPCommunicator();
+			tcp.StartListening();
         }
     }
 }
