@@ -26,6 +26,8 @@ namespace AtmServer
         }
         static void Main(string[] args)
         {
+            int width = 200, height = 50;
+            Console.SetWindowSize(width, height);
             Console.WriteLine("In ServerController Main()");
             DBCommunicator dbComm = new DBCommunicator();
             dbComm.FillDB();
