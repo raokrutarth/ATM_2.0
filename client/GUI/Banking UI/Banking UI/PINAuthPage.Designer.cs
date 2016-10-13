@@ -35,7 +35,6 @@
             this.txtPIN = new System.Windows.Forms.TextBox();
             this.thePIN = new System.Windows.Forms.Label();
             this.bankName = new System.Windows.Forms.Label();
-            this.moveOn = new System.Windows.Forms.Button();
             this.ErrorMessage = new System.Windows.Forms.Label();
             this.WrongPINMessage = new System.Windows.Forms.Label();
             this.fbground = new System.Windows.Forms.Panel();
@@ -113,25 +112,6 @@
             this.bankName.TabIndex = 2;
             this.bankName.Text = "HSBC";
             // 
-            // moveOn
-            // 
-            this.moveOn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.moveOn.BackColor = System.Drawing.Color.Transparent;
-            this.moveOn.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.moveOn.FlatAppearance.BorderSize = 0;
-            this.moveOn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.moveOn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.moveOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.moveOn.Location = new System.Drawing.Point(0, -9);
-            this.moveOn.Name = "moveOn";
-            this.moveOn.Size = new System.Drawing.Size(987, 565);
-            this.moveOn.TabIndex = 8;
-            this.moveOn.UseVisualStyleBackColor = false;
-            this.moveOn.Visible = false;
-            this.moveOn.Click += new System.EventHandler(this.moveOn_Click);
-            // 
             // ErrorMessage
             // 
             this.ErrorMessage.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -190,11 +170,11 @@
             this.Controls.Add(this.txtPIN);
             this.Controls.Add(this.messagePIN);
             this.Controls.Add(this.greetingText);
-            this.Controls.Add(this.moveOn);
             this.DoubleBuffered = true;
             this.Name = "loginPage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PIN Authentication";
+            this.Load += new System.EventHandler(this.loginPage_Load);
             this.fbground.ResumeLayout(false);
             this.fbground.PerformLayout();
             this.ResumeLayout(false);
@@ -210,7 +190,6 @@
         private System.Windows.Forms.TextBox txtPIN;
         private System.Windows.Forms.Label thePIN;
         private System.Windows.Forms.Label bankName;
-        private System.Windows.Forms.Button moveOn;
         private System.Windows.Forms.Label ErrorMessage;
         private System.Windows.Forms.Label WrongPINMessage;
         private System.Windows.Forms.Panel fbground;

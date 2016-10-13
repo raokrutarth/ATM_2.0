@@ -35,6 +35,9 @@
             this.Insert_Message = new System.Windows.Forms.Label();
             this.moveOn = new System.Windows.Forms.Button();
             this.fbground = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.sendName = new System.Windows.Forms.Button();
             this.fbground.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,14 +81,14 @@
             // cardIcon
             // 
             this.cardIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.cardIcon.AutoSize = true;
             this.cardIcon.BackColor = System.Drawing.Color.Transparent;
-            this.cardIcon.Image = global::Banking_UI.Properties.Resources.Card_image1;
-            this.cardIcon.Location = new System.Drawing.Point(209, 267);
-            this.cardIcon.MinimumSize = new System.Drawing.Size(200, 200);
+            this.cardIcon.Image = global::Banking_UI.Properties.Resources.Card1;
+            this.cardIcon.Location = new System.Drawing.Point(242, 320);
+            this.cardIcon.MinimumSize = new System.Drawing.Size(100, 100);
             this.cardIcon.Name = "cardIcon";
-            this.cardIcon.Size = new System.Drawing.Size(200, 200);
+            this.cardIcon.Size = new System.Drawing.Size(156, 100);
             this.cardIcon.TabIndex = 3;
+            this.cardIcon.Click += new System.EventHandler(this.cardIcon_Click);
             // 
             // Insert_Message
             // 
@@ -108,9 +111,9 @@
             this.moveOn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.moveOn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.moveOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.moveOn.Location = new System.Drawing.Point(48, 24);
+            this.moveOn.Location = new System.Drawing.Point(691, 198);
             this.moveOn.Name = "moveOn";
-            this.moveOn.Size = new System.Drawing.Size(885, 500);
+            this.moveOn.Size = new System.Drawing.Size(242, 326);
             this.moveOn.TabIndex = 5;
             this.moveOn.UseVisualStyleBackColor = false;
             this.moveOn.Click += new System.EventHandler(this.moveOn_Click);
@@ -129,6 +132,44 @@
             this.fbground.Size = new System.Drawing.Size(992, 108);
             this.fbground.TabIndex = 6;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(728, 474);
+            this.textBox1.MinimumSize = new System.Drawing.Size(4, 30);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(115, 22);
+            this.textBox1.TabIndex = 7;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(600, 474);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(113, 20);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "**Demo ID**";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // sendName
+            // 
+            this.sendName.BackColor = System.Drawing.Color.Transparent;
+            this.sendName.BackgroundImage = global::Banking_UI.Properties.Resources.fbg_image;
+            this.sendName.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.sendName.FlatAppearance.BorderSize = 0;
+            this.sendName.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.sendName.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.sendName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.sendName.Location = new System.Drawing.Point(858, 470);
+            this.sendName.Name = "sendName";
+            this.sendName.Size = new System.Drawing.Size(75, 31);
+            this.sendName.TabIndex = 9;
+            this.sendName.Text = "Submit";
+            this.sendName.UseVisualStyleBackColor = false;
+            this.sendName.Click += new System.EventHandler(this.sendName_Click);
+            // 
             // welcomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -136,6 +177,9 @@
             this.BackgroundImage = global::Banking_UI.Properties.Resources.bbg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(982, 553);
+            this.Controls.Add(this.sendName);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.Insert_Message);
             this.Controls.Add(this.cardIcon);
             this.Controls.Add(this.welcomeMessage);
@@ -162,6 +206,9 @@
         private System.Windows.Forms.Label Insert_Message;
         private System.Windows.Forms.Button moveOn;
         private System.Windows.Forms.Panel fbground;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button sendName;
     }
 }
 
