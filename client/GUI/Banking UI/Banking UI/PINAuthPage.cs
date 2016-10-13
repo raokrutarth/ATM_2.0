@@ -27,6 +27,7 @@ namespace Banking_UI
         {
             ErrorMessage.Visible = false;
             WrongPINMessage.Visible = false;
+
             if (txtPIN.Text.Length == 4)
             {
                 long a;
@@ -43,43 +44,30 @@ namespace Banking_UI
                 //Enables for future usage
                 txtPIN.Enabled = true;
 
+
+                //This will be taken care of on the server side
                 if (!txtPIN.Text.Equals("1000"))
                 {
-
                     txtPIN.Clear();
                     WrongPINMessage.Visible = true;
                     thePIN.Text = "";
                     return;
 
                 }
-                //can be used if wanted by team
-                //moveOn.Visible = true;
-
+                //This is where we will send the PIN to the server
                 //for now we will just close
                 Close();
             }
-
-
-            /* This will be its own function, possibily ness. for demo purposes
-                 *  
-                if (txtPIN.Text.Equals("8080"))
-                {
-                    txtPIN.Clear();
-                    WrongPINMessage.Visible = true;
-                    //Clear doesn't work?
-                    thePIN.Text = "";
-                    return;
-                }
-                thePIN.Text = txtPIN.Text;
-                txtPIN.Text = "";
-                *
-                */
-
+            
         }
         private void moveOn_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        private void loginPage_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

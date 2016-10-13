@@ -72,6 +72,7 @@ namespace Banking_UI
                         return;
                     }
                 }
+                //If all conditions are met then this should be sent to the server
                 Close();
             }
         }

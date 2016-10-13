@@ -136,16 +136,22 @@
   <data name="fbg_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fbg_image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bbg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bbg.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Card_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Card_image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HSVC_image1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HSVC_image1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Card" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Card.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Card_image1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Card_image1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bbg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bbg.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Card1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Card1.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
