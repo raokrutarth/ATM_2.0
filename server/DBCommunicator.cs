@@ -26,15 +26,21 @@ namespace AtmServer
         {
             // Header
             // ID     Fname     Lname     HPIN     HFINGER     HFACE     Balance
-            string fileName = "TextFile1.txt";
-            string path = Path.Combine(Environment.CurrentDirectory, @"TestDataFiles\", fileName);
-
-            using (StreamReader reader= new StreamReader("D:\\CS 307\\ATM_2.0\\server\\TestDataFiles\\TextFile1.txt"))
+            string fileName = @"..\..\TestDataFiles\MOCK_DATA.csv";           
+            using (StreamReader reader= new StreamReader(fileName))
             {
                 string newContent;
                 while ( (newContent = reader.ReadLine()) != null)
                 {
-                    Console.WriteLine(newContent);                    
+                    string[] fields = newContent.Split(',');
+
+                    Console.WriteLine("Account No.: {0} " +
+                                       "fName: {1} " +
+                                       "lName: {2} " +
+                                       "hpin: {3} " +
+                                       "hface: {4} " +
+                                       "hfinger: {5} " +
+                                       "Balance: {6} ", fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6]);                    
                 }
                 Console.ReadKey(true);
             }
