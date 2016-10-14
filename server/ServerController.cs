@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 
 namespace AtmServer
 {
-    class ServerController
+	public delegate bool TCPDataCallback(Command command);
+
+	class ServerController
     {
+		public static ServerController currentController;
+
 		//used for callback functions
-		private Dictionary<string, TCPCallback> callbacks;
+		private Dictionary<string, TCPDataCallback> callbacks;
 
 		private string accountNumber = string.Empty;
 
 		public ServerController()
         {
-
+			currentController = this;
         }
         void serveClient()
         {
@@ -40,26 +44,12 @@ namespace AtmServer
         }
 
 		public void executeCommand(Command command) {
-			if (command.command.Equals("login")) {
+			bool success = this.callbacks[command.command](command);
 
-			} else if (command.command.Equals("authenticatePIN")) {
-
-			} else if (command.command.Equals("authenticateFace")) {
-
-			} else if (command.command.Equals("authenticateFinger")) {
-
-			} //else if (command.command.Equals("login")) {
-
-			//}
-			//command match not found return error to the client
-			else {
-				//TODO: call the callback function
-				
-			}
 		}
 
 		//registers callback functions
-		public bool RegisterCallback(string dataType, TCPCallback callback) {
+		public bool RegisterCallback(string dataType, TCPDataCallback callback) {
 			this.callbacks[dataType] = callback;
 			return true;
 		}
