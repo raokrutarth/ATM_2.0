@@ -49,6 +49,7 @@ namespace AtmServer {
 		public TCPCommunicator() {
 			this.callbacks = new Dictionary<string, TCPDataCallback>();
 			this.currentCommand = new Command();
+			ServerController.currentController.RegisterCallback("Send", Send);
 		}
 
         public void StartListening() {
