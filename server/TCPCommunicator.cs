@@ -8,7 +8,7 @@ using System.Text;
 namespace AtmServer {
 
 	//Delegate for TCP callbacks.
-	public delegate bool TCPDataCallback(string data);
+	public delegate bool TCPDataCallback(Command command);
 
 	// State object for reading client data asynchronously
 	public class StateObject {
@@ -33,15 +33,18 @@ namespace AtmServer {
 	}
 
     public class TCPCommunicator {
+		private ServerController controller = new ServerController();
 
-        // Thread signal.
-        public static ManualResetEvent allDone = new ManualResetEvent(false);
+		// Thread signal.
+		public static ManualResetEvent allDone = new ManualResetEvent(false);
 
 		//used for callback functions
 		private Dictionary<string, TCPDataCallback> callbacks;
 
 		//holds the current command data
-		private Command currentCommand;
+		public Command currentCommand;
+		
+
 		
 		//constructor
 		public TCPCommunicator() {
@@ -172,7 +175,7 @@ namespace AtmServer {
         }
 
 		//registers callback functions
-        private bool RegisterCallback(string dataType, TCPDataCallback callback) {
+        public bool RegisterCallback(string dataType, TCPDataCallback callback) {
 			this.callbacks[dataType] = callback;
 			return true;
         }
@@ -190,20 +193,8 @@ namespace AtmServer {
 			this.currentCommand.command = temp[1];
 			this.currentCommand.data = temp[2];
 			this.currentCommand.size = Int32.Parse(size);
-		}
 
-		//executes the command sent by the client
-		private void commandCaller() {
-
-			if (this.currentCommand.command.Equals("authenticatePIN")) {
-
-			} else if (this.currentCommand.command.Equals("authenticateFace")) {
-
-			} else if (this.currentCommand.command.Equals("authenticateFinger")) {
-
-			} else if (this.currentCommand.command.Equals("login")) {
-
-			}
+			this.callbacks[this.currentCommand.command](this.currentCommand);
 		}
 	}
 }
