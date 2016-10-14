@@ -17,6 +17,7 @@ namespace ATM
 		public const int BUFFER_SIZE = 256;
 		public byte[] buffer = new byte[BUFFER_SIZE];
 		public StringBuilder sb = new StringBuilder();
+		public int dataLength = 0;
 	}
 
 	public class ServerConnection
@@ -152,8 +153,10 @@ namespace ATM
 			}
 		}
 
-		private void ReceiveCallback( IAsyncResult ar ) {
-			try {
+		private void ReceiveCallback( IAsyncResult ar )
+		{
+			try
+			{
 				// Retrieve the state object and the client socket 
 				// from the asynchronous state object.
 				TCPStateObject state = (TCPStateObject) ar.AsyncState;
@@ -162,28 +165,50 @@ namespace ATM
 				// Read data from the remote device.
 				int bytesRead = client.EndReceive(ar);
 
-				if (bytesRead > 0) {
+				if (bytesRead > 0)
+				{
 					// There might be more data, so store the data received so far.
 					state.sb.Append(Encoding.ASCII.GetString(state.buffer,0,bytesRead));
 
 					// Get the rest of the data.
 					client.BeginReceive(state.buffer,0,TCPStateObject.BUFFER_SIZE,0,
 						new AsyncCallback(ReceiveCallback), state);
-				} else {
+				}
+				else
+				{
 					// All the data has arrived; put it in response.
-					if (state.sb.Length > 1) {
+					if (state.sb.Length > 1)
+					{
 						response = state.sb.ToString();
 
 						Console.WriteLine("RECEIVED DATA FROM SERVER:\n{0}\n", response);
-						/*int idx = response.IndexOf("\r\n");
-						string type = response.Substring(0, idx);
-						string data = response.Substring(idx, response.Length);
 
-						// Call our callback here.
-						bool success = this.callbacks[type](data);*/
+						// Parse out data here.
+						int idx = response.IndexOf("\r\n");
+						if (idx >= 0)
+						{
+							string type = response.Substring(0, idx);
+							string data = response.Substring(idx, response.Length);
+
+							// Call our callback here.
+							if (this.callbacks.ContainsKey(type))
+							{
+								bool success = this.callbacks[type](data);
+							}
+							else
+							{
+								Console.WriteLine("ERROR: Invalid message name received.");
+							}
+						}
+						else
+							Console.WriteLine("bad");
 					}
+
+					// Clear the buffer.
+					state.sb.Clear();
+
 					// Signal that all bytes have been received.
-					receiveDone.Set();
+					//receiveDone.Set();
 				}
 			} catch (Exception e) {
 				Console.WriteLine(e.ToString());
