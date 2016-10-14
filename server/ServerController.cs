@@ -15,7 +15,7 @@ namespace AtmServer
 		private static TCPCommunicator tcp = new TCPCommunicator();
 
 		//used for callback functions
-		private Dictionary<string, TCPDataCallback> callbacks;
+		public Dictionary<string, TCPDataCallback> callbacks;
 
 		private string accountNumber = string.Empty;
 
@@ -44,18 +44,6 @@ namespace AtmServer
 
 		public void executeCommand(Command command) {
 			bool success = this.callbacks[command.command](command);
-			Command c = new Command();
-
-
-			if (success) {
-				//command had a success
-				c.command = "success";
-				c.data = "";
-				c.size = c.command.Length + c.data.Length;
-				tcp.Send(tcp.listener, c);
-			} else {
-
-			}
 		}
 
 		//registers callback functions
