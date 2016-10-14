@@ -10,8 +10,14 @@ namespace AtmServer
     {
         public Authenticator()
         {
+			ServerController.currentController.RegisterCallback("authPin", authPin);
             /// select hashing algorithim
             /// test encrypt/decrypt
         }
+
+		public bool authPin(Command command)
+		{
+			return false;
+		}
     }
 }
