@@ -19,7 +19,8 @@ namespace ATM {
 			// Main program loop.
 			while (true)
 			{
-				connection.sendData("test", "this is some test data\n1 2 3");
+				connection.sendData("authenticatePIN", "this is some test data\n1 2 3<EOF>");
+				connection.receiveData();
 				System.Threading.Thread.Sleep(5000);
 			}
         }

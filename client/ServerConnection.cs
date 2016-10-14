@@ -157,7 +157,6 @@ namespace ATM
 
 		private void ReceiveCallback( IAsyncResult ar )
 		{
-			Console.WriteLine("receive callback");
 			try
 			{
 				// Retrieve the state object and the client socket 
@@ -168,11 +167,21 @@ namespace ATM
 				// Read data from the remote device.
 				int bytesRead = client.EndReceive(ar);
 
-				if (bytesRead > 0)
+				if (bytesRead > 0 && (state.dataLength == 0 || bytesRead >= state.dataLength))
 				{
-					Console.WriteLine("bytes read: {0}", bytesRead);
 					// There might be more data, so store the data received so far.
-					state.sb.Append(Encoding.ASCII.GetString(state.buffer,0,bytesRead));
+					string ascii = Encoding.ASCII.GetString(state.buffer, 0, bytesRead);
+					state.sb.Append(ascii);
+
+					Console.WriteLine("Have received {0} bytes:\n{1}", bytesRead, ascii);
+
+					// Check if data length is specified.
+					if (state.dataLength == 0 && ascii.IndexOf('\n') >= 0)
+					{
+						string[] lines = ascii.Split('\n');
+						state.dataLength = Int32.Parse(lines[0]);
+						Console.WriteLine("Got data length of {0}", state.dataLength);
+					}
 
 					// Get the rest of the data.
 					client.BeginReceive(state.buffer,0,TCPStateObject.BUFFER_SIZE,0,
@@ -193,7 +202,7 @@ namespace ATM
 						if (idx >= 0)
 						{
 							string type = response.Substring(0, idx);
-							string data = response.Substring(idx, response.Length);
+							string data = response.Substring(idx, response.Length - 1);
 
 							// Call our callback here.
 							if (this.callbacks.ContainsKey(type))
@@ -207,6 +216,9 @@ namespace ATM
 						}
 						else
 							Console.WriteLine("bad");
+
+						// Reset the data length for the next packet.
+						state.dataLength = 0;
 					}
 
 					// Clear the buffer.
