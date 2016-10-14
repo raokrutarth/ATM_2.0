@@ -32,7 +32,16 @@ namespace AtmServer
             DBCommunicator dbComm = new DBCommunicator();
 			//dbComm.testDb();
 			TCPCommunicator tcp = new TCPCommunicator();
+			setup();
 			tcp.StartListening();
         }
+
+		public void executeCommand(Command command) {
+			
+		}
+
+		public void setup() {
+
+		}
     }
 }
