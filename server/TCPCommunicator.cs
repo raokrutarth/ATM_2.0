@@ -30,13 +30,13 @@ namespace AtmServer {
 	}
 
     public class TCPCommunicator {
-		private ServerController controller = new ServerController();
+		//private ServerController controller = new ServerController();
 
 		// Thread signal.
 		public static ManualResetEvent allDone = new ManualResetEvent(false);
 
 		//used for callback functions
-		private Dictionary<string, TCPDataCallback> callbacks;
+		//private Dictionary<string, TCPDataCallback> callbacks;
 		
 		//holds the current command data
 		public Command currentCommand;
@@ -47,7 +47,7 @@ namespace AtmServer {
 		
 		//constructor
 		public TCPCommunicator() {
-			this.callbacks = new Dictionary<string, TCPDataCallback>();
+			//this.callbacks = new Dictionary<string, TCPDataCallback>();
 			this.currentCommand = new Command();
 			ServerController.currentController.RegisterCallback("authenticatePIN", Send);
 			ServerController.currentController.RegisterCallback("Send", Send);
