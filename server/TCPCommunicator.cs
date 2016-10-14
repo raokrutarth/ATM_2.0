@@ -8,8 +8,8 @@ using System.Text;
 namespace AtmServer {
 
 	//Delegate for TCP callbacks.
-	public delegate bool TCPDataCallback(Command command);
-	public delegate void TCPCallback(Socket handler, String data); //Send(Socket handler, String data)
+	//public delegate bool TCPDataCallback(Command command);
+	//public delegate void TCPCallback(Socket handler, String data); //Send(Socket handler, String data)
 
 	// State object for reading client data asynchronously
 	public class StateObject {
@@ -192,7 +192,7 @@ namespace AtmServer {
 			this.currentCommand.size = Int32.Parse(size);
 
 			//TODO: register callback to Send
-			this.controller.RegisterCallback("void", Send);
+			//this.controller.RegisterCallback("void", Send);
 			
 			this.controller.executeCommand(this.currentCommand);
 		}
