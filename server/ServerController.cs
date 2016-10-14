@@ -9,6 +9,9 @@ namespace AtmServer
 {
     class ServerController
     {
+		//used for callback functions
+		private Dictionary<string, TCPCallback> callbacks;
+
 		private string accountNumber = string.Empty;
 
 		public ServerController()
@@ -37,10 +40,31 @@ namespace AtmServer
         }
 
 		public void executeCommand(Command command) {
-			
+			if (command.command.Equals("login")) {
+
+			} else if (command.command.Equals("authenticatePIN")) {
+
+			} else if (command.command.Equals("authenticateFace")) {
+
+			} else if (command.command.Equals("authenticateFinger")) {
+
+			} //else if (command.command.Equals("login")) {
+
+			//}
+			//command match not found return error to the client
+			else {
+				//TODO: call the callback function
+				
+			}
 		}
 
-		public void setup() {
+		//registers callback functions
+		public bool RegisterCallback(string dataType, TCPCallback callback) {
+			this.callbacks[dataType] = callback;
+			return true;
+		}
+
+		public static void setup() {
 
 		}
     }
