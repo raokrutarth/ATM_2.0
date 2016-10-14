@@ -5,3 +5,4 @@ D:\CS 307\ATM_2.0\server\bin\Debug\AtmServer.exe
 D:\CS 307\ATM_2.0\server\bin\Debug\AtmServer.pdb
 D:\CS 307\ATM_2.0\server\obj\Debug\AtmServer.exe
 D:\CS 307\ATM_2.0\server\obj\Debug\AtmServer.pdb
+D:\CS 307\ATM_2.0\server\obj\Debug\AtmServer.csprojResolveAssemblyReference.cache
