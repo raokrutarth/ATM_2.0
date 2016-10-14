@@ -10,14 +10,29 @@ namespace AtmServer
     {
         public Authenticator()
         {
-			ServerController.currentController.RegisterCallback("authPin", authPin);
-            /// select hashing algorithim
-            /// test encrypt/decrypt
-        }
+			ServerController.currentController.RegisterCallback("authenticatePIN", authenticatePIN);
+			ServerController.currentController.RegisterCallback("authenticateFace", authenticateFace);
+			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
+			/// select hashing algorithim
+			/// test encrypt/decrypt
+		}
 
-		public bool authPin(Command command)
+		public bool authenticatePIN(Command command)
 		{
+			
+
+			return true;
+		}
+
+		public bool authenticateFace(Command command) {
+
 			return false;
 		}
-    }
+
+		public bool authenticateFinger(Command command) {
+
+			return false;
+		}
+
+	}
 }
