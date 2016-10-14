@@ -137,7 +137,7 @@ namespace AtmServer {
 					
 					//call the message decoder method to determine the command given
 					this.decoder(state.sb.ToString());
-					
+					state.sb.Clear();
 				} else {
                     // Not all data received. Get more.
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
@@ -145,7 +145,7 @@ namespace AtmServer {
             }
         }
 
-        public void Send(Socket handler, String data) {
+       /* public void Send(Socket handler, String data) {
 			// Calculate packet size.
 			int size = Encoding.ASCII.GetByteCount(data);
 			Console.WriteLine("Sending {0} bytes of data.", size);
@@ -158,10 +158,20 @@ namespace AtmServer {
 
             // Begin sending the data to the remote device.
             handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
-        }
+        }*/
 
-		public void Send() {
+		private bool Send(Command c) {
+			Socket handler = this.listener;
+			String data;
 
+			data = c.size.ToString();
+			data = data + "\n" + c.command + "\n" + c.data;
+
+			// Convert the string data to byte data using ASCII encoding.
+			byte[] byteData = Encoding.ASCII.GetBytes(data);
+
+			handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
+			return true;
 		}
 
         private void SendCallback(IAsyncResult ar) {
