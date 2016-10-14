@@ -110,10 +110,6 @@ namespace ATM
 				client.BeginConnect( remoteEP, 
 					new AsyncCallback(ConnectCallback), client);
 				connectDone.WaitOne();
-
-				// Receive the response from the remote device.
-				Console.WriteLine("Receive data.");
-				Receive(client);
 			}
             catch (Exception e)
             {
@@ -139,7 +135,13 @@ namespace ATM
 			}
 		}
 
+		public void receiveData()
+		{
+			this.Receive(this.client);
+		}
+
 		private void Receive(Socket client) {
+			Console.WriteLine("Receive data.");
 			try {
 				// Create the state object.
 				TCPStateObject state = new TCPStateObject();
@@ -155,6 +157,7 @@ namespace ATM
 
 		private void ReceiveCallback( IAsyncResult ar )
 		{
+			Console.WriteLine("receive callback");
 			try
 			{
 				// Retrieve the state object and the client socket 
@@ -167,6 +170,7 @@ namespace ATM
 
 				if (bytesRead > 0)
 				{
+					Console.WriteLine("bytes read: {0}", bytesRead);
 					// There might be more data, so store the data received so far.
 					state.sb.Append(Encoding.ASCII.GetString(state.buffer,0,bytesRead));
 
@@ -176,6 +180,7 @@ namespace ATM
 				}
 				else
 				{
+					Console.WriteLine("sb length: {0}", state.sb.Length);
 					// All the data has arrived; put it in response.
 					if (state.sb.Length > 1)
 					{
@@ -184,7 +189,7 @@ namespace ATM
 						Console.WriteLine("RECEIVED DATA FROM SERVER:\n{0}\n", response);
 
 						// Parse out data here.
-						int idx = response.IndexOf("\r\n");
+						int idx = response.IndexOf("\n");
 						if (idx >= 0)
 						{
 							string type = response.Substring(0, idx);
@@ -221,7 +226,7 @@ namespace ATM
 			Console.WriteLine("Sending {0} bytes of data.", size);
 
 			// Prepend header to packet.
-			data = "$Size: " + size.ToString() + "\n" + data;
+			data = size.ToString() + "\n" + data;
 
 			// Convert the string data to byte data using ASCII encoding.
 			byte[] byteData = Encoding.ASCII.GetBytes(data);
