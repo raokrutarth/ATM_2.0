@@ -12,6 +12,7 @@ namespace AtmServer
 	class ServerController
     {
 		public static ServerController currentController;
+		private static TCPCommunicator tcp = new TCPCommunicator();
 
 		//used for callback functions
 		private Dictionary<string, TCPDataCallback> callbacks;
@@ -38,14 +39,23 @@ namespace AtmServer
             Console.WriteLine("In ServerController Main()");
             DBCommunicator dbComm = new DBCommunicator();
 			//dbComm.testDb();
-			TCPCommunicator tcp = new TCPCommunicator();
-			setup();
 			tcp.StartListening();
         }
 
 		public void executeCommand(Command command) {
 			bool success = this.callbacks[command.command](command);
+			Command c = new Command();
 
+
+			if (success) {
+				//command had a success
+				c.command = "success";
+				c.data = "";
+				c.size = c.command.Length + c.data.Length;
+				tcp.Send(tcp.listener, c);
+			} else {
+
+			}
 		}
 
 		//registers callback functions
@@ -54,8 +64,8 @@ namespace AtmServer
 			return true;
 		}
 
-		public static void setup() {
-
+		public void setup() {
+			
 		}
-    }
+	}
 }

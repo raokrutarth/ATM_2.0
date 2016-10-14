@@ -7,10 +7,6 @@ using System.Text;
 
 namespace AtmServer {
 
-	//Delegate for TCP callbacks.
-	//public delegate bool TCPDataCallback(Command command);
-	//public delegate void TCPCallback(Socket handler, String data); //Send(Socket handler, String data)
-
 	// State object for reading client data asynchronously
 	public class StateObject {
 		// Client  socket.
@@ -41,12 +37,12 @@ namespace AtmServer {
 
 		//used for callback functions
 		private Dictionary<string, TCPDataCallback> callbacks;
-
+		
 		//holds the current command data
 		public Command currentCommand;
-
+		
 		//socket used for client connection
-		private Socket listener;
+		public Socket listener;
 
 		
 		//constructor
@@ -70,7 +66,7 @@ namespace AtmServer {
             Console.WriteLine("TCP server is listening at {0} on port {1}.", ipAddress.ToString(), port);
 
             // Create a TCP/IP socket.
-            listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             // Bind the socket to the local endpoint and listen for incoming connections.
             try {
@@ -136,15 +132,12 @@ namespace AtmServer {
                     Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                         content.Length, content);
                     // Echo the data back to the client.
-                    Send(handler, content);
+                    //Send(handler, content);
 
-					/*
+					
 					//call the message decoder method to determine the command given
 					this.decoder(state.sb.ToString());
 					
-					*/
-                    //Call readCommand to determine what command is to be performed
-
 				} else {
                     // Not all data received. Get more.
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
@@ -152,13 +145,24 @@ namespace AtmServer {
             }
         }
 
-        private void Send(Socket handler, String data) {
-            // Convert the string data to byte data using ASCII encoding.
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
+        public void Send(Socket handler, String data) {
+			// Calculate packet size.
+			int size = Encoding.ASCII.GetByteCount(data);
+			Console.WriteLine("Sending {0} bytes of data.", size);
+
+			// Prepend header to packet.
+			data = "$Size: " + size.ToString() + "\n" + data;
+
+			// Convert the string data to byte data using ASCII encoding.
+			byte[] byteData = Encoding.ASCII.GetBytes(data);
 
             // Begin sending the data to the remote device.
             handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
         }
+
+		public void Send() {
+
+		}
 
         private void SendCallback(IAsyncResult ar) {
             try {
@@ -169,8 +173,8 @@ namespace AtmServer {
                 int bytesSent = handler.EndSend(ar);
                 Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
-                handler.Shutdown(SocketShutdown.Both);
-                handler.Close();
+                //handler.Shutdown(SocketShutdown.Both);
+                //handler.Close();
 
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
@@ -191,9 +195,6 @@ namespace AtmServer {
 			this.currentCommand.data = temp[2];
 			this.currentCommand.size = Int32.Parse(size);
 
-			//TODO: register callback to Send
-			//this.controller.RegisterCallback("void", Send);
-			
 			this.controller.executeCommand(this.currentCommand);
 		}
 	}
