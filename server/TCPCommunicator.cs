@@ -9,6 +9,7 @@ namespace AtmServer {
 
 	//Delegate for TCP callbacks.
 	public delegate bool TCPDataCallback(Command command);
+	public delegate void TCPCallback(Socket handler, String data); //Send(Socket handler, String data)
 
 	// State object for reading client data asynchronously
 	public class StateObject {
@@ -43,7 +44,9 @@ namespace AtmServer {
 
 		//holds the current command data
 		public Command currentCommand;
-		
+
+		//socket used for client connection
+		private Socket listener;
 
 		
 		//constructor
@@ -67,7 +70,7 @@ namespace AtmServer {
             Console.WriteLine("TCP server is listening at {0} on port {1}.", ipAddress.ToString(), port);
 
             // Create a TCP/IP socket.
-            Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             // Bind the socket to the local endpoint and listen for incoming connections.
             try {
@@ -142,7 +145,7 @@ namespace AtmServer {
 					*/
                     //Call readCommand to determine what command is to be performed
 
-                } else {
+				} else {
                     // Not all data received. Get more.
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
                 }
@@ -174,12 +177,6 @@ namespace AtmServer {
             }
         }
 
-		//registers callback functions
-        public bool RegisterCallback(string dataType, TCPDataCallback callback) {
-			this.callbacks[dataType] = callback;
-			return true;
-        }
-
 		//decodes information from client and stores it in currentCommand
 		private void decoder(string data) {
 			string size = String.Empty;
@@ -194,7 +191,10 @@ namespace AtmServer {
 			this.currentCommand.data = temp[2];
 			this.currentCommand.size = Int32.Parse(size);
 
-			this.callbacks[this.currentCommand.command](this.currentCommand);
+			//TODO: register callback to Send
+			this.controller.RegisterCallback("void", Send);
+			
+			this.controller.executeCommand(this.currentCommand);
 		}
 	}
 }
