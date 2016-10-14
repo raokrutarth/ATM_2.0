@@ -49,6 +49,7 @@ namespace AtmServer {
 		public TCPCommunicator() {
 			this.callbacks = new Dictionary<string, TCPDataCallback>();
 			this.currentCommand = new Command();
+			ServerController.currentController.RegisterCallback("authenticatePIN", Send);
 			ServerController.currentController.RegisterCallback("Send", Send);
 		}
 
@@ -105,6 +106,7 @@ namespace AtmServer {
             // Create the state object.
             StateObject state = new StateObject();
             state.workSocket = handler;
+			this.listener = handler;
             handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
         }
 
@@ -139,10 +141,10 @@ namespace AtmServer {
 					//call the message decoder method to determine the command given
 					this.decoder(state.sb.ToString());
 					state.sb.Clear();
-				} else {
+				} //else {
                     // Not all data received. Get more.
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
-                }
+               // }
             }
         }
 
@@ -171,6 +173,7 @@ namespace AtmServer {
 			// Convert the string data to byte data using ASCII encoding.
 			byte[] byteData = Encoding.ASCII.GetBytes(data);
 
+			//handler.EndSend();
 			handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
 			return true;
 		}
