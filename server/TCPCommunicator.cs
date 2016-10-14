@@ -189,6 +189,7 @@ namespace AtmServer {
 
                 //handler.Shutdown(SocketShutdown.Both);
                 //handler.Close();
+				//handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
 
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
@@ -209,7 +210,7 @@ namespace AtmServer {
 			this.currentCommand.data = temp[2];
 			this.currentCommand.size = Int32.Parse(size);
 
-			this.controller.executeCommand(this.currentCommand);
+			ServerController.currentController.executeCommand(this.currentCommand);
 		}
 	}
 }
