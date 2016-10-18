@@ -26,4 +26,3 @@ The client application runs on the ATM itself and displays the user interface.
 
 ## Server
 
-The server application forms the core of the backend.
