@@ -6,6 +6,13 @@ using System.Text;
 
 namespace ATM
 {
+	public class Message
+	{
+		public string type;
+		public string data;
+		public int size;
+	}
+
 	public class ServerConnection
 	{
 		private static int MAX_PACKET_SIZE = 4096;
@@ -18,8 +25,8 @@ namespace ATM
 		private String response = String.Empty;
 
 		// The client socket.
-		TcpClient client;
-		NetworkStream stream;
+		private TcpClient client;
+		private NetworkStream stream;
 
 		/*
 		 * Creates a new ServerConnection object. This connection will remain
@@ -48,7 +55,7 @@ namespace ATM
 		 * \param expectResponse Whether to wait for a response.
 		 * \returns The response received or emtpy string if response not expected.
 		 */
-		public string SendData(string dataType, string data, bool expectResponse=false)
+		public Message SendData(string dataType, string data, bool expectResponse=false)
 		{
 			byte[] byteData = Encoding.ASCII.GetBytes(data);
 			return this.SendData(dataType, byteData, expectResponse);
@@ -61,24 +68,34 @@ namespace ATM
 		 * \param expectResponse Whether to wait for a response.
 		 * \returns The response received or emtpy string if response not expected.
 		 */
-		private string SendData(string dataType, byte[] data, bool expectResponse = false)
+		private Message SendData(string dataType, byte[] data, bool expectResponse = false)
 		{
 			int size = data.Length;
-			Console.WriteLine("Sending with payload size of {0} bytes.", size);
 
 			// Create header.
 			string header = size.ToString() + "\n" + dataType + "\n";
 			byte[] headerData = Encoding.ASCII.GetBytes(header);
 
 			// Send the data.
-			this.stream.Write(headerData, 0, headerData.Length);
-			this.stream.Write(data, 0, data.Length);
+			try
+			{
+				this.stream.Write(headerData, 0, headerData.Length);
+				this.stream.Write(data, 0, data.Length);
+			}
+			catch (System.IO.IOException e)
+			{
+				Console.WriteLine("IOException: {0}", e);
+			}
+			catch (SocketException e)
+			{
+				Console.WriteLine("SocketException: {0}", e);
+			}
 
-			if(expectResponse)
+			if (expectResponse)
 			{
 				return this.ReceiveData();
 			}
-			return String.Empty;
+			return null;
 		}
 
 		/*
@@ -88,7 +105,8 @@ namespace ATM
 		{
 			try
 			{
-				TcpClient client = new TcpClient(this.server, this.port);
+				this.client = new TcpClient(this.server, this.port);
+				this.stream = this.client.GetStream();
 				Console.WriteLine("Connected to {0}:{1}", this.server, this.port);
 			}
 			catch (ArgumentNullException e)
@@ -121,23 +139,38 @@ namespace ATM
 
 		/*
 		 * Receives data from the server.
+		 * \returns a Message class instance with the appropriate data.
 		 */
-		private string ReceiveData()
+		private Message ReceiveData()
 		{
 			try
 			{
-				Console.WriteLine("Receiving data");
+				// Read data.
 				byte[] data = new Byte[MAX_PACKET_SIZE];
 				string response = string.Empty;
 				Int32 bytes = stream.Read(data, 0, data.Length);
 				response = Encoding.ASCII.GetString(data, 0, bytes);
-				Console.WriteLine("Received response:\n{0}", response);
-				return response;
+
+				// Create Message instance.
+				Message result = new Message();
+
+				// Parse data.
+				string[] lines = response.Split('\n');
+				result.size = Int32.Parse(lines[0]);
+				result.type = lines[1];
+				result.data = lines[2];
+
+				return result;
+			}
+			catch (System.IO.IOException e)
+			{
+				Console.WriteLine("IOException: {0}", e);
+				return null;
 			}
 			catch (SocketException e)
 			{
 				Console.WriteLine("SocketException: {0}", e);
-				return string.Empty;
+				return null;
 			}
 		}
 
