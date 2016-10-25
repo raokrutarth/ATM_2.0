@@ -14,13 +14,13 @@ namespace ATM {
 		public static void Main(string[] args) {
             Console.WriteLine("ATM client initializing.");
             ServerConnection connection = new ServerConnection("192.168.1.230", 11000);
-            connection.connect();
+            connection.Connect();
 
 			// Main program loop.
 			while (true)
 			{
-				connection.sendData("authenticatePIN", "this is some test data\n1 2 3<EOF>");
-				connection.receiveData();
+				Message result = connection.SendData("authenticatePIN", "this is some test data\n1 2 3<EOF>", true);
+				Console.WriteLine("Got type \"{0}\" and message \"{1}\".", result.type, result.data);
 				System.Threading.Thread.Sleep(5000);
 			}
         }
