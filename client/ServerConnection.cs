@@ -2,41 +2,31 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using System.Text;
 
 namespace ATM
 {
-	// This is a delegate for TCP callbacks.
-	public delegate bool TCPDataCallback(string data);
-
-	// State object for receiving data from remote device.
-	class TCPStateObject
+	public class Message
 	{
-		public Socket workSocket = null;
-		public const int BUFFER_SIZE = 256;
-		public byte[] buffer = new byte[BUFFER_SIZE];
-		public StringBuilder sb = new StringBuilder();
-		public int dataLength = 0;
+		public string type;
+		public string data;
+		public int size;
 	}
 
 	public class ServerConnection
 	{
+		private static int MAX_PACKET_SIZE = 4096;
+
 		// The port number for the remote device.
 		private int port;
-		private string hostName;
-		private Dictionary<string, TCPDataCallback> callbacks;
-
-		// ManualResetEvent instances signal completion.
-		private static ManualResetEvent connectDone = new ManualResetEvent(false);
-		private static ManualResetEvent sendDone = new ManualResetEvent(false);
-		private static ManualResetEvent receiveDone = new ManualResetEvent(false);
+		private string server;
 
 		// The response from the remote device.
 		private String response = String.Empty;
 
 		// The client socket.
-		Socket client;
+		private TcpClient client;
+		private NetworkStream stream;
 
 		/*
 		 * Creates a new ServerConnection object. This connection will remain
@@ -44,11 +34,10 @@ namespace ATM
 		 * \param host The hostname or IP address of the server.
 		 * \param port The port that the server is listening on.
 		 */
-		public ServerConnection(string host, int port)
+		public ServerConnection(string server, int port)
 		{
-			this.hostName = host;
+			this.server = server;
 			this.port = port;
-			this.callbacks = new Dictionary<string, TCPDataCallback>();
 		}
 
 		/*
@@ -56,106 +45,136 @@ namespace ATM
 		 */
 		~ServerConnection()
 		{
+			this.Close();
+		}
+
+		/*
+		 * \brief Sends text data to the server.
+		 * \param dataType The data type descriptor.
+		 * \param data The data itself.
+		 * \param expectResponse Whether to wait for a response.
+		 * \returns The response received or emtpy string if response not expected.
+		 */
+		public Message SendData(string dataType, string data, bool expectResponse=false)
+		{
+			byte[] byteData = Encoding.ASCII.GetBytes(data);
+			return this.SendData(dataType, byteData, expectResponse);
+		}
+
+		/*
+		 * Sends binary data to the server.
+		 * \param dataType The data type descriptor.
+		 * \param data The data itself.
+		 * \param expectResponse Whether to wait for a response.
+		 * \returns The response received or emtpy string if response not expected.
+		 */
+		private Message SendData(string dataType, byte[] data, bool expectResponse = false)
+		{
+			int size = data.Length;
+
+			// Create header.
+			string header = size.ToString() + "\n" + dataType + "\n";
+			byte[] headerData = Encoding.ASCII.GetBytes(header);
+
+			// Send the data.
+			try
+			{
+				this.stream.Write(headerData, 0, headerData.Length);
+				this.stream.Write(data, 0, data.Length);
+			}
+			catch (System.IO.IOException e)
+			{
+				Console.WriteLine("IOException: {0}", e);
+			}
+			catch (SocketException e)
+			{
+				Console.WriteLine("SocketException: {0}", e);
+			}
+
+			if (expectResponse)
+			{
+				return this.ReceiveData();
+			}
+			return null;
+		}
+
+		/*
+		 * Establishes the connection to the server.
+		 */
+		public void Connect()
+		{
+			try
+			{
+				this.client = new TcpClient(this.server, this.port);
+				this.stream = this.client.GetStream();
+				Console.WriteLine("Connected to {0}:{1}", this.server, this.port);
+			}
+			catch (ArgumentNullException e)
+			{
+				Console.WriteLine("ArgumentNullException: {0}", e);
+			}
+			catch (SocketException e)
+			{
+				Console.WriteLine("SocketException: {0}", e);
+			}
+		}
+
+		/*
+		 * Releases the connection to the server.
+		 * This is performed before object deletion.
+		 */
+		public void Close()
+		{
 			try
 			{
 				// Release the socket.
-				client.Shutdown(SocketShutdown.Both);
+				stream.Close();
 				client.Close();
 			}
-			catch (Exception e)
+			catch (SocketException e)
 			{
-				Console.WriteLine(e.ToString());
+				Console.WriteLine("SocketException: {0}", e);
 			}
 		}
 
 		/*
-		 * \brief Sends data to the server.
-		 * \param dataType The data type descriptor.
-		 * \param data The data itself.
-		 * Returns false for failure, true for success.
+		 * Receives data from the server.
+		 * \returns a Message class instance with the appropriate data.
 		 */
-		public bool sendData(string dataType, string data)
+		private Message ReceiveData()
 		{
-			Send(client, dataType + "\n" + data + "\n");
-			sendDone.WaitOne();
-			return false;
-		}
-
-		/*
-		 * Registers a receive data callback function.
-		 */
-		public bool registerCallback(string dataType, TCPDataCallback callback)
-		{
-			this.callbacks[dataType] = callback;
-			return true;
-		}
-
-		public void connect()
-		{
-			// Connect to a remote device.
 			try
 			{
-				IPHostEntry ipHostInfo = Dns.Resolve(hostName);
-				IPAddress ipAddress = ipHostInfo.AddressList[0];
-				Console.WriteLine("Potential IPs: {0}", ipHostInfo.AddressList[0].ToString());
-				IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
-				Console.WriteLine("Using IP: {0}", ipHostInfo.AddressList[0].ToString());
+				// Read data.
+				byte[] data = new Byte[MAX_PACKET_SIZE];
+				string response = string.Empty;
+				Int32 bytes = stream.Read(data, 0, data.Length);
+				response = Encoding.ASCII.GetString(data, 0, bytes);
 
-				// Create a TCP/IP socket.
-				client = new Socket(AddressFamily.InterNetwork,
-					SocketType.Stream, ProtocolType.Tcp);
+				// Create Message instance.
+				Message result = new Message();
 
-				Console.WriteLine("Creating socket.");
-				// Connect to the remote endpoint.
-				client.BeginConnect( remoteEP, 
-					new AsyncCallback(ConnectCallback), client);
-				connectDone.WaitOne();
+				// Parse data.
+				string[] lines = response.Split('\n');
+				result.size = Int32.Parse(lines[0]);
+				result.type = lines[1];
+				result.data = lines[2];
+
+				return result;
 			}
-            catch (Exception e)
-            {
-				Console.WriteLine(e.ToString());
+			catch (System.IO.IOException e)
+			{
+				Console.WriteLine("IOException: {0}", e);
+				return null;
 			}
-		}
-
-		private void ConnectCallback(IAsyncResult ar) {
-			try {
-				// Retrieve the socket from the state object.
-				Socket client = (Socket)ar.AsyncState;
-
-				// Complete the connection.
-				client.EndConnect(ar);
-
-				Console.WriteLine("Socket connected to {0}",
-					client.RemoteEndPoint.ToString());
-
-				// Signal that the connection has been made.
-				connectDone.Set();
-			} catch (Exception e) {
-				Console.WriteLine(e.ToString());
+			catch (SocketException e)
+			{
+				Console.WriteLine("SocketException: {0}", e);
+				return null;
 			}
 		}
 
-		public void receiveData()
-		{
-			this.Receive(this.client);
-		}
-
-		private void Receive(Socket client) {
-			Console.WriteLine("Receive data.");
-			try {
-				// Create the state object.
-				TCPStateObject state = new TCPStateObject();
-				state.workSocket = client;
-
-				// Begin receiving the data from the remote device.
-				client.BeginReceive( state.buffer, 0, TCPStateObject.BUFFER_SIZE, 0,
-					new AsyncCallback(ReceiveCallback), state);
-			} catch (Exception e) {
-				Console.WriteLine(e.ToString());
-			}
-		}
-
-		private void ReceiveCallback( IAsyncResult ar )
+		/*private void ReceiveCallback( IAsyncResult ar )
 		{
 			try
 			{
@@ -230,38 +249,6 @@ namespace ATM
 			} catch (Exception e) {
 				Console.WriteLine(e.ToString());
 			}
-		}
-
-		private void Send(Socket client, String data) {
-			// Calculate packet size.
-			int size = Encoding.ASCII.GetByteCount(data);
-			Console.WriteLine("Sending {0} bytes of data.", size);
-
-			// Prepend header to packet.
-			data = size.ToString() + "\n" + data;
-
-			// Convert the string data to byte data using ASCII encoding.
-			byte[] byteData = Encoding.ASCII.GetBytes(data);
-
-			// Begin sending the data to the remote device.
-			client.BeginSend(byteData, 0, byteData.Length, 0,
-				new AsyncCallback(SendCallback), client);
-		}
-
-		private void SendCallback(IAsyncResult ar) {
-			try {
-				// Retrieve the socket from the state object.
-				Socket client = (Socket) ar.AsyncState;
-
-				// Complete sending the data to the remote device.
-				int bytesSent = client.EndSend(ar);
-				Console.WriteLine("Sent {0} bytes to server.", bytesSent);
-
-				// Signal that all bytes have been sent.
-				sendDone.Set();
-			} catch (Exception e) {
-				Console.WriteLine(e.ToString());
-			}
-		}
+		}*/
 	}
 }
