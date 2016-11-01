@@ -5,28 +5,61 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ATM {
-    public class ATMClient {
-		private UserInterface ui = new UserInterface();
-		private HardwareReader drivers = new HardwareReader();
+	public class ATMClient
+	{
+		public static ATMClient _atmClientObject = null;
+		private UserInterface ui;
+		private HardwareReader drivers;
+		private ServerConnection serverConnection;
 		private CurrentUser user; //this will be initialized after someone attempts a login
-
-		/*Public methods*/
-		public static void Main(string[] args) {
-            Console.WriteLine("ATM client initializing.");
-            ServerConnection connection = new ServerConnection("192.168.1.230", 11000);
-            connection.Connect();
-
-			// Main program loop.
-			while (true)
+		
+		/*
+		 * Creates the ATMClient root class. This is a singleton - only one can exist.
+		 */
+		public ATMClient()
+		{
+			if(_atmClientObject == null)
 			{
-				Message result = connection.SendData("authenticatePIN", "this is some test data\n1 2 3<EOF>", true);
-				Console.WriteLine("Got type \"{0}\" and message \"{1}\".", result.type, result.data);
-				System.Threading.Thread.Sleep(5000);
+				_atmClientObject = this;
+				this.initialize();
 			}
-        }
+			else
+			{
+				//TODO: Already created. Throw exception?
+			}
+		}
 
-		/*Private methods*/
-		private bool login(string username) {
+		~ATMClient()
+		{
+			if(_atmClientObject == this)
+			{
+				_atmClientObject = null;
+			}
+		}
+
+		/*
+		 * Initializes the ATMClient application.
+		 */
+		private void initialize()
+		{
+			Console.WriteLine("ATM client initializing.");
+			drivers = new HardwareReader();
+			ui = new UserInterface();
+			serverConnection = new ServerConnection("192.168.1.230", 11000);
+			//serverConnection.Connect();
+		}
+
+		/*
+		 * Called once per main loop iteration. This is where program logic is performed.
+		 */
+		private void iterate()
+		{
+			//Message result = serverConnection.SendData("authenticatePIN", "this is some test data\n1 2 3<EOF>", true);
+			//Console.WriteLine("Got type \"{0}\" and message \"{1}\".", result.type, result.data);
+		}
+
+		private bool login(string username)
+		{
 			//check for username and PIN
 /*			if () {
 
@@ -43,6 +76,18 @@ namespace ATM {
 			}
 */
 			return false;
+		}
+
+		public static void Main(string[] args)
+		{
+			ATMClient atm = new ATMClient();
+
+			// Main program loop.
+			while (true)
+			{
+				atm.iterate();
+				System.Threading.Thread.Sleep(5000);
+			}
 		}
 	}
 }
