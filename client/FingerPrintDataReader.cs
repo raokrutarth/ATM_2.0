@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*
+ * FingerPrintDataReader
+ * Takes in data from the fingerprint scanner.
+ */
 
-namespace ATM {
-	class FingerPrintDataReader {
+using ScanAPIHelper;
 
+namespace ATM
+{
+	class FingerPrintDataReader
+	{
+		public FingerPrintDataReader()
+		{
+
+		}
 	}
 }
