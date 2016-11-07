@@ -27,6 +27,24 @@ namespace AtmServer {
 		public int size;
 		//data passed with the command
 		public string data;
+
+        public Command() {
+            this.command = String.Empty;
+            this.size = 0;
+            this.data = String.Empty;
+        }
+
+        public Command(string c, string d) {
+            this.command = c;
+            this.data = d;
+            this.size = c.Length + d.Length;
+        }
+
+        public Command(string c, int s, string d) {
+            this.command = c;
+            this.size = s;
+            this.data = d;
+        }
 	}
 
     public class TCPCommunicator {
@@ -113,38 +131,50 @@ namespace AtmServer {
         public void ReadCallback(IAsyncResult ar) {
             String content = String.Empty;
 
-            // Retrieve the state object and the handler socket
-            // from the asynchronous state object.
-            StateObject state = (StateObject)ar.AsyncState;
-            Socket handler = state.workSocket;
+            try {
+                // Retrieve the state object and the handler socket
+                // from the asynchronous state object.
+                StateObject state = (StateObject)ar.AsyncState;
+                Socket handler = state.workSocket;
 
-            // Read data from the client socket. 
-            int bytesRead = handler.EndReceive(ar);
+                // Read data from the client socket. 
+                int bytesRead = handler.EndReceive(ar);
 
-            if (bytesRead > 0) {
-                // There  might be more data, so store the data received so far.
-                state.sb.Append(Encoding.ASCII.GetString(
-                    state.buffer, 0, bytesRead));
+                if (bytesRead > 0) {
+                    // There  might be more data, so store the data received so far.
+                    state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
 
-                // Check for end-of-file tag. If it is not there, read 
-                // more data.
-                content = state.sb.ToString();
-                if (content.IndexOf("<EOF>") > -1) {
-                    // All the data has been read from the 
-                    // client. Display it on the console.
-                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
-                        content.Length, content);
-                    // Echo the data back to the client.
-                    //Send(handler, content);
+                    // Check for end-of-file tag. If it is not there, read 
+                    // more data.
+                    content = state.sb.ToString();
 
-					
-					//call the message decoder method to determine the command given
-					this.decoder(state.sb.ToString());
-					state.sb.Clear();
-				} //else {
-                    // Not all data received. Get more.
+                    if (this.currentCommand.size == 0 && content.Contains("\n")) {
+                        string s = content.Substring(0, content.IndexOf('\n'));
+                        this.currentCommand.size = Int32.Parse(s);
+                    }
+
+                    if (state.sb.Length == (this.currentCommand.size + sizeof(int))) {
+                        // All the data has been read from the client. Display it on the console.
+                        Console.WriteLine("Read {0} bytes from socket. \n Data : {1}", content.Length, content);
+      
+                        // Echo the data back to the client.
+                        //Send(handler, content);
+
+
+                        //call the message decoder method to determine the command given
+                        this.decoder(state.sb.ToString());
+                        state.sb.Clear();
+
+                    }
+
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
-               // }
+                }
+            } catch (System.IO.IOException e) {
+                Console.WriteLine("IOException: {0}", e);
+                //return null;
+            } catch (SocketException e) {
+                Console.WriteLine("SocketException: {0}", e);
+                //return null;
             }
         }
 
@@ -207,10 +237,21 @@ namespace AtmServer {
 			size = temp[0];
 
 			this.currentCommand.command = temp[1];
-			this.currentCommand.data = temp[2];
-			this.currentCommand.size = Int32.Parse(size);
+			//this.currentCommand.size = Int32.Parse(size);
 
-			ServerController.currentController.executeCommand(this.currentCommand);
+            if (this.currentCommand.command.Equals("authenticateFinger")) {
+                convertToBitmap(temp[2]);
+            } else {
+                this.currentCommand.data = temp[2];
+            }
+
+            ServerController.currentController.executeCommand(this.currentCommand);
 		}
-	}
+
+        private void convertToBitmap(string s) {
+
+        }
+
+
+    }
 }
