@@ -52,19 +52,18 @@
             this.panel1.Controls.Add(this.bankName);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(989, 113);
+            this.panel1.Size = new System.Drawing.Size(990, 115);
             this.panel1.TabIndex = 0;
             // 
             // bankIcon
             // 
             this.bankIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.bankIcon.AutoSize = true;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
             this.bankIcon.Image = global::Banking_UI.Properties.Resources.HSVC_image1;
-            this.bankIcon.Location = new System.Drawing.Point(521, 29);
-            this.bankIcon.MinimumSize = new System.Drawing.Size(110, 64);
+            this.bankIcon.Location = new System.Drawing.Point(530, 20);
+            this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
             this.bankIcon.Name = "bankIcon";
-            this.bankIcon.Size = new System.Drawing.Size(110, 64);
+            this.bankIcon.Size = new System.Drawing.Size(110, 60);
             this.bankIcon.TabIndex = 3;
             // 
             // bankName
@@ -74,7 +73,7 @@
             this.bankName.BackColor = System.Drawing.Color.Transparent;
             this.bankName.Font = new System.Drawing.Font("Rockwell", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bankName.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.bankName.Location = new System.Drawing.Point(346, 20);
+            this.bankName.Location = new System.Drawing.Point(355, 15);
             this.bankName.Name = "bankName";
             this.bankName.Size = new System.Drawing.Size(184, 68);
             this.bankName.TabIndex = 2;

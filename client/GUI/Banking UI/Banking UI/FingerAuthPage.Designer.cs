@@ -47,7 +47,7 @@
             this.BankName.BackColor = System.Drawing.Color.Transparent;
             this.BankName.Font = new System.Drawing.Font("Rockwell", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BankName.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.BankName.Location = new System.Drawing.Point(354, 22);
+            this.BankName.Location = new System.Drawing.Point(355, 15);
             this.BankName.Name = "BankName";
             this.BankName.Size = new System.Drawing.Size(184, 68);
             this.BankName.TabIndex = 2;
@@ -59,7 +59,7 @@
             this.bankIcon.AutoSize = true;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
             this.bankIcon.Image = ((System.Drawing.Image)(resources.GetObject("bankIcon.Image")));
-            this.bankIcon.Location = new System.Drawing.Point(527, 30);
+            this.bankIcon.Location = new System.Drawing.Point(530, 20);
             this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
             this.bankIcon.Name = "bankIcon";
             this.bankIcon.Size = new System.Drawing.Size(110, 60);
@@ -141,9 +141,9 @@
             this.fbground.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.fbground.Controls.Add(this.bankIcon);
             this.fbground.Controls.Add(this.BankName);
-            this.fbground.Location = new System.Drawing.Point(-9, -13);
+            this.fbground.Location = new System.Drawing.Point(0, 0);
             this.fbground.Name = "fbground";
-            this.fbground.Size = new System.Drawing.Size(993, 113);
+            this.fbground.Size = new System.Drawing.Size(990, 115);
             this.fbground.TabIndex = 10;
             // 
             // FingerAuthPage

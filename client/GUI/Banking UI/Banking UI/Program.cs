@@ -22,6 +22,7 @@ namespace Banking_UI
             {
                 Application.Run(new welcomePage());
                 Application.Run(new loginPage());
+                Application.Run(new PhotoAuth());
                 Application.Run(new FingerAuthPage());
                 Application.Run(new MainMenu());
                 Application.Run(new Confirmation());
