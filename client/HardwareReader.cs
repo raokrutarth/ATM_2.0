@@ -8,8 +8,6 @@ namespace ATM
 {
 	class HardwareReader
 	{
-		/*Methods currently return void for compilation*/
-		private int serialPort;
 		private CameraDataReader cameraReader;
 		private FingerPrintDataReader fingerprintReader;
 		private TouchScreenDataReader touch;
@@ -18,9 +16,16 @@ namespace ATM
 		public HardwareReader()
 		{
 			cameraReader = new CameraDataReader();
-			Console.WriteLine("start");
 			fingerprintReader = new FingerPrintDataReader(true);
-			Console.WriteLine("end");
+			Console.WriteLine("Place finger 1");
+			System.Threading.Thread.Sleep(5000);
+			fingerprintReader.SaveImage(".\\finger1.bmp", true);
+			Console.WriteLine("Place finger 2");
+			System.Threading.Thread.Sleep(5000);
+			fingerprintReader.SaveImage(".\\finger2.bmp", true);
+			Console.WriteLine("Place finger 3");
+			System.Threading.Thread.Sleep(5000);
+			fingerprintReader.SaveImage(".\\finger3.bmp", true);
 			touch = new TouchScreenDataReader();
 			buttonReader = new ButtonReader();
 		}
