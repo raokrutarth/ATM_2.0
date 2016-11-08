@@ -4,6 +4,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
+using Unosquare.Labs.LibFprint;
+using System.IO;
 
 namespace AtmServer {
 
@@ -27,6 +29,8 @@ namespace AtmServer {
 		public int size;
 		//data passed with the command
 		public string data;
+        //if its a fingerprint bitmap the data will be stored here
+        public byte[] dataFinger;
 
         public Command() {
             this.command = String.Empty;
@@ -237,21 +241,11 @@ namespace AtmServer {
 			size = temp[0];
 
 			this.currentCommand.command = temp[1];
-			//this.currentCommand.size = Int32.Parse(size);
-
-            if (this.currentCommand.command.Equals("authenticateFinger")) {
-                convertToBitmap(temp[2]);
-            } else {
-                this.currentCommand.data = temp[2];
-            }
+			this.currentCommand.size = Int32.Parse(size);
+            this.currentCommand.data = temp[2];
 
             ServerController.currentController.executeCommand(this.currentCommand);
 		}
-
-        private void convertToBitmap(string s) {
-
-        }
-
 
     }
 }

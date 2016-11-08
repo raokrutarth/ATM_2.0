@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,12 +37,21 @@ namespace AtmServer
 		}
 
 		public bool authenticateFinger(Command command) {
+			Command c;
+			byte[] image = Encoding.ASCII.GetBytes(command.data);
 
+			ScanAPIDemo.MyBitmapFile myFile = new ScanAPIDemo.MyBitmapFile(320, 480, image);
+			FileStream file = new FileStream(path, FileMode.Create);
+			file.Write(myFile.BitmatFileData, 0, myFile.BitmatFileData.Length);
+			file.Close();
 
-            //decode image from string to bitmap
+			//authenticate with database
 
+			//return success or failure
+			c = new Command("Send", "Fingerprint successfully authenticated");
+			ServerController.currentController.callbacks[c.command](command);
 
-            return false;
+			return false;
 		}
 
 	}
