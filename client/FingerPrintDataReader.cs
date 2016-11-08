@@ -4,14 +4,19 @@
  */
 
 using System;
+using System.Drawing;
+using System.IO;
 using ScanAPIHelper;
 
 namespace ATM
 {
 	class FingerPrintDataReader
 	{
-		bool connected;
-		int interfaceNumber;
+		private bool connected;
+		private int interfaceNumber;
+		private Device scanner;
+		private byte[] image;
+		private Size imageSize;
 
 		/*
 		 * Creates an interface to the fingerprint reader.
@@ -19,19 +24,24 @@ namespace ATM
 		 */
 		public FingerPrintDataReader(bool waitForDevice)
 		{
-			connected = false;
+			// Set defaults
+			this.image = null;
+			this.scanner = null;
+			this.connected = false;
 			interfaceNumber = Device.BaseInterface;
+
 			try
 			{
-				FTRSCAN_INTERFACE_STATUS[] status = Device.GetInterfaces();
-				while (true)
+				// Check that the device is connected.
+				while (!this.connected)
 				{
+					FTRSCAN_INTERFACE_STATUS[] status = Device.GetInterfaces();
 					if (status[interfaceNumber] == FTRSCAN_INTERFACE_STATUS.FTRSCAN_INTERFACE_STATUS_CONNECTED)
 					{
-						Console.WriteLine("Fingerprint reader connected.");
-						connected = true;
+						this.connected = true;
+						break;
 					}
-					if(!waitForDevice)
+					else if(!waitForDevice)
 					{
 						break;
 					}
@@ -44,11 +54,73 @@ namespace ATM
 			}
 			finally
 			{
-				if(!connected)
+				if(this.connected)
+				{
+					Console.WriteLine("Fingerprint reader connected.");
+				}
+				else
 				{
 					Console.WriteLine("Fingerprint reader connection failed.");
 				}
 			}
+
+			// Open the connection.
+			this.OpenDevice();
+		}
+
+		/*
+		 * Opens a connection to the device.
+		 */
+		private void OpenDevice()
+		{
+			try
+			{
+				this.scanner = new Device();
+				this.scanner.Open(this.interfaceNumber);
+				this.imageSize = this.scanner.ImageSize;
+				Console.WriteLine("Scanner uses images of size {0}", this.imageSize.ToString());
+			}
+			catch (ScanAPIException ex)
+			{
+				this.CloseDevice();
+				Console.WriteLine("Scanner open error: {0}", ex.ToString());
+			}
+		}
+
+		private void CloseDevice()
+		{
+			if(this.scanner != null)
+			{
+				this.scanner.Dispose();
+				this.scanner = null;
+				Console.WriteLine("Closed scanner");
+			}
+		}
+
+		public byte[] GetImage()
+		{
+			try
+			{
+				this.image = this.scanner.GetFrame();
+				return this.image;
+			}
+			catch (ScanAPIException ex)
+			{
+				Console.WriteLine("Failed to retrieve image from scanner: {0}", ex.ToString());
+			}
+			return null;
+		}
+
+		public void SaveImage(string path, bool getImage)
+		{
+			if(getImage)
+			{
+				this.GetImage();
+			}
+			ScanAPIDemo.MyBitmapFile myFile = new ScanAPIDemo.MyBitmapFile(this.imageSize.Width, this.imageSize.Height, this.image);
+			FileStream file = new FileStream(path, FileMode.Create);
+			file.Write(myFile.BitmatFileData, 0, myFile.BitmatFileData.Length);
+			file.Close();
 		}
 	}
 }
