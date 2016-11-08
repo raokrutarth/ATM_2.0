@@ -48,7 +48,7 @@
             this.bankName.BackColor = System.Drawing.Color.Transparent;
             this.bankName.Font = new System.Drawing.Font("Rockwell", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bankName.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.bankName.Location = new System.Drawing.Point(360, 27);
+            this.bankName.Location = new System.Drawing.Point(355, 15);
             this.bankName.Name = "bankName";
             this.bankName.Size = new System.Drawing.Size(184, 68);
             this.bankName.TabIndex = 0;
@@ -60,7 +60,7 @@
             this.bankIcon.AutoSize = true;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
             this.bankIcon.Image = global::Banking_UI.Properties.Resources.HSVC_image1;
-            this.bankIcon.Location = new System.Drawing.Point(535, 35);
+            this.bankIcon.Location = new System.Drawing.Point(530, 20);
             this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
             this.bankIcon.Name = "bankIcon";
             this.bankIcon.Size = new System.Drawing.Size(110, 60);
@@ -129,7 +129,7 @@
             this.fbground.Controls.Add(this.bankName);
             this.fbground.Location = new System.Drawing.Point(0, 0);
             this.fbground.Name = "fbground";
-            this.fbground.Size = new System.Drawing.Size(992, 108);
+            this.fbground.Size = new System.Drawing.Size(990, 115);
             this.fbground.TabIndex = 6;
             // 
             // textBox1

@@ -47,9 +47,9 @@
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.Controls.Add(this.bankIcon);
             this.panel1.Controls.Add(this.bankName);
-            this.panel1.Location = new System.Drawing.Point(-2, -1);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(987, 106);
+            this.panel1.Size = new System.Drawing.Size(990, 115);
             this.panel1.TabIndex = 12;
             // 
             // bankIcon
@@ -58,7 +58,7 @@
             this.bankIcon.AutoSize = true;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
             this.bankIcon.Image = ((System.Drawing.Image)(resources.GetObject("bankIcon.Image")));
-            this.bankIcon.Location = new System.Drawing.Point(526, 18);
+            this.bankIcon.Location = new System.Drawing.Point(530, 20);
             this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
             this.bankIcon.Name = "bankIcon";
             this.bankIcon.Size = new System.Drawing.Size(110, 60);
@@ -71,7 +71,7 @@
             this.bankName.BackColor = System.Drawing.Color.Transparent;
             this.bankName.Font = new System.Drawing.Font("Rockwell", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bankName.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.bankName.Location = new System.Drawing.Point(358, 10);
+            this.bankName.Location = new System.Drawing.Point(355, 15);
             this.bankName.Name = "bankName";
             this.bankName.Size = new System.Drawing.Size(184, 68);
             this.bankName.TabIndex = 2;
@@ -85,7 +85,7 @@
             this.CompMessage.Font = new System.Drawing.Font("Rockwell", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CompMessage.Location = new System.Drawing.Point(360, 201);
             this.CompMessage.Name = "CompMessage";
-            this.CompMessage.Size = new System.Drawing.Size(262, 49);
+            this.CompMessage.Size = new System.Drawing.Size(259, 49);
             this.CompMessage.TabIndex = 13;
             this.CompMessage.Text = "Completed!";
             // 
@@ -97,7 +97,7 @@
             this.label1.Font = new System.Drawing.Font("Rockwell", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(656, 452);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(289, 38);
+            this.label1.Size = new System.Drawing.Size(285, 37);
             this.label1.TabIndex = 14;
             this.label1.Text = "Have a good day!";
             // 

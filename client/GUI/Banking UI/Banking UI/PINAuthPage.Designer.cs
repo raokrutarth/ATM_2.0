@@ -47,7 +47,7 @@
             this.bankIcon.AutoSize = true;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
             this.bankIcon.Image = ((System.Drawing.Image)(resources.GetObject("bankIcon.Image")));
-            this.bankIcon.Location = new System.Drawing.Point(530, 40);
+            this.bankIcon.Location = new System.Drawing.Point(530, 20);
             this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
             this.bankIcon.Name = "bankIcon";
             this.bankIcon.Size = new System.Drawing.Size(110, 60);
@@ -106,7 +106,7 @@
             this.bankName.BackColor = System.Drawing.Color.Transparent;
             this.bankName.Font = new System.Drawing.Font("Rockwell", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bankName.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.bankName.Location = new System.Drawing.Point(365, 35);
+            this.bankName.Location = new System.Drawing.Point(355, 15);
             this.bankName.Name = "bankName";
             this.bankName.Size = new System.Drawing.Size(184, 68);
             this.bankName.TabIndex = 2;
@@ -153,7 +153,7 @@
             this.fbground.Controls.Add(this.bankName);
             this.fbground.Location = new System.Drawing.Point(0, 0);
             this.fbground.Name = "fbground";
-            this.fbground.Size = new System.Drawing.Size(986, 126);
+            this.fbground.Size = new System.Drawing.Size(990, 115);
             this.fbground.TabIndex = 11;
             // 
             // loginPage
