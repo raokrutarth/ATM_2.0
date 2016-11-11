@@ -4,20 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATM {
-	class HardwareReader {
-		/*Methods currently return void for compilation*/
-		private int serialPort;
-		private CameraDataReader cam = new CameraDataReader();
-		private FingerPrintDataReader fin = new FingerPrintDataReader();
-		private TouchScreenDataReader touch = new TouchScreenDataReader();
-		private ButtonReader button = new ButtonReader();
+namespace ATM
+{
+	class HardwareReader
+	{
+		public CameraDataReader cameraReader;
+		public FingerPrintDataReader fingerprintReader;
+		public TouchScreenDataReader touch;
+		public ButtonReader buttonReader;
 
-		public void readData() {
+		public HardwareReader()
+		{
+			cameraReader = new CameraDataReader();
+			fingerprintReader = new FingerPrintDataReader(true);
+			touch = new TouchScreenDataReader();
+			buttonReader = new ButtonReader();
+		}
+
+		public void readData()
+		{
 			
 		}
 
-		public bool validate() {
+		public bool validate()
+		{
 			return false;
 		}
 	}

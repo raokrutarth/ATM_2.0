@@ -68,9 +68,10 @@ namespace ATM
 		 * \param expectResponse Whether to wait for a response.
 		 * \returns The response received or emtpy string if response not expected.
 		 */
-		private Message SendData(string dataType, byte[] data, bool expectResponse = false)
+		public Message SendData(string dataType, byte[] data, bool expectResponse = false)
 		{
-			int size = data.Length;
+			int size = data.Length + dataType.Length;
+			Console.WriteLine("Send data of size {0}", size);
 
 			// Create header.
 			string header = size.ToString() + "\n" + dataType + "\n";
@@ -101,7 +102,7 @@ namespace ATM
 		/*
 		 * Establishes the connection to the server.
 		 */
-		public void Connect()
+		public bool Connect()
 		{
 			try
 			{
@@ -112,11 +113,14 @@ namespace ATM
 			catch (ArgumentNullException e)
 			{
 				Console.WriteLine("ArgumentNullException: {0}", e);
+				return false;
 			}
 			catch (SocketException e)
 			{
 				Console.WriteLine("SocketException: {0}", e);
+				return false;
 			}
+			return true;
 		}
 
 		/*
@@ -150,12 +154,13 @@ namespace ATM
 				string response = string.Empty;
 				Int32 bytes = stream.Read(data, 0, data.Length);
 				response = Encoding.ASCII.GetString(data, 0, bytes);
+				Console.WriteLine("Got response of length {1}:\n\"\"\"\n{0}\n\"\"\"\n", response, response.Length);
 
 				// Create Message instance.
 				Message result = new Message();
+				string[] lines = response.Split("\n".ToCharArray(), 3);
 
 				// Parse data.
-				string[] lines = response.Split('\n');
 				result.size = Int32.Parse(lines[0]);
 				result.type = lines[1];
 				result.data = lines[2];
@@ -169,7 +174,7 @@ namespace ATM
 			}
 			catch (SocketException e)
 			{
-				Console.WriteLine("SocketException: {0}", e);
+				//Console.WriteLine("SocketException: {0}", e);
 				return null;
 			}
 		}
