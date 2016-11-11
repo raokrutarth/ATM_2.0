@@ -20,13 +20,15 @@ namespace AtmServer
 
 		public bool authenticatePIN(Command command)
 		{
-            Command c; 
+            Command c;
 
+			string s = command.dataFinger.ToString();
+			Console.WriteLine("*****************Data: {0}", s);
 			//authenticate with database
 
 			//return success or failure
-            c = new Command("Send", "PIN successfully authenticated");
-            ServerController.currentController.callbacks[c.command](command);
+            c = new Command("Send", "PIN successfully \nauthenticated");
+            ServerController.currentController.callbacks[c.command](c);
 
 			return true;
 		}
@@ -38,10 +40,12 @@ namespace AtmServer
 
 		public bool authenticateFinger(Command command) {
 			Command c;
-			byte[] image = Encoding.ASCII.GetBytes(command.data);
+			//byte[] image = Encoding.ASCII.GetBytes(command.dataFinger);
 
-			ScanAPIDemo.MyBitmapFile myFile = new ScanAPIDemo.MyBitmapFile(320, 480, image);
-			FileStream file = new FileStream(path, FileMode.Create);
+			Console.WriteLine("Made it to the authenticator method");
+
+			ScanAPIDemo.MyBitmapFile myFile = new ScanAPIDemo.MyBitmapFile(320, 480, command.dataFinger);
+			FileStream file = new FileStream(".\\finger2.bmp", FileMode.Create);
 			file.Write(myFile.BitmatFileData, 0, myFile.BitmatFileData.Length);
 			file.Close();
 
