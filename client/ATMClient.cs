@@ -52,8 +52,8 @@ namespace ATM {
 			}
 
 
-			//Console.WriteLine("Place finger 1");
-			//System.Threading.Thread.Sleep(2000);
+			Console.WriteLine("Place finger 1");
+			System.Threading.Thread.Sleep(2000);
 
 			/*fingerprintReader.SaveImage(".\\finger1.bmp", true);
 			Console.WriteLine("Place finger 2");
@@ -64,16 +64,23 @@ namespace ATM {
 			fingerprintReader.SaveImage(".\\finger3.bmp", true);*/
 
 			// TEST TRANSMIT
-			//byte[] data = drivers.fingerprintReader.GetImage();
-			//Console.WriteLine("Sending data of length {0}", data.Length);
-			//Message msg = serverConnection.SendData("authenticateFinger", data, true);
-			int i = 1;
+			byte[] data;
+			while((data = drivers.fingerprintReader.GetImage()) == null)
+			{
+				Console.WriteLine("Please put your finger on the scanner.");
+				System.Threading.Thread.Sleep(2000);
+			}
+			Console.WriteLine("Sending data of length {0}", data.Length);
+			Message msg = serverConnection.SendData("authenticateFinger", data, true);
+			Console.WriteLine("Got response: {0}; {1}; {2}", msg.type, msg.data, msg.size);
+
+			/*int i = 1;
 			while (true)
 			{
 				Message msg = serverConnection.SendData("authenticatePIN", "COUNTING IS FUN! " + i.ToString(), true);
 				Console.WriteLine("Got response: {0}; {1}; {2}", msg.type, msg.data, msg.size);
 				System.Threading.Thread.Sleep(1000);
-			}
+			}*/
 		}
 
 		/*
