@@ -19,20 +19,18 @@ namespace ATM {
 		public ATMClient()
 		{
 			if(_atmClientObject == null)
-
-		/*Public methods*/
-		public static void Main(string[] args) {
-            Console.WriteLine("ATM client initializing.");
-            ServerConnection connection = new ServerConnection("192.168.1.230", 11000);
-            connection.Connect();
-
-			// Main program loop.
-			while (true)
 			{
-				Message result = connection.SendData("authenticatePIN", "this is some test data\n1 2 3<EOF>", true);
-				Console.WriteLine("Got type \"{0}\" and message \"{1}\".", result.type, result.data);
-				System.Threading.Thread.Sleep(5000);
+				_atmClientObject = this;
+				this.initialize();
 			}
+			else
+			{
+				//TODO: Already created. Throw exception?
+			}
+		}
+
+		~ATMClient()
+		{
 			if(_atmClientObject == this)
 			{
 				_atmClientObject = null;
@@ -87,8 +85,8 @@ namespace ATM {
 			//Console.WriteLine("Got type \"{0}\" and message \"{1}\".", result.type, result.data);
 		}
 
-		/*Private methods*/
-		private bool login(string username) {
+		private bool login(string username)
+		{
 			//check for username and PIN
 /*			if () {
 
@@ -105,6 +103,18 @@ namespace ATM {
 			}
 */
 			return false;
+		}
+
+		public static void Main(string[] args)
+		{
+			ATMClient atm = new ATMClient();
+
+			// Main program loop.
+			while (true)
+			{
+				atm.iterate();
+				System.Threading.Thread.Sleep(5000);
+			}
 		}
 	}
 }
