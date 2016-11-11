@@ -53,7 +53,7 @@ namespace AtmServer
 
 			//return success or failure
 			c = new Command("Send", "Fingerprint successfully authenticated");
-			ServerController.currentController.callbacks[c.command](command);
+			ServerController.currentController.callbacks[c.command](c);
 
 			return false;
 		}

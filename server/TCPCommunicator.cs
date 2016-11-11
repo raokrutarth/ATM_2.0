@@ -113,6 +113,7 @@ namespace AtmServer {
 
 			}
 			catch (SocketException s) {
+				this.listener.Shutdown(SocketShutdown.Both);
 				this.listener.Close();
 				StartListening();
 
@@ -199,6 +200,7 @@ namespace AtmServer {
             } catch (SocketException e) {
                 Console.WriteLine("SocketException: {0}", e);
 
+				this.listener.Shutdown(SocketShutdown.Both);
 				this.listener.Close();
 				StartListening();
 			}
