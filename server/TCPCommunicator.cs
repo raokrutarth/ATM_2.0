@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
-using Unosquare.Labs.LibFprint;
 using System.IO;
 
 namespace AtmServer {
@@ -64,14 +63,12 @@ namespace AtmServer {
 		public Command currentCommand;
 		
 		//socket used for client connection
-		public Socket listener;
-
-		
+		public Socket listener;		
 		//constructor
 		public TCPCommunicator() {
 			//this.callbacks = new Dictionary<string, TCPDataCallback>();
 			this.currentCommand = new Command();
-			ServerController.currentController.RegisterCallback("authenticatePIN", Send);
+			//ServerController.currentController.RegisterCallback("authenticatePIN", Send);
 			ServerController.currentController.RegisterCallback("Send", Send);
 		}
 
@@ -79,39 +76,50 @@ namespace AtmServer {
             // Data buffer for incoming data.
             byte[] bytes = new Byte[1024];
 
-            // Establish the local endpoint for the socket.
-            // The DNS name of the computer
-            // running the listener is "host.contoso.com".
-            IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
-            int port = 11000;
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-            Console.WriteLine("TCP server is listening at {0} on port {1}.", ipAddress.ToString(), port);
+			try
+			{
+				// Establish the local endpoint for the socket.
+				// The DNS name of the computer
+				// running the listener is "host.contoso.com".
+				IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
+				IPAddress ipAddress = ipHostInfo.AddressList[0];
+				int port = 11000;
+				IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-            // Create a TCP/IP socket.
-            this.listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+				Console.WriteLine("TCP server is listening at {0} on port {1}.", ipAddress.ToString(), port);
 
-            // Bind the socket to the local endpoint and listen for incoming connections.
-            try {
-                listener.Bind(localEndPoint);
-                listener.Listen(100);
+				// Create a TCP/IP socket.
+				this.listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-                while (true) {
-                    // Set the event to nonsignaled state.
-                    allDone.Reset();
 
-                    // Start an asynchronous socket to listen for connections.
-                    Console.WriteLine("Waiting for a connection...");
-                    listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
+				// Bind the socket to the local endpoint and listen for incoming connections.
+				listener.Bind(localEndPoint);
+				listener.Listen(100);
 
-                    // Wait until a connection is made before continuing.
-                    allDone.WaitOne();
-                }
+				while (true)
+				{
 
-            } catch (Exception e) {
-                Console.WriteLine(e.ToString());
-            }
+					// Set the event to nonsignaled state.
+					allDone.Reset();
+
+					// Start an asynchronous socket to listen for connections.
+					Console.WriteLine("Waiting for a connection...");
+					listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
+
+					// Wait until a connection is made before continuing.
+					allDone.WaitOne();
+				}
+
+			}
+			catch (SocketException s) {
+				this.listener.Close();
+				StartListening();
+
+			} catch (Exception e)
+			{
+				Console.WriteLine(e.ToString());
+			}
 
             Console.WriteLine("\nPress ENTER to continue...");
             Console.Read();
@@ -134,17 +142,24 @@ namespace AtmServer {
 
         public void ReadCallback(IAsyncResult ar) {
             String content = String.Empty;
+			//Console.WriteLine("Reading Data");
 
-            try {
-                // Retrieve the state object and the handler socket
-                // from the asynchronous state object.
-                StateObject state = (StateObject)ar.AsyncState;
-                Socket handler = state.workSocket;
 
-                // Read data from the client socket. 
-                int bytesRead = handler.EndReceive(ar);
 
-                if (bytesRead > 0) {
+
+			try {
+
+				// Retrieve the state object and the handler socket
+				// from the asynchronous state object.
+				StateObject state = (StateObject)ar.AsyncState;
+				Socket handler = state.workSocket;
+
+				// Read data from the client socket. 
+				int bytesRead = handler.EndReceive(ar);
+
+				
+
+				if (bytesRead > 0) {
                     // There  might be more data, so store the data received so far.
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
 
@@ -154,22 +169,27 @@ namespace AtmServer {
 
                     if (this.currentCommand.size == 0 && content.Contains("\n")) {
                         string s = content.Substring(0, content.IndexOf('\n'));
+						Console.WriteLine("s:\"{0}\"", s);
                         this.currentCommand.size = Int32.Parse(s);
+						state.sb.Remove(0, s.Length + 1);
                     }
 
-                    if (state.sb.Length == (this.currentCommand.size + sizeof(int))) {
-                        // All the data has been read from the client. Display it on the console.
-                        Console.WriteLine("Read {0} bytes from socket. \n Data : {1}", content.Length, content);
+					Console.WriteLine("state.size: {0}\ncurrentCommand.size: {1}", state.sb.Length, (this.currentCommand.size));
+                    if (state.sb.Length >= (this.currentCommand.size)) {
+						// this.currentCommand.size.ToString().Length
+						// All the data has been read from the client. Display it on the console.
+						Console.WriteLine("Read {0} bytes from socket.", content.Length);
       
                         // Echo the data back to the client.
                         //Send(handler, content);
 
 
                         //call the message decoder method to determine the command given
-                        this.decoder(state.sb.ToString());
+                        this.decoder(state.sb.ToString(), this.currentCommand.size);
                         state.sb.Clear();
+						this.currentCommand = new Command();
 
-                    }
+					}
 
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
                 }
@@ -178,8 +198,10 @@ namespace AtmServer {
                 //return null;
             } catch (SocketException e) {
                 Console.WriteLine("SocketException: {0}", e);
-                //return null;
-            }
+
+				this.listener.Close();
+				StartListening();
+			}
         }
 
        /* public void Send(Socket handler, String data) {
@@ -204,6 +226,8 @@ namespace AtmServer {
 			data = c.size.ToString();
 			data = data + "\n" + c.command + "\n" + c.data;
 
+			Console.WriteLine("Sending data: {0}", data);
+
 			// Convert the string data to byte data using ASCII encoding.
 			byte[] byteData = Encoding.ASCII.GetBytes(data);
 
@@ -223,7 +247,7 @@ namespace AtmServer {
 
                 //handler.Shutdown(SocketShutdown.Both);
                 //handler.Close();
-				//handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
+				//handler.BeginReceive(ar.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
 
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
@@ -231,21 +255,38 @@ namespace AtmServer {
         }
 
 		//decodes information from client and stores it in currentCommand
-		private void decoder(string data) {
-			string size = String.Empty;
+		private void decoder(string data, int size) {
+			int index = 0;
+
+			//begin decoding
+
+			this.currentCommand.command = data.Substring(0, data.IndexOf('\n'));
+			this.currentCommand.size = size;
+
+			index = this.currentCommand.command.Length + 1;
+
+			Console.WriteLine("Command: {0}", this.currentCommand.command);
+
+			//this.currentCommand.data = data.Substring(index, data.Length);
+
+			this.currentCommand.dataFinger = Encoding.ASCII.GetBytes(data.ToCharArray(), index, size - index + 1);
+			Console.WriteLine("dataFinger: {0}", this.currentCommand.dataFinger.Length);
+            ServerController.currentController.executeCommand(this.currentCommand);
+		}
+		/*
+		private void decoder(byte[] data, int size) {
 			string[] temp;
 
 			//begin decoding
-			temp = data.Split('\n');
-
-			size = temp[0];
+			//temp = data.Split('\n');
+			data.
 
 			this.currentCommand.command = temp[1];
-			this.currentCommand.size = Int32.Parse(size);
-            this.currentCommand.data = temp[2];
+			this.currentCommand.size = size;
+			this.currentCommand.data = temp[2];
 
-            ServerController.currentController.executeCommand(this.currentCommand);
-		}
+			ServerController.currentController.executeCommand(this.currentCommand);
+		}*/
 
     }
 }

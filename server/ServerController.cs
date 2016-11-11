@@ -49,16 +49,14 @@ namespace AtmServer
 		public void executeCommand(Command command) {
 			// Call our callback here.
 			Console.WriteLine("Keys:");
-			foreach (KeyValuePair<string, TCPDataCallback> kvp in this.callbacks)
-			{
+			foreach (KeyValuePair<string, TCPDataCallback> kvp in this.callbacks) {
 				Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
 			}
-			if (this.callbacks.ContainsKey(command.command))
-			{
+
+			if (this.callbacks.ContainsKey(command.command)) {
+				Console.WriteLine("Calling the callback: {0}", command.command);
 				bool success = this.callbacks[command.command](command);
-			}
-			else
-			{
+			} else {
 				Console.WriteLine("ERROR: Invalid message name received.");
 				Console.WriteLine("Name: {0} {1}", command.command, command.command.Length);
 			}
