@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,15 +20,15 @@ namespace AtmServer
 
 		public bool authenticatePIN(Command command)
 		{
-			Command c = new Command();
+            Command c;
 
+			string s = command.dataFinger.ToString();
+			Console.WriteLine("*****************Data: {0}", s);
 			//authenticate with database
 
 			//return success or failure
-			c.command = "Send";
-			c.data = "PIN successfully authenticated";
-			c.size = c.command.Length + c.data.Length;
-			ServerController.currentController.callbacks[c.command](command);
+            c = new Command("Send", "PIN successfully \nauthenticated");
+            ServerController.currentController.callbacks[c.command](c);
 
 			return true;
 		}
@@ -38,6 +39,21 @@ namespace AtmServer
 		}
 
 		public bool authenticateFinger(Command command) {
+			Command c;
+			//byte[] image = Encoding.ASCII.GetBytes(command.dataFinger);
+
+			Console.WriteLine("Made it to the authenticator method");
+
+			ScanAPIDemo.MyBitmapFile myFile = new ScanAPIDemo.MyBitmapFile(320, 480, command.dataFinger);
+			FileStream file = new FileStream(".\\finger2.bmp", FileMode.Create);
+			file.Write(myFile.BitmatFileData, 0, myFile.BitmatFileData.Length);
+			file.Close();
+
+			//authenticate with database
+
+			//return success or failure
+			c = new Command("Send", "Fingerprint successfully authenticated");
+			ServerController.currentController.callbacks[c.command](command);
 
 			return false;
 		}
