@@ -36,11 +36,11 @@ namespace AtmServer
         }
         static void Main(string[] args)
         {
-            Console.WriteLine("In ServerController Main()");
+            //Console.WriteLine("In ServerController Main()");
 			ServerController controller = new ServerController();
             DBCommunicator dbComm = new DBCommunicator();
 			Authenticator testAuth = new Authenticator();
-			Console.WriteLine("Callbacks: {0}", controller.callbacks.ToString());
+			//Console.WriteLine("Callbacks: {0}", controller.callbacks.ToString());
 			//dbComm.testDb();
 			TCPCommunicator tcp = new TCPCommunicator();
 			tcp.StartListening();
@@ -64,7 +64,7 @@ namespace AtmServer
 
 		//registers callback functions
 		public bool RegisterCallback(string dataType, TCPDataCallback callback) {
-			Console.WriteLine("Registered callback for {0}: {1}", dataType, callback.ToString());
+			//Console.WriteLine("Registered callback for {0}: {1}", dataType, callback.ToString());
 			this.callbacks[dataType] = callback;
 			return true;
 		}
