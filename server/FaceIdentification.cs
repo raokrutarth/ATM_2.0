@@ -17,20 +17,17 @@ namespace AtmServer
         //FaceService Client object initilized with subscription key
         static FaceServiceClient face_api = new FaceServiceClient("38e4c823cbc344a2b882c5b3ada6dbcd");
 
-
-
         public FaceIdentification(string imagePath, string clientID)
         {
            // init group and get customer info or files to cross check with           
         }
-
-        
+                
         public static async void testRun()
         {
             try
             {
-                Console.WriteLine("1: Training (will train a new person group and create a person for each folder");
-                Console.WriteLine("2: Query (select image and verify against group created in (1) ");
+                Console.WriteLine("1: Training (will train a new person group and create a person for each folder in /Images)");
+                Console.WriteLine("2: Query (select image and verify against group created in (1))");
 
                 var choice = Console.ReadKey();
 
@@ -172,19 +169,7 @@ namespace AtmServer
                 Console.WriteLine("Training whole group with groupID = " + groupId);
                 var t = face_api.TrainPersonGroupAsync(groupId);
                 t.Wait();
-
-                /*// Wait till group training finishes
-                TrainingStatus trainingStatus = null;
-                while (true)
-                {
-                    trainingStatus = await face_api.GetPersonGroupTrainingStatusAsync(groupId);
-                    if ( trainingStatus.Status.Equals("succeeded") )
-                    {
-                        break;
-                    }
-                    await Task.Delay(1000);
-                }
-                Console.WriteLine("Group sucessfully trained"); */
+                
             }
             catch (Exception e)
             {

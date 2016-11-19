@@ -8,10 +8,11 @@ using System.Text.RegularExpressions;
 
 namespace AtmServer
 {
-    class DBCommunicator
+    public class DBCommunicator
     {
         /* Using Data model gateway design pattern */
         enum RequestType { Query, Insert, Peek};
+        public enum UpdateType { ID, fName, lName, h_pin, finger_path, face_path, balance };
 
         string connectionString;
 
@@ -37,14 +38,6 @@ namespace AtmServer
                 while ( (newContent = reader.ReadLine()) != null)
                 {
                     string[] fields = newContent.Split(',');
-
-                    /*Console.WriteLine("Account No.: {0} " +
-                                       "fName: {1} " +
-                                       "lName: {2} " +
-                                       "hpin: {3} " +
-                                       "hface: {4} " +
-                                       "hfinger: {5} " +
-                                       "Balance: {6} ", fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6]); */                 
 
                     Console.WriteLine("Inserting entry:\n" +
                                       "Account No.: {0} " +
@@ -72,12 +65,9 @@ namespace AtmServer
 
         public void printDB()
         {
-            string queryString = null;
-            /*using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Connection.Open();
-                command.ExecuteNonQuery();
+            // ID     Fname     Lname     HPIN     HFINGER     HFACE     Balance   
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {               
                 SqlDataReader rdr = null;
                 try
                 {
@@ -86,9 +76,13 @@ namespace AtmServer
                     rdr = cmd.ExecuteReader();                    
                     while (rdr.Read())
                     {
-                        Console.WriteLine("Reading from DB...");
-                        Console.WriteLine(rdr[0]);
+                        Console.Write("Customer ID = ");
+                        Console.WriteLine( rdr["CustomerID"].ToString() );
                     }
+                }
+                catch (SqlException se)
+                {
+                    Console.WriteLine("SQL db not connected");
                 }
                 finally
                 {                    
@@ -97,10 +91,10 @@ namespace AtmServer
                     if (connection != null)
                         connection.Close();
                 }
-            }*/
+            }
         }
 
-        public bool InsertData(string connectionString, string CustID, string firstName, string lastName, string hPin, string hFace,
+        public bool InsertEntry(string connectionString, string CustID, string firstName, string lastName, string hPin, string hFace,
                         string hFinger, double balance)
         {
             // define INSERT query with parameters
@@ -130,6 +124,11 @@ namespace AtmServer
                 }
             }            
         }
+        public bool update(string custID, UpdateType t, string data )
+        {
+
+            return false;
+        }
         public bool remove(string dataType, string data)
         {
             return true;
@@ -140,7 +139,7 @@ namespace AtmServer
         }
         public bool testDbConnection()
         {
-            Console.WriteLine("testDb called()");
+            Console.WriteLine("testDbconnection called()");
             using (var connection = new QC.SqlConnection(connectionString))
             {
                 connection.Open();
@@ -153,21 +152,6 @@ namespace AtmServer
         ~DBCommunicator()
         {
             Console.WriteLine("DBCommunicator object terminated");
-        }
-
-        public static bool GuidTryParse(string s, out Guid result)
-        {
-            if (!String.IsNullOrEmpty(s) && guidRegEx.IsMatch(s))
-            {
-                result = new Guid(s);
-                return true;
-            }
-            result = default(Guid);
-            return false;
-        }
-        static Regex guidRegEx = new Regex("^[A-Fa-f0-9]{32}$|" +
-                              "^({|\\()?[A-Fa-f0-9]{8}-([A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}(}|\\))?$|" +
-                              "^({)?[0xA-Fa-f0-9]{3,10}(, {0,1}[0xA-Fa-f0-9]{3,6}){2}, {0,1}({)([0xA-Fa-f0-9]{3,4}, "+ 
-                              "{0,1}){7}[0xA-Fa-f0-9]{3,4}(}})$", RegexOptions.Compiled);
+        }        
     }
 }
