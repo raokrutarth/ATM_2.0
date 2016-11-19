@@ -27,20 +27,20 @@ namespace AtmServer
         [STAThread]
         static void Main(string[] args)
         {
-            int width = 220, height = 50;
-            Console.SetWindowSize(width, height);
-            Console.WriteLine("In ServerController Main()");
-            /*DBCommunicator dbComm = new DBCommunicator();
-            dbComm.FillDB();
-            Console.WriteLine("Finished FillDB()\nCalling readDB()");
-            dbComm.printDB(); */
+            //int width = 220, height = 50;
+             // Console.SetWindowSize(width, height);
+            // Console.WriteLine("In ServerController Main()");
+            DBCommunicator dbComm = new DBCommunicator();
+            //dbComm.FillDB();
+            Console.WriteLine("Printing database...");
+            dbComm.printDB();
 
-            FaceIdentification fi = new FaceIdentification("<new Image Path>", "<custID>");
+            /*FaceIdentification fi = new FaceIdentification("<new Image Path>", "<custID>");
             while (true)
             {
                 FaceIdentification.testRun();
-            }
-
+            }*/
+            Console.ReadKey();
 
         }
     }
