@@ -1,4 +1,4 @@
-﻿namespace Banking_UI
+﻿namespace ATM
 {
     partial class welcomePage
     {
@@ -59,7 +59,7 @@
             this.bankIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bankIcon.AutoSize = true;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
-            this.bankIcon.Image = global::Banking_UI.Properties.Resources.HSVC_image1;
+            this.bankIcon.Image = global::ATMClient.GUI.Properties.Resources.HSVC_image1;
             this.bankIcon.Location = new System.Drawing.Point(530, 20);
             this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
             this.bankIcon.Name = "bankIcon";
@@ -82,7 +82,7 @@
             // 
             this.cardIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cardIcon.BackColor = System.Drawing.Color.Transparent;
-            this.cardIcon.Image = global::Banking_UI.Properties.Resources.Card1;
+            this.cardIcon.Image = global::ATMClient.GUI.Properties.Resources.Card1;
             this.cardIcon.Location = new System.Drawing.Point(242, 320);
             this.cardIcon.MinimumSize = new System.Drawing.Size(100, 100);
             this.cardIcon.Name = "cardIcon";
@@ -123,7 +123,7 @@
             this.fbground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fbground.BackColor = System.Drawing.Color.Transparent;
-            this.fbground.BackgroundImage = global::Banking_UI.Properties.Resources.fbg_image;
+            this.fbground.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.fbground.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.fbground.Controls.Add(this.bankIcon);
             this.fbground.Controls.Add(this.bankName);
@@ -156,7 +156,7 @@
             // sendName
             // 
             this.sendName.BackColor = System.Drawing.Color.Transparent;
-            this.sendName.BackgroundImage = global::Banking_UI.Properties.Resources.fbg_image;
+            this.sendName.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.sendName.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.sendName.FlatAppearance.BorderSize = 0;
             this.sendName.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -174,7 +174,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Banking_UI.Properties.Resources.bbg;
+            this.BackgroundImage = global::ATMClient.GUI.Properties.Resources.bbg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(982, 553);
             this.Controls.Add(this.sendName);

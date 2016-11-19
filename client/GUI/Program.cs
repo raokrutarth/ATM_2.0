@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Banking_UI
+namespace ATM
 {
     static class Program
     {

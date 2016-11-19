@@ -1,4 +1,4 @@
-﻿namespace Banking_UI
+﻿namespace ATM
 {
     partial class loginPage
     {
@@ -118,7 +118,7 @@
             this.ErrorMessage.BackColor = System.Drawing.Color.Transparent;
             this.ErrorMessage.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ErrorMessage.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.ErrorMessage.Image = global::Banking_UI.Properties.Resources.SideText_image1;
+            this.ErrorMessage.Image = global::ATMClient.GUI.Properties.Resources.SideText_image1;
             this.ErrorMessage.Location = new System.Drawing.Point(580, 405);
             this.ErrorMessage.Name = "ErrorMessage";
             this.ErrorMessage.Size = new System.Drawing.Size(435, 80);
@@ -133,7 +133,7 @@
             this.WrongPINMessage.BackColor = System.Drawing.Color.Transparent;
             this.WrongPINMessage.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WrongPINMessage.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.WrongPINMessage.Image = global::Banking_UI.Properties.Resources.SideText_image1;
+            this.WrongPINMessage.Image = global::ATMClient.GUI.Properties.Resources.SideText_image1;
             this.WrongPINMessage.Location = new System.Drawing.Point(580, 405);
             this.WrongPINMessage.Name = "WrongPINMessage";
             this.WrongPINMessage.Size = new System.Drawing.Size(435, 80);
@@ -147,7 +147,7 @@
             this.fbground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fbground.BackColor = System.Drawing.Color.Transparent;
-            this.fbground.BackgroundImage = global::Banking_UI.Properties.Resources.fbg_image;
+            this.fbground.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.fbground.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.fbground.Controls.Add(this.bankIcon);
             this.fbground.Controls.Add(this.bankName);
@@ -160,7 +160,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Banking_UI.Properties.Resources.bbg;
+            this.BackgroundImage = global::ATMClient.GUI.Properties.Resources.bbg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(982, 553);
             this.Controls.Add(this.fbground);

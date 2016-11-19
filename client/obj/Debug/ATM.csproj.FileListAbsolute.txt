@@ -1,3 +1,16 @@
 C:\Users\Harold\Documents\Github\client\bin\Debug\ATMClient.exe.config
 C:\Users\Rashon\Documents\Github\ATM_2.0\client\bin\Debug\ATMClient.exe.config
 C:\Users\Rashon\Documents\Github\ATM_2.0\client\obj\Debug\ATM.csprojResolveAssemblyReference.cache
+C:\Users\Anthony\Development\cs307\atm2\client\bin\Debug\ATMClient.exe.config
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATMClient.exe
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATMClient.pdb
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATM.csprojResolveAssemblyReference.cache
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATM.changePIN.resources
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATM.Confirmation.resources
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATM.PhotoAuth.resources
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATM.MainMenu.resources
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATM.welcomePage.resources
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATM.loginPage.resources
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATM.FingerAuthPage.resources
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATMClient.GUI.Properties.Resources.resources
+C:\Users\Anthony\Development\cs307\atm2\client\obj\Debug\ATM.csproj.GenerateResource.Cache

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Banking_UI.Properties
+namespace ATMClient.GUI.Properties
 {
 
 
