@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ATM {
-	class CurrentUser {
+	public class CurrentUser {
 		private string userName;
 		private bool loggedIn;
 

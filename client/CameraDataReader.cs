@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ATM {
-	class CameraDataReader {
+	public class CameraDataReader {
 
 
 		public void getImage() {
