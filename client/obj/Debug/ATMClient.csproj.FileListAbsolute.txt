@@ -1,1 +1,0 @@
-c:\users\harold\documents\visual studio 2015\Projects\ATMClient\ATMClient\bin\Debug\ATMClient.exe.config
