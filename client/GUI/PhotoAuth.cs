@@ -13,7 +13,7 @@ using AForge.Math;
 using AForge.Video;
 using AForge.Video.DirectShow;
 
-namespace Banking_UI
+namespace ATM
 {
     public partial class PhotoAuth : Form
     {

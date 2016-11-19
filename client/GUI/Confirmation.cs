@@ -8,20 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Banking_UI
+namespace ATM
 {
-    public partial class FingerAuthPage : Form
+    public partial class Confirmation : Form
     {
-        public FingerAuthPage()
+        public Confirmation()
         {
             InitializeComponent();
         }
 
-        private void moveOn_Click(object sender, EventArgs e)
+        private void Confirmation_Load(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
             Close();
         }
-
-        
     }
 }

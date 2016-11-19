@@ -1,4 +1,4 @@
-﻿namespace Banking_UI
+﻿namespace ATM
 {
     partial class MainMenu
     {
@@ -45,7 +45,7 @@
             // 
             this.fbground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.fbground.BackgroundImage = global::Banking_UI.Properties.Resources.fbg_image;
+            this.fbground.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.fbground.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.fbground.Controls.Add(this.bankIcon);
             this.fbground.Controls.Add(this.bankName);
@@ -59,7 +59,7 @@
             this.bankIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bankIcon.AutoSize = true;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
-            this.bankIcon.Image = global::Banking_UI.Properties.Resources.HSVC_image1;
+            this.bankIcon.Image = global::ATMClient.GUI.Properties.Resources.HSVC_image1;
             this.bankIcon.Location = new System.Drawing.Point(530, 20);
             this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
             this.bankIcon.Name = "bankIcon";
@@ -83,7 +83,7 @@
             // 
             this.WithdrawBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.WithdrawBtn.BackColor = System.Drawing.Color.Transparent;
-            this.WithdrawBtn.BackgroundImage = global::Banking_UI.Properties.Resources.SideText_image;
+            this.WithdrawBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.WithdrawBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.WithdrawBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.WithdrawBtn.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -100,7 +100,7 @@
             // 
             this.DepositBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.DepositBtn.BackColor = System.Drawing.Color.Transparent;
-            this.DepositBtn.BackgroundImage = global::Banking_UI.Properties.Resources.SideText_image;
+            this.DepositBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.DepositBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.DepositBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.DepositBtn.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -117,7 +117,7 @@
             // 
             this.HelpBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.HelpBtn.BackColor = System.Drawing.Color.Transparent;
-            this.HelpBtn.BackgroundImage = global::Banking_UI.Properties.Resources.SideText_image;
+            this.HelpBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.HelpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.HelpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.HelpBtn.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -134,7 +134,7 @@
             // 
             this.AccSettingBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.AccSettingBtn.BackColor = System.Drawing.Color.Transparent;
-            this.AccSettingBtn.BackgroundImage = global::Banking_UI.Properties.Resources.SideText_image;
+            this.AccSettingBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.AccSettingBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.AccSettingBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.AccSettingBtn.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -152,7 +152,7 @@
             // 
             this.CheckBalBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.CheckBalBtn.BackColor = System.Drawing.Color.Transparent;
-            this.CheckBalBtn.BackgroundImage = global::Banking_UI.Properties.Resources.SideText_image;
+            this.CheckBalBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.CheckBalBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CheckBalBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.CheckBalBtn.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -169,7 +169,7 @@
             // 
             this.LogOutBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.LogOutBtn.BackColor = System.Drawing.Color.Transparent;
-            this.LogOutBtn.BackgroundImage = global::Banking_UI.Properties.Resources.SideText_image;
+            this.LogOutBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.LogOutBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.LogOutBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.LogOutBtn.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -186,7 +186,7 @@
             // 
             this.changePINBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.changePINBtn.BackColor = System.Drawing.Color.Transparent;
-            this.changePINBtn.BackgroundImage = global::Banking_UI.Properties.Resources.SideText_image;
+            this.changePINBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.changePINBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.changePINBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.changePINBtn.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -204,7 +204,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BackgroundImage = global::Banking_UI.Properties.Resources.bbg;
+            this.BackgroundImage = global::ATMClient.GUI.Properties.Resources.bbg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(982, 553);
             this.Controls.Add(this.changePINBtn);

@@ -1,4 +1,4 @@
-﻿namespace Banking_UI
+﻿namespace ATM
 {
     partial class changePIN
     {
@@ -46,7 +46,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BackgroundImage = global::Banking_UI.Properties.Resources.fbg_image;
+			this.panel1.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.Controls.Add(this.bankIcon);
             this.panel1.Controls.Add(this.bankName);
@@ -59,7 +59,7 @@
             // 
             this.bankIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
-            this.bankIcon.Image = global::Banking_UI.Properties.Resources.HSVC_image1;
+            this.bankIcon.Image = global::ATMClient.GUI.Properties.Resources.HSVC_image1;
             this.bankIcon.Location = new System.Drawing.Point(530, 20);
             this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
             this.bankIcon.Name = "bankIcon";
@@ -144,7 +144,7 @@
             this.invalidPINMessage.BackColor = System.Drawing.Color.Transparent;
             this.invalidPINMessage.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.invalidPINMessage.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.invalidPINMessage.Image = global::Banking_UI.Properties.Resources.SideText_image1;
+            this.invalidPINMessage.Image = global::ATMClient.GUI.Properties.Resources.SideText_image1;
             this.invalidPINMessage.Location = new System.Drawing.Point(571, 417);
             this.invalidPINMessage.Name = "invalidPINMessage";
             this.invalidPINMessage.Size = new System.Drawing.Size(435, 80);
@@ -159,7 +159,7 @@
             this.unequalPINMessage.BackColor = System.Drawing.Color.Transparent;
             this.unequalPINMessage.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.unequalPINMessage.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.unequalPINMessage.Image = global::Banking_UI.Properties.Resources.SideText_image1;
+            this.unequalPINMessage.Image = global::ATMClient.GUI.Properties.Resources.SideText_image1;
             this.unequalPINMessage.Location = new System.Drawing.Point(571, 417);
             this.unequalPINMessage.Name = "unequalPINMessage";
             this.unequalPINMessage.Size = new System.Drawing.Size(435, 80);
@@ -173,7 +173,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.BackgroundImage = global::Banking_UI.Properties.Resources.bbg;
+            this.BackgroundImage = global::ATMClient.GUI.Properties.Resources.bbg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(982, 553);
             this.Controls.Add(this.unequalPINMessage);

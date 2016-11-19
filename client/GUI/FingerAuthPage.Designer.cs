@@ -1,4 +1,4 @@
-﻿namespace Banking_UI
+﻿namespace ATM
 {
     partial class FingerAuthPage
     {
@@ -69,7 +69,7 @@
             // 
             this.thumbPrint.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.thumbPrint.BackColor = System.Drawing.Color.Transparent;
-            this.thumbPrint.Image = global::Banking_UI.Properties.Resources.ThumbPrint;
+            this.thumbPrint.Image = global::ATMClient.GUI.Properties.Resources.ThumbPrint;
             this.thumbPrint.Location = new System.Drawing.Point(23, 176);
             this.thumbPrint.Name = "thumbPrint";
             this.thumbPrint.Size = new System.Drawing.Size(296, 227);
@@ -105,7 +105,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label1.Image = global::Banking_UI.Properties.Resources.SideText_image1;
+            this.label1.Image = global::ATMClient.GUI.Properties.Resources.SideText_image1;
             this.label1.Location = new System.Drawing.Point(549, 399);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(435, 100);
@@ -137,7 +137,7 @@
             this.fbground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fbground.BackColor = System.Drawing.Color.Transparent;
-            this.fbground.BackgroundImage = global::Banking_UI.Properties.Resources.fbg_image;
+            this.fbground.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.fbground.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.fbground.Controls.Add(this.bankIcon);
             this.fbground.Controls.Add(this.BankName);

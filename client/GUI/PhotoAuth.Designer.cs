@@ -1,4 +1,4 @@
-﻿namespace Banking_UI
+﻿namespace ATM
 {
     partial class PhotoAuth
     {
@@ -59,7 +59,7 @@
             // 
             this.bankIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
-            this.bankIcon.Image = global::Banking_UI.Properties.Resources.HSVC_image1;
+            this.bankIcon.Image = global::ATMClient.GUI.Properties.Resources.HSVC_image1;
             this.bankIcon.Location = new System.Drawing.Point(530, 20);
             this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
             this.bankIcon.Name = "bankIcon";
@@ -70,7 +70,7 @@
             // 
             this.fbground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.fbground.BackgroundImage = global::Banking_UI.Properties.Resources.fbg_image;
+            this.fbground.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.fbground.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.fbground.Controls.Add(this.bankIcon);
             this.fbground.Controls.Add(this.bankName);
@@ -102,7 +102,7 @@
             // takePic
             // 
             this.takePic.BackColor = System.Drawing.Color.Transparent;
-            this.takePic.BackgroundImage = global::Banking_UI.Properties.Resources.fbg_image;
+            this.takePic.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.takePic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.takePic.FlatAppearance.BorderSize = 0;
             this.takePic.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
@@ -141,7 +141,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Banking_UI.Properties.Resources.bbg;
+            this.BackgroundImage = global::ATMClient.GUI.Properties.Resources.bbg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(982, 553);
             this.Controls.Add(this.CountDown);

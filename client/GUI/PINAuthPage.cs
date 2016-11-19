@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Banking_UI
+namespace ATM
 {
     public partial class loginPage : Form
     {
