@@ -95,17 +95,17 @@ namespace ATM {
 		private bool login(string username)
 		{
 			//check for username and PIN
-/*			if () {
+/*			if (true) {
 
 			}
 
 			//check for fingerprint match
-			if () {
+			if (true) {
 
 			}
 
 			//check for facial recognition
-			if () {
+			if (true) {
 
 			}
 */
