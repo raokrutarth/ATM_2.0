@@ -32,8 +32,18 @@ namespace AtmServer
             Console.WriteLine("In ServerController Main()");
             DBCommunicator dbComm = new DBCommunicator();
             //dbComm.FillDB();
-            Console.WriteLine("Printing database...");
-            dbComm.printDB();
+            //Console.WriteLine("Printing database...");
+            //dbComm.printDB();
+            
+            string toChange = "00000000-0000-0000-3586-123193050990";
+            string newName = "Peter";
+            Console.WriteLine("Before :");
+            dbComm.getCustomer(toChange);
+            Console.WriteLine("Changing " + toChange + " first name to " + newName);
+            bool done = dbComm.update(toChange, DBCommunicator.UpdateType.fName, newName);
+            //Console.WriteLine("Printing database...");
+            Console.WriteLine("After :");
+            dbComm.getCustomer(toChange);
 
             /*FaceIdentification fi = new FaceIdentification("<new Image Path>", "<custID>");
             while (true)

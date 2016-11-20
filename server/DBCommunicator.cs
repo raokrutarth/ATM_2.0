@@ -125,19 +125,18 @@ namespace AtmServer
             {
                 string query = "";
                 int nUpdated = 0;
+                Guid f_custID = new Guid(custID); // new Guid(CustID.PadLeft(32, '0')
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
                     SqlCommand cmd; // = new SqlCommand(query, conn)
                     if (t == UpdateType.fName)
-                    {
-                        // new Guid(CustID.PadLeft(32, '0')
-                        query = "UPDATE dbo.TestCustomers SET FirstName=@NewName, Address=@NewAddress WHERE CustomerID=@Id";
-                        cmd = new SqlCommand(query, conn);
-                        cmd.Parameters.AddWithValue("@Id", 1);
-                        cmd.Parameters.AddWithValue("@Name", "Munna Hussain");
-                        cmd.Parameters.AddWithValue("@Address", "Kerala");                        
+                    {                        
                         // update first name
+                        query = "UPDATE dbo.TestCustomers SET FirstName=@NewName WHERE CustomerID=@Id";
+                        cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@Id", f_custID);
+                        cmd.Parameters.AddWithValue("@NewName", data);
                     }                       
                     else if (t == UpdateType.lName)
                         // update last name
@@ -160,6 +159,8 @@ namespace AtmServer
                         return false;
                     }
                     nUpdated = cmd.ExecuteNonQuery();
+
+
                     if(nUpdated > 0)
                     {
                         Console.WriteLine("[+] " + nUpdated + " entries updated in update() ");
@@ -174,6 +175,17 @@ namespace AtmServer
                 }
                 
             }
+            catch(FormatException fe)
+            {
+                Console.WriteLine("Update called with invalid custID = " + custID);
+                Console.WriteLine(fe.Message);
+                return false;
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine("Update called with invalid [NULL] custID :" + custID);
+                return false;
+            }
             catch (SqlException ex)
             {
                 Console.WriteLine("SQL exception in update()");
@@ -187,8 +199,41 @@ namespace AtmServer
         {
             return true;
         }
-        public string getData(string DataType, string request)
+        public string getCustomer(string custID)
         {
+            Guid f_custID = new Guid(custID);
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlDataReader rdr = null;
+                try
+                {
+                    connection.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.TestCustomers WHERE CustomerID = @Id", connection);
+                    cmd.Parameters.AddWithValue("@Id", f_custID);
+                    rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        Console.Write("Customer ID = ");
+                        Console.Write(rdr["CustomerID"].ToString());
+                        Console.Write(", FirstName = ");
+                        Console.Write(rdr["FirstName"].ToString());
+                        Console.Write(", Balance = ");
+                        Console.WriteLine(rdr["Balance"].ToString());
+                    }
+                }
+                catch (SqlException se)
+                {
+                    Console.WriteLine("SQL db not connected");
+                    Console.WriteLine(se.Message);
+                }
+                finally
+                {
+                    if (rdr != null)
+                        rdr.Close();
+                    if (connection != null)
+                        connection.Close();
+                }
+            }
             return null;
         }
         public bool testDbConnection()
