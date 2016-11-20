@@ -49,7 +49,7 @@ namespace AtmServer
                                        "Balance: {6} ", Int64.Parse(fields[0]), fields[1], fields[2],
                                                         fields[3], fields[4], fields[5], Convert.ToDouble(fields[6].Trim('$')));
 
-                    InsertData(connectionString, fields[0], fields[1], fields[2],
+                    InsertEntry(connectionString, fields[0], fields[1], fields[2],
                                 fields[3], fields[4], fields[5], Convert.ToDouble(fields[6].Trim('$')));                  
                 }
                 Console.ReadKey(true);
