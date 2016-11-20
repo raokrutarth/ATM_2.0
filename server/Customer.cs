@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AtmServer
 {
-    class Customer
+    public class Customer
     {
         //("@CustomerID", SqlDbType.UniqueIdentifier).Value = new Guid(CustID.PadLeft(32, '0'));
         //            cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 50).Value = firstName;

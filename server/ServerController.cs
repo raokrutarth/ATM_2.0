@@ -36,12 +36,19 @@ namespace AtmServer
             //dbComm.printDB();
             
             string toChange = "00000000-0000-0000-3586-123193050990";
-            string newName = "Peter";
+            string newName = "Dhoni";
             Console.WriteLine("Before :");
             dbComm.getCustomer(toChange);
             Console.WriteLine("Changing " + toChange + " first name to " + newName);
-            bool done = dbComm.update(toChange, DBCommunicator.UpdateType.fName, newName);
-            //Console.WriteLine("Printing database...");
+            bool done = dbComm.update(toChange, DBCommunicator.UpdateType.fName, newName);            
+            Console.WriteLine("After :");
+            dbComm.getCustomer(toChange);
+
+            Console.WriteLine("Before :");
+            dbComm.getCustomer(toChange);
+            double nb = 98000.25;
+            Console.WriteLine("Changing " + toChange + " balance to to " + nb);
+            done = dbComm.update(toChange, DBCommunicator.UpdateType.balance, nb.ToString() );
             Console.WriteLine("After :");
             dbComm.getCustomer(toChange);
 
