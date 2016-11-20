@@ -28,7 +28,6 @@ namespace AtmServer
         }
         public void FillDB()
         {
-            // Header
             // ID     Fname     Lname     HPIN     HFINGER     HFACE     Balance
             Console.WriteLine("Filling Test DB");
             string fileName = @"..\..\TestDataFiles\MOCK_DATA.csv";           
@@ -38,7 +37,6 @@ namespace AtmServer
                 while ( (newContent = reader.ReadLine()) != null)
                 {
                     string[] fields = newContent.Split(',');
-
                     Console.WriteLine("Inserting entry:\n" +
                                       "Account No.: {0} " +
                                        "fName: {1} " +
@@ -47,20 +45,12 @@ namespace AtmServer
                                        "hface: {4} " +
                                        "hfinger: {5} " +
                                        "Balance: {6} ", Int64.Parse(fields[0]), fields[1], fields[2],
-                                                        fields[3], fields[4], fields[5], Convert.ToDouble(fields[6].Trim('$')));
-
+                                                        fields[3], fields[4], fields[5], Convert.ToDouble(fields[6].Trim('$') ) );
                     InsertEntry(connectionString, fields[0], fields[1], fields[2],
-                                fields[3], fields[4], fields[5], Convert.ToDouble(fields[6].Trim('$')));                  
+                                fields[3], fields[4], fields[5], Convert.ToDouble(fields[6].Trim('$') ) );                  
                 }
                 Console.ReadKey(true);
             }
-
-
-        }
-
-        private int TryParse(string v, int int32)
-        {
-            throw new NotImplementedException();
         }
 
         public void printDB()
@@ -72,17 +62,22 @@ namespace AtmServer
                 try
                 {
                     connection.Open();                    
-                    SqlCommand cmd = new SqlCommand("select * from dbo.TestCustomers", connection);
+                    SqlCommand cmd = new SqlCommand("select * from dbo.TestCustomers order by Balance", connection);
                     rdr = cmd.ExecuteReader();                    
                     while (rdr.Read())
                     {
                         Console.Write("Customer ID = ");
-                        Console.WriteLine( rdr["CustomerID"].ToString() );
+                        Console.Write( rdr["CustomerID"].ToString() );
+                        Console.Write(", FirstName = ");
+                        Console.Write(rdr["FirstName"].ToString());
+                        Console.Write(", Balance = ");
+                        Console.WriteLine(rdr["Balance"].ToString());
                     }
                 }
                 catch (SqlException se)
                 {
                     Console.WriteLine("SQL db not connected");
+                    Console.WriteLine(se.Message);
                 }
                 finally
                 {                    
@@ -94,8 +89,8 @@ namespace AtmServer
             }
         }
 
-        public bool InsertEntry(string connectionString, string CustID, string firstName, string lastName, string hPin, string hFace,
-                        string hFinger, double balance)
+        public bool InsertEntry(string connectionString, string CustID, string firstName, 
+            string lastName, string hPin, string hFace, string hFinger, double balance)
         {
             // define INSERT query with parameters
             string query = "INSERT INTO dbo.TestCustomers (CustomerID, FirstName, LastName, HPIN, HFinger, HFace, Balance) " +
@@ -126,9 +121,68 @@ namespace AtmServer
         }
         public bool update(string custID, UpdateType t, string data )
         {
-
-            return false;
+            try
+            {
+                string query = "";
+                int nUpdated = 0;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd; // = new SqlCommand(query, conn)
+                    if (t == UpdateType.fName)
+                    {
+                        // new Guid(CustID.PadLeft(32, '0')
+                        query = "UPDATE dbo.TestCustomers SET FirstName=@NewName, Address=@NewAddress WHERE CustomerID=@Id";
+                        cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@Id", 1);
+                        cmd.Parameters.AddWithValue("@Name", "Munna Hussain");
+                        cmd.Parameters.AddWithValue("@Address", "Kerala");                        
+                        // update first name
+                    }                       
+                    else if (t == UpdateType.lName)
+                        // update last name
+                        return true;
+                    else if (t == UpdateType.balance)
+                        // update balance
+                        return true;
+                    else if (t == UpdateType.h_pin)
+                        // update hash_pin
+                        return true;
+                    else if (t == UpdateType.finger_path)
+                        // update HFinger field in database
+                        return true;
+                    else if (t == UpdateType.face_path)
+                        // update HFace field 
+                        return true;
+                    else
+                    {
+                        Console.WriteLine("[-] Invalid update type requested in db.update()");
+                        return false;
+                    }
+                    nUpdated = cmd.ExecuteNonQuery();
+                    if(nUpdated > 0)
+                    {
+                        Console.WriteLine("[+] " + nUpdated + " entries updated in update() ");
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("[-] " + nUpdated + " entries updated in update() ");
+                        Console.WriteLine("query_str = " + query);
+                        return false;
+                    }
+                }
+                
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("SQL exception in update()");
+                Console.WriteLine(ex.Message);
+                return false;
+            }    
         }
+
+
         public bool remove(string dataType, string data)
         {
             return true;
