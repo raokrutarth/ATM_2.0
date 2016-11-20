@@ -22,8 +22,6 @@ namespace AtmServer
             /// check connection with database
             /// check validity of  test data
             /// setup encryption
-            /// return true on sucess
-            /// 
             connectionString = ConfigurationManager.ConnectionStrings["DBConnString"].ConnectionString;
         }
         public void FillDB()
@@ -46,7 +44,7 @@ namespace AtmServer
                                        "hfinger: {5} " +
                                        "Balance: {6} ", Int64.Parse(fields[0]), fields[1], fields[2],
                                                         fields[3], fields[4], fields[5], Convert.ToDouble(fields[6].Trim('$') ) );
-                    InsertEntry(connectionString, fields[0], fields[1], fields[2],
+                    InsertEntry(fields[0], fields[1], fields[2],
                                 fields[3], fields[4], fields[5], Convert.ToDouble(fields[6].Trim('$') ) );                  
                 }
                 Console.ReadKey(true);
@@ -89,7 +87,7 @@ namespace AtmServer
             }
         }
 
-        public bool InsertEntry(string connectionString, string CustID, string firstName, 
+        public bool InsertEntry(string CustID, string firstName, 
             string lastName, string hPin, string hFace, string hFinger, double balance)
         {
             // define INSERT query with parameters
@@ -102,20 +100,35 @@ namespace AtmServer
                 Console.WriteLine("DB Connected successfully.");
                 using (SqlCommand cmd = new SqlCommand(query, cn))
                 {
-                    // define parameters and their values
-                    cmd.Parameters.Add("@CustomerID", SqlDbType.UniqueIdentifier).Value = new Guid(CustID.PadLeft(32, '0'));
-                    cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 50).Value = firstName;
-                    cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 50).Value = lastName;
-                    cmd.Parameters.Add("@HPIN", SqlDbType.NVarChar).Value = hPin;
-                    cmd.Parameters.Add("@HFinger", SqlDbType.NVarChar).Value = hFinger;
-                    cmd.Parameters.Add("@HFace", SqlDbType.NVarChar).Value = hFace;
-                    cmd.Parameters.Add("@Balance", SqlDbType.Money).Value = balance;
+                    try
+                    {
+                        // define parameters and their values
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.UniqueIdentifier).Value = new Guid(CustID.PadLeft(32, '0'));
+                        cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 50).Value = firstName;
+                        cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 50).Value = lastName;
+                        cmd.Parameters.Add("@HPIN", SqlDbType.NVarChar).Value = hPin;
+                        cmd.Parameters.Add("@HFinger", SqlDbType.NVarChar).Value = hFinger;
+                        cmd.Parameters.Add("@HFace", SqlDbType.NVarChar).Value = hFace;
+                        cmd.Parameters.Add("@Balance", SqlDbType.Money).Value = balance;
 
-                    // open connection, execute INSERT, close connection
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                    cn.Close();
-                    return true;
+                        // open connection, execute INSERT, close connection
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                        cn.Close();
+                        return true;
+                    }
+                    catch (FormatException fe)
+                    {
+                        Console.WriteLine("Update called with invalid custID = " + CustID);
+                        Console.WriteLine(fe.Message);
+                        return false;
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        Console.WriteLine("Update called with invalid [NULL] custID :" + CustID);
+                        return false;
+                    }
+
                 }
             }            
         }
@@ -131,37 +144,61 @@ namespace AtmServer
                     conn.Open();
                     SqlCommand cmd; // = new SqlCommand(query, conn)
                     if (t == UpdateType.fName)
-                    {                        
+                    {
                         // update first name
                         query = "UPDATE dbo.TestCustomers SET FirstName=@NewName WHERE CustomerID=@Id";
                         cmd = new SqlCommand(query, conn);
                         cmd.Parameters.AddWithValue("@Id", f_custID);
                         cmd.Parameters.AddWithValue("@NewName", data);
-                    }                       
+                    }
                     else if (t == UpdateType.lName)
-                        // update last name
-                        return true;
+                    {
+                        query = "UPDATE dbo.TestCustomers SET LastName=@NewName WHERE CustomerID=@Id";
+                        cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@Id", f_custID);
+                        cmd.Parameters.AddWithValue("@NewName", data);
+                    }
                     else if (t == UpdateType.balance)
-                        // update balance
-                        return true;
+                    {
+                        query = "UPDATE dbo.TestCustomers SET Balance=@NewBalance WHERE CustomerID=@Id";
+                        cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@Id", f_custID);
+                        double newBalance;
+                        if (Double.TryParse(data, out newBalance))
+                            cmd.Parameters.AddWithValue("@NewBalance", newBalance);
+                        else
+                            Console.WriteLine("{0} is outside the range of a Double in update()", newBalance);
+                    }
+
                     else if (t == UpdateType.h_pin)
-                        // update hash_pin
-                        return true;
+                    {
+                        query = "UPDATE dbo.TestCustomers SET HPIN=@NewPin WHERE CustomerID=@Id";
+                        cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@Id", f_custID);
+                        cmd.Parameters.AddWithValue("@NewPin", data);
+                    }
                     else if (t == UpdateType.finger_path)
-                        // update HFinger field in database
-                        return true;
+                    {
+                        query = "UPDATE dbo.TestCustomers SET HFinger=@NewFingerPath WHERE CustomerID=@Id";
+                        cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@Id", f_custID);
+                        cmd.Parameters.AddWithValue("@NewFingerPath", data);
+                    }
                     else if (t == UpdateType.face_path)
-                        // update HFace field 
-                        return true;
+                    {
+                        query = "UPDATE dbo.TestCustomers SET HFace=@NewFacePath WHERE CustomerID=@Id";
+                        cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@Id", f_custID);
+                        cmd.Parameters.AddWithValue("@NewFacePath", data);
+                    }
                     else
                     {
                         Console.WriteLine("[-] Invalid update type requested in db.update()");
                         return false;
                     }
-                    nUpdated = cmd.ExecuteNonQuery();
 
-
-                    if(nUpdated > 0)
+                    nUpdated = cmd.ExecuteNonQuery(); // execute the dynamically created query
+                    if (nUpdated > 0)
                     {
                         Console.WriteLine("[+] " + nUpdated + " entries updated in update() ");
                         return true;
@@ -199,7 +236,7 @@ namespace AtmServer
         {
             return true;
         }
-        public string getCustomer(string custID)
+        public Customer getCustomer(string custID)
         {
             Guid f_custID = new Guid(custID);
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -213,18 +250,56 @@ namespace AtmServer
                     rdr = cmd.ExecuteReader();
                     while (rdr.Read())
                     {
-                        Console.Write("Customer ID = ");
-                        Console.Write(rdr["CustomerID"].ToString());
-                        Console.Write(", FirstName = ");
-                        Console.Write(rdr["FirstName"].ToString());
+                        Customer newCust = new Customer();
+
+                        Console.Write("Customer ID : ");
+                        newCust.CustomerID = new Guid(rdr["CustomerID"].ToString());
+                        Console.Write(newCust.CustomerID.ToString());
+                        
+                        Console.Write(", FirstName : ");
+                        newCust.FirstName = rdr["FirstName"].ToString();
+                        Console.Write(newCust.FirstName);
+
+                        Console.Write(", LastName : ");
+                        newCust.LastName = rdr["LastName"].ToString();
+                        Console.Write(newCust.LastName);
+
+                        Console.Write(", HPin : ");
+                        newCust.HPIN = rdr["HPIN"].ToString();
+                        Console.Write(newCust.HPIN);
+
+                        Console.Write(", finger_path : ");
+                        newCust.finger_path = rdr["HFinger"].ToString();
+                        Console.Write(newCust.finger_path);
+
+                        Console.Write(", face_path : ");
+                        newCust.face_path = rdr["HFace"].ToString();
+                        Console.Write(newCust.face_path);
+
                         Console.Write(", Balance = ");
-                        Console.WriteLine(rdr["Balance"].ToString());
+                        double newBalance = -999;
+                        if ( Double.TryParse(rdr["Balance"].ToString(), out newBalance) )
+                            newCust.balance = newBalance;
+                        else
+                            Console.WriteLine("{0} is outside the range of a Double in getCust()", newBalance);
+                        Console.WriteLine(newCust.balance);
+                        return newCust;
                     }
                 }
                 catch (SqlException se)
                 {
                     Console.WriteLine("SQL db not connected");
-                    Console.WriteLine(se.Message);
+                    Console.WriteLine(se.Message);                    
+                }
+                catch (FormatException fe)
+                {
+                    Console.WriteLine("Update called with invalid custID = " + custID);
+                    Console.WriteLine(fe.Message);
+                    return null;
+                }
+                catch (ArgumentNullException)
+                {
+                    Console.WriteLine("Update called with invalid [NULL] custID :" + custID);
                 }
                 finally
                 {
@@ -233,8 +308,8 @@ namespace AtmServer
                     if (connection != null)
                         connection.Close();
                 }
-            }
-            return null;
+                return null;
+            }            
         }
         public bool testDbConnection()
         {
@@ -246,8 +321,7 @@ namespace AtmServer
                 connection.Close();
                 return true;               
             }
-        }
-        
+        }        
         ~DBCommunicator()
         {
             Console.WriteLine("DBCommunicator object terminated");
