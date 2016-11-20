@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authenticator.cs" />
+    <Compile Include="Customer.cs" />
     <Compile Include="DBCommunicator.cs" />
     <Compile Include="FaceIdentification.cs" />
     <Compile Include="ServerController.cs" />

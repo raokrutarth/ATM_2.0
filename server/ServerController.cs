@@ -27,9 +27,9 @@ namespace AtmServer
         [STAThread]
         static void Main(string[] args)
         {
-            //int width = 220, height = 50;
-             // Console.SetWindowSize(width, height);
-            // Console.WriteLine("In ServerController Main()");
+            int width = 200, height = 30;
+            Console.SetWindowSize(width, height);
+            Console.WriteLine("In ServerController Main()");
             DBCommunicator dbComm = new DBCommunicator();
             //dbComm.FillDB();
             Console.WriteLine("Printing database...");

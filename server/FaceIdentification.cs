@@ -61,8 +61,8 @@ namespace AtmServer
                     trainPersonGroup(groupId);  //********************
                 }
                 else //person image to be identified
-                {              
-                    
+                {
+                                       
                     Console.WriteLine("Select image");
 
                     OpenFileDialog fd = new OpenFileDialog();
