@@ -106,7 +106,6 @@ namespace ATM
 			}
 			catch (ScanAPIException ex)
 			{
-				Console.WriteLine("Failed to retrieve image from scanner: {0}", ex.ToString());
 			}
 			return null;
 		}
