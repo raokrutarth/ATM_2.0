@@ -28,8 +28,6 @@ namespace AtmServer {
 		public int size;
 		//data passed with the command
 		public string data;
-        //if its a fingerprint bitmap the data will be stored here
-        public byte[] dataFinger;
 
         public Command() {
             this.command = String.Empty;
@@ -221,7 +219,7 @@ namespace AtmServer {
             handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
         }*/
 
-		private bool Send(Command c) {
+		public bool Send(Command c) {
 			Socket handler = this.listener;
 			String data;
 
@@ -267,12 +265,10 @@ namespace AtmServer {
 
 			index = this.currentCommand.command.Length + 1;
 
-			Console.WriteLine("Command: {0}", this.currentCommand.command);
-
-			//this.currentCommand.data = data.Substring(index, data.Length);
-
-			this.currentCommand.dataFinger = Encoding.ASCII.GetBytes(data.ToCharArray(), index, size - index + 1);
-			Console.WriteLine("dataFinger: {0}", this.currentCommand.dataFinger.Length);
+			Console.WriteLine("Reveived command: {0}", this.currentCommand.command);
+			
+			this.currentCommand.data = data.Substring(index, size - index + 1);
+			Console.WriteLine("data length: {0}", this.currentCommand.data.Length);
             ServerController.currentController.executeCommand(this.currentCommand);
 		}
 		/*
