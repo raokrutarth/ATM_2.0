@@ -19,9 +19,10 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +34,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FR.Core">
+      <HintPath>lib\fingerprint-recognition\bin\Debug\FR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FR.Medina2011">
+      <HintPath>lib\fingerprint-recognition\bin\Debug\FR.Medina2011.dll</HintPath>
+    </Reference>
+    <Reference Include="FR.Ratha1995">
+      <HintPath>lib\fingerprint-recognition\bin\Debug\FR.Ratha1995.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ProjectOxford.Face, Version=1.2.1.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.ProjectOxford.Face.1.2.1.2\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Microsoft.ProjectOxford.Face.dll</HintPath>
       <Private>True</Private>
@@ -40,13 +50,11 @@
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
-	</Reference>
-    <Reference Include="FR.Medina2011">
-      <HintPath>..\..\..\Downloads\FingerprintRecognition v2.2\bin\Release\FR.Medina2011.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
