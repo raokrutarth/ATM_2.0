@@ -45,34 +45,37 @@ namespace ATM {
 			Console.WriteLine("ATM client initializing.");
 			drivers = new HardwareReader();
 			ui = new UserInterface();
-			serverConnection = new ServerConnection("192.168.1.10", 11000);
+			serverConnection = new ServerConnection("192.168.1.230", 11000);
 			while(!serverConnection.Connect())
 			{
 				Console.WriteLine("Failed to connect to server. Retrying...");
 			}
 
 
-			Console.WriteLine("Place finger 1");
-			System.Threading.Thread.Sleep(2000);
-
-			/*fingerprintReader.SaveImage(".\\finger1.bmp", true);
-			Console.WriteLine("Place finger 2");
-			System.Threading.Thread.Sleep(5000);
-			fingerprintReader.SaveImage(".\\finger2.bmp", true);
-			Console.WriteLine("Place finger 3");
-			System.Threading.Thread.Sleep(5000);
-			fingerprintReader.SaveImage(".\\finger3.bmp", true);*/
-
-			// TEST TRANSMIT
-			byte[] data;
-			while((data = drivers.fingerprintReader.GetImage()) == null)
+			while (true)
 			{
-				Console.WriteLine("Please put your finger on the scanner.");
+				Console.WriteLine("Place finger 1");
 				System.Threading.Thread.Sleep(2000);
+
+				/*fingerprintReader.SaveImage(".\\finger1.bmp", true);
+				Console.WriteLine("Place finger 2");
+				System.Threading.Thread.Sleep(5000);
+				fingerprintReader.SaveImage(".\\finger2.bmp", true);
+				Console.WriteLine("Place finger 3");
+				System.Threading.Thread.Sleep(5000);
+				fingerprintReader.SaveImage(".\\finger3.bmp", true);*/
+
+				// TEST TRANSMIT
+				byte[] data;
+				while ((data = drivers.fingerprintReader.GetImage()) == null)
+				{
+					Console.WriteLine("Please put your finger on the scanner.");
+					System.Threading.Thread.Sleep(2000);
+				}
+				Console.WriteLine("Sending data of length {0}", data.Length);
+				Message msg = serverConnection.SendData("authenticateFinger", data, true);
+				Console.WriteLine("Got response: {0}; {1}; {2}", msg.type, msg.data, msg.size);
 			}
-			Console.WriteLine("Sending data of length {0}", data.Length);
-			Message msg = serverConnection.SendData("authenticateFinger", data, true);
-			Console.WriteLine("Got response: {0}; {1}; {2}", msg.type, msg.data, msg.size);
 
 			/*int i = 1;
 			while (true)
