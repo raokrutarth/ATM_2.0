@@ -37,8 +37,8 @@
     <Reference Include="FR.Core">
       <HintPath>lib\fingerprint-recognition\bin\Debug\FR.Core.dll</HintPath>
     </Reference>
-    <Reference Include="FR.Medina2011">
-      <HintPath>lib\fingerprint-recognition\bin\Debug\FR.Medina2011.dll</HintPath>
+    <Reference Include="FR.MTriplets">
+      <HintPath>lib\fingerprint-recognition\bin\Debug\FR.MTriplets.dll</HintPath>
     </Reference>
     <Reference Include="FR.Ratha1995">
       <HintPath>lib\fingerprint-recognition\bin\Debug\FR.Ratha1995.dll</HintPath>
@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authenticator.cs" />
+    <Compile Include="ClientData.cs" />
     <Compile Include="DBCommunicator.cs" />
     <Compile Include="FaceIdentification.cs" />
     <Compile Include="MyBitmapFile.cs" />
