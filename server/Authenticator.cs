@@ -17,12 +17,12 @@ namespace AtmServer
 
         public Authenticator()
         {
+			// Register TCP callbacks.
 			ServerController.currentController.RegisterCallback("authenticateAccount", authenticateAccount);
 			ServerController.currentController.RegisterCallback("authenticatePIN", authenticatePIN);
 			ServerController.currentController.RegisterCallback("authenticateFace", authenticateFace);
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
-			/// select hashing algorithim
-			/// test encrypt/decrypt
+			ServerController.currentController.RegisterCallback("setFingerImageSize", setFingerImageSize);
 		}
 
 		// returns true/ false given:
@@ -99,7 +99,8 @@ namespace AtmServer
 		{
 			// Parse bytes as image.
 			byte[] data = Encoding.ASCII.GetBytes(command.data);
-			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(320, 480, data);
+			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(clientData.fingerprintImageSize.Width,
+				clientData.fingerprintImageSize.Height, data);
 			Stream fStream = new MemoryStream(bmp.BitmatFileData);
 			Bitmap image1 = new Bitmap(fStream);
 			Bitmap image2 = new Bitmap(".\\test-img.bmp");
@@ -129,6 +130,18 @@ namespace AtmServer
 				ServerController.currentController.tcp.Send(cmd);
 				return false;
 			}
+		}
+
+		/*
+		 * Sets the expected size of received fingerprint images.
+		 */
+		public bool setFingerImageSize(ClientData clientData, Command command)
+		{
+			string[] lines = command.data.Split('\n');
+			clientData.fingerprintImageSize.Width = Int32.Parse(lines[0]);
+			clientData.fingerprintImageSize.Height = Int32.Parse(lines[1]);
+			Console.WriteLine("Client is using fingerprint image size of {0}", clientData.fingerprintImageSize.ToString());
+			return true;
 		}
 	}
 }

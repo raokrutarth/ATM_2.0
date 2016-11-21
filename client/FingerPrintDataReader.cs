@@ -16,7 +16,7 @@ namespace ATM
 		private int interfaceNumber;
 		private Device scanner;
 		private byte[] image;
-		private Size imageSize;
+		public Size imageSize {  get; private set; }
 
 		/*
 		 * Creates an interface to the fingerprint reader.

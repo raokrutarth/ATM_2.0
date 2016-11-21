@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace AtmServer
 {
@@ -14,6 +15,7 @@ namespace AtmServer
 		public bool authFace { get; set; }
 		public bool authFinger { get; set; }
 		public bool authenticated { get; set; }
+		public Size fingerprintImageSize;
 
 		/*
 		 * Creates a new ClientData object.
@@ -25,6 +27,7 @@ namespace AtmServer
 			this.authFace = false;
 			this.authFinger = false;
 			this.authenticated = false;
+			this.fingerprintImageSize = new Size();
 		}
 	}
 }
