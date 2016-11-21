@@ -51,7 +51,12 @@ namespace ATM {
 				Console.WriteLine("Failed to connect to server. Retrying...");
 			}
 
+			// Send initial data, including image sizes.
+			System.Drawing.Size imgSize = drivers.fingerprintReader.imageSize;
+			string sizeString = imgSize.Width.ToString() + "\n" + imgSize.Height.ToString();
+			serverConnection.SendData("setFingerImageSize", sizeString);
 
+			// Send fingerprints as a test.
 			while (true)
 			{
 				Console.WriteLine("Place finger 1");

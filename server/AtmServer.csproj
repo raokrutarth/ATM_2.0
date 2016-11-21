@@ -72,7 +72,6 @@
     <Compile Include="MyBitmapFile.cs" />
     <Compile Include="ServerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System\Drawing\Image.cs" />
     <Compile Include="TCPCommunicator.cs" />
   </ItemGroup>
   <ItemGroup>
