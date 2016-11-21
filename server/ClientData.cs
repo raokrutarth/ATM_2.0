@@ -9,6 +9,7 @@ namespace AtmServer
 	public class ClientData
 	{
 		// Current authentication status.
+		public int accountNumber { get; set; }
 		public bool authPIN { get; set; }
 		public bool authFace { get; set; }
 		public bool authFinger { get; set; }
@@ -19,6 +20,7 @@ namespace AtmServer
 		 */
 		public ClientData()
 		{
+			this.accountNumber = 0;
 			this.authPIN = false;
 			this.authFace = false;
 			this.authFinger = false;
