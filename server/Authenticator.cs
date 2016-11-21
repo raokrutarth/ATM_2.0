@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Net.Http.Headers;
-using System.Net.Http;
-using System.Web;
+
+using PatternRecognition.FingerprintRecognition.Core;
+using PatternRecognition.FingerprintRecognition.FeatureExtractors;
+using PatternRecognition.FingerprintRecognition.Matchers;
 
 namespace AtmServer
 {
     class Authenticator
     {
+		const double MIN_FINGERPRINT_SIMILARITY = 30.0;
+
         public Authenticator()
         {
 			ServerController.currentController.RegisterCallback("authenticatePIN", authenticatePIN);
@@ -52,19 +56,36 @@ namespace AtmServer
 		public bool authenticateFinger(Command command)
 		{
 			// Parse bytes as image.
-			byte[] image = Encoding.ASCII.GetBytes(command.data);
-			ScanAPIDemo.MyBitmapFile myFile = new ScanAPIDemo.MyBitmapFile(320, 480, image);
-			FileStream file = new FileStream(".\\finger2.bmp", FileMode.Create);
-			file.Write(myFile.BitmatFileData, 0, myFile.BitmatFileData.Length);
-			file.Close();
+			byte[] data = Encoding.ASCII.GetBytes(command.data);
 
-			//authenticate with database
+			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(320, 480, data);
+			Stream fStream = new MemoryStream(bmp.BitmatFileData);
+			Bitmap image1 = new Bitmap(fStream);
+			Bitmap image2 = new Bitmap(".\\test-img.bmp");
 
-			//return success or failure
-			Command cmd = new Command("authResponse", "ok/denied");
-			ServerController.currentController.tcp.Send(cmd);
+			// Extract features from images.
+			var featureExtractor = new DalaunayMTpsExtractor() {MtiaExtractor = new Ratha1995MinutiaeExtractor() };
+			var features1 = featureExtractor.ExtractFeatures(image1);
+			var features2 = featureExtractor.ExtractFeatures(image2);
 
-			return false;
+			// Perform matching.
+			var matcher = new MPN();
+			double similarity = matcher.Match(features1, features2);
+			Console.WriteLine("Fingerprint similarity of {0}", similarity);
+
+			// Return success or failure.
+			if(similarity >= MIN_FINGERPRINT_SIMILARITY)
+			{
+				Command cmd = new Command("authResponse", "ok");
+				ServerController.currentController.tcp.Send(cmd);
+				return true;
+			}
+			else
+			{
+				Command cmd = new Command("authResponse", "denied");
+				ServerController.currentController.tcp.Send(cmd);
+				return false;
+			}
 		}
 
 	}
