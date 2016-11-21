@@ -13,10 +13,11 @@ namespace AtmServer
 {
     class Authenticator
     {
-		const double MIN_FINGERPRINT_SIMILARITY = 30.0;
+		const double MIN_FINGERPRINT_SIMILARITY = 0.13;
 
         public Authenticator()
         {
+			ServerController.currentController.RegisterCallback("authenticateAccount", authenticateAccount);
 			ServerController.currentController.RegisterCallback("authenticatePIN", authenticatePIN);
 			ServerController.currentController.RegisterCallback("authenticateFace", authenticateFace);
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
@@ -27,32 +28,73 @@ namespace AtmServer
 		// returns true/ false given:
         // image = new image taken by atm machine
         // db_ImagePath = collection of images the customer provided during account creation 
-        public bool verifyFace(string[] db_ImagePath, System.Drawing.Image image)
+        public bool verifyFace(string[] db_ImagePath, Image image)
         {
             // db
             return false;
         }
 
-		public bool authenticatePIN(ClientData clientData, Command command)
+		/*
+		 * Validates and stores the user's account number.
+		 */
+		public bool authenticateAccount(ClientData clientData, Command command)
 		{
-            /*Command c;
+			// Parse account number.
+			int accountNumber = Int32.Parse(command.data);
 
-			string s = command.dataFinger.ToString();
-			Console.WriteLine("*****************Data: {0}", s);
-			//authenticate with database
+			// Validate and store account number.
+			//TODO: validate account number here.
+			clientData.accountNumber = accountNumber;
 
-			//return success or failure
-            c = new Command("Send", "PIN successfully \nauthenticated");
-            ServerController.currentController.tcp.Send(c);
-			*/
+			// Send response.
+			Command cmd = new Command("authResponse", "ok");
+			ServerController.currentController.tcp.Send(cmd);
+
 			return true;
 		}
 
-		public bool authenticateFace(ClientData clientData, Command command) {
+		/*
+		 * Validate PIN sent from client and send response.
+		 */
+		public bool authenticatePIN(ClientData clientData, Command command)
+		{
+			// Parse PIN.
+			int pin = Int32.Parse(command.data);
 
-			return false;
+			// Validate PIN.
+			//TODO: validate PIN here.
+
+			// Send response.
+			Command cmd = new Command("authResponse", "ok");
+			ServerController.currentController.tcp.Send(cmd);
+
+			return true;
 		}
 
+		/*
+		 * Verify face image sent from client and send response.
+		 */
+		public bool authenticateFace(ClientData clientData, Command command)
+		{
+			// Parse bytes as image.
+			byte[] data = Encoding.ASCII.GetBytes(command.data);
+			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(320, 480, data);
+			Stream fStream = new MemoryStream(bmp.BitmatFileData);
+			Bitmap image1 = new Bitmap(fStream);
+
+			// Verify the image.
+			//TODO: this.verifyFace();
+
+			// Send response.
+			Command cmd = new Command("authResponse", "ok");
+			ServerController.currentController.tcp.Send(cmd);
+
+			return true;
+		}
+
+		/*
+		 * Verify fingerprint image sent from client and send response.
+		 */
 		public bool authenticateFinger(ClientData clientData, Command command)
 		{
 			// Parse bytes as image.
@@ -88,6 +130,5 @@ namespace AtmServer
 				return false;
 			}
 		}
-
 	}
 }
