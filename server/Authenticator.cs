@@ -13,7 +13,7 @@ namespace AtmServer
 {
     class Authenticator
     {
-		const double MIN_FINGERPRINT_SIMILARITY = 0.13;
+		const double MIN_FINGERPRINT_SIMILARITY = 0.05;
 
         public Authenticator()
         {
@@ -104,6 +104,7 @@ namespace AtmServer
 			Stream fStream = new MemoryStream(bmp.BitmatFileData);
 			Bitmap image1 = new Bitmap(fStream);
 			Bitmap image2 = new Bitmap(".\\test-img.bmp");
+			image1.Save(".\\img.bmp");
 
 			// Extract features from images.
 			var featureExtractor = new MTripletsExtractor() {MtiaExtractor = new Ratha1995MinutiaeExtractor() };
