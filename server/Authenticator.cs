@@ -31,7 +31,7 @@ namespace AtmServer
 
 		public bool authenticatePIN(Command command)
 		{
-            Command c;
+            /*Command c;
 
 			string s = command.dataFinger.ToString();
 			Console.WriteLine("*****************Data: {0}", s);
@@ -39,8 +39,8 @@ namespace AtmServer
 
 			//return success or failure
             c = new Command("Send", "PIN successfully \nauthenticated");
-            ServerController.currentController.callbacks[c.command](c);
-
+            ServerController.currentController.tcp.Send(c);
+			*/
 			return true;
 		}
 
@@ -49,13 +49,11 @@ namespace AtmServer
 			return false;
 		}
 
-		public bool authenticateFinger(Command command) {
-			Command c;
-			//byte[] image = Encoding.ASCII.GetBytes(command.dataFinger);
-
-			Console.WriteLine("Made it to the authenticator method");
-
-			ScanAPIDemo.MyBitmapFile myFile = new ScanAPIDemo.MyBitmapFile(320, 480, command.dataFinger);
+		public bool authenticateFinger(Command command)
+		{
+			// Parse bytes as image.
+			byte[] image = Encoding.ASCII.GetBytes(command.data);
+			ScanAPIDemo.MyBitmapFile myFile = new ScanAPIDemo.MyBitmapFile(320, 480, image);
 			FileStream file = new FileStream(".\\finger2.bmp", FileMode.Create);
 			file.Write(myFile.BitmatFileData, 0, myFile.BitmatFileData.Length);
 			file.Close();
@@ -63,8 +61,8 @@ namespace AtmServer
 			//authenticate with database
 
 			//return success or failure
-			c = new Command("Send", "Fingerprint successfully authenticated");
-			ServerController.currentController.callbacks[c.command](c);
+			Command cmd = new Command("authResponse", "ok/denied");
+			ServerController.currentController.tcp.Send(cmd);
 
 			return false;
 		}
