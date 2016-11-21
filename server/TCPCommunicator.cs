@@ -18,6 +18,8 @@ namespace AtmServer {
 		public byte[] buffer = new byte[BufferSize];
 		// Received data string.
 		public StringBuilder sb = new StringBuilder();
+		// Client data.
+		public ClientData clientData = new ClientData();
 	}
 
 	//local class that holds command information
@@ -67,7 +69,7 @@ namespace AtmServer {
 			//this.callbacks = new Dictionary<string, TCPDataCallback>();
 			this.currentCommand = new Command();
 			//ServerController.currentController.RegisterCallback("authenticatePIN", Send);
-			ServerController.currentController.RegisterCallback("Send", Send);
+			//ServerController.currentController.RegisterCallback("Send", Send);
 		}
 
         public void StartListening() {
@@ -111,7 +113,14 @@ namespace AtmServer {
 
 			}
 			catch (SocketException s) {
-				this.listener.Shutdown(SocketShutdown.Both);
+				try
+				{
+					this.listener.Shutdown(SocketShutdown.Both);
+				}
+				catch (Exception e)
+				{
+					
+				}
 				this.listener.Close();
 				StartListening();
 
@@ -184,7 +193,7 @@ namespace AtmServer {
 
 
                         //call the message decoder method to determine the command given
-                        this.decoder(state.sb.ToString(), this.currentCommand.size);
+                        this.decoder(state.clientData, state.sb.ToString(), this.currentCommand.size);
                         state.sb.Clear();
 						this.currentCommand = new Command();
 
@@ -255,7 +264,7 @@ namespace AtmServer {
         }
 
 		//decodes information from client and stores it in currentCommand
-		private void decoder(string data, int size) {
+		private void decoder(ClientData clientData, string data, int size) {
 			int index = 0;
 
 			//begin decoding
@@ -269,7 +278,7 @@ namespace AtmServer {
 			
 			this.currentCommand.data = data.Substring(index, size - index + 1);
 			Console.WriteLine("data length: {0}", this.currentCommand.data.Length);
-            ServerController.currentController.executeCommand(this.currentCommand);
+            ServerController.currentController.executeCommand(clientData, this.currentCommand);
 		}
 		/*
 		private void decoder(byte[] data, int size) {

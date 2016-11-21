@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AtmServer
 {
-	public delegate bool TCPDataCallback(Command command);
+	public delegate bool TCPDataCallback(ClientData clientData, Command command);
 
 	class ServerController
     {
@@ -65,11 +65,11 @@ namespace AtmServer
 			controller.tcp.StartListening();
         }
 
-		public void executeCommand(Command command) {
+		public void executeCommand(ClientData clientData, Command command) {
 			// Call our callback here.
 			if (this.callbacks.ContainsKey(command.command)) {
 				Console.WriteLine("Calling the callback: {0}", command.command);
-				bool success = this.callbacks[command.command](command);
+				bool success = this.callbacks[command.command](clientData, command);
 			} else {
 				Console.WriteLine("ERROR: Invalid message name received.");
 				Console.WriteLine("Name: {0} {1}", command.command, command.command.Length);
