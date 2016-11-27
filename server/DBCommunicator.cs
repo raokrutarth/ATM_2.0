@@ -26,6 +26,22 @@ namespace AtmServer
         }
         public void FillDB()
         {
+            // Create database if it doesn't exist
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                var commandStr = @"If not exists (SELECT * FROM sys.tables WHERE name LIKE '#Customer%') 
+                                    CREATE TABLE TestCustomers(CustomerID UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,FirstName varchar(50),LastName varchar(50), HPIN 
+                                    nvarchar,HFinger nvarchar,HFace nvarchar,Balance Money)";
+
+                using (SqlCommand command = new SqlCommand(commandStr, con))
+                {
+                    if (command.ExecuteNonQuery() > 0)
+                        Console.WriteLine("New db created");
+                }
+                con.Close();
+            }
+
             // ID     Fname     Lname     HPIN     HFINGER     HFACE     Balance
             Console.WriteLine("Filling Test DB");
             string fileName = @"..\..\TestDataFiles\MOCK_DATA.csv";           
@@ -47,7 +63,6 @@ namespace AtmServer
                     InsertEntry(fields[0], fields[1], fields[2],
                                 fields[3], fields[4], fields[5], Convert.ToDouble(fields[6].Trim('$') ) );                  
                 }
-                Console.ReadKey(true);
             }
         }
 
@@ -60,7 +75,7 @@ namespace AtmServer
                 try
                 {
                     connection.Open();                    
-                    SqlCommand cmd = new SqlCommand("select * from dbo.TestCustomers order by Balance", connection);
+                    SqlCommand cmd = new SqlCommand("select * from dbo.TestCustomers order by FirstName", connection);
                     rdr = cmd.ExecuteReader();                    
                     while (rdr.Read())
                     {
@@ -232,7 +247,7 @@ namespace AtmServer
         }
 
 
-        public bool remove(string dataType, string data)
+        public bool remove(string custID, UpdateType t, string data)
         {
             return true;
         }
@@ -277,7 +292,7 @@ namespace AtmServer
                         Console.Write(newCust.face_path);
 
                         Console.Write(", Balance = ");
-                        double newBalance = -999;
+                        double newBalance = 0;
                         if ( Double.TryParse(rdr["Balance"].ToString(), out newBalance) )
                             newCust.balance = newBalance;
                         else
@@ -289,7 +304,8 @@ namespace AtmServer
                 catch (SqlException se)
                 {
                     Console.WriteLine("SQL db not connected");
-                    Console.WriteLine(se.Message);                    
+                    Console.WriteLine(se.Message);
+                    return null;
                 }
                 catch (FormatException fe)
                 {
@@ -300,6 +316,7 @@ namespace AtmServer
                 catch (ArgumentNullException)
                 {
                     Console.WriteLine("Update called with invalid [NULL] custID :" + custID);
+                    return null;
                 }
                 finally
                 {
@@ -314,13 +331,13 @@ namespace AtmServer
         public bool testDbConnection()
         {
             Console.WriteLine("testDbconnection called()");
-            using (var connection = new QC.SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 Console.WriteLine("DB Connected successfully.");
                 connection.Close();
                 return true;               
-            }
+            }            
         }        
         ~DBCommunicator()
         {
