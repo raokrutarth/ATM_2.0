@@ -1,5 +1,3 @@
-client/bin/*
-client/obj/*
-server/bin/*
-server/obj/*
+bin
+obj
 .suo
