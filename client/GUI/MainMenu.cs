@@ -12,8 +12,10 @@ namespace ATM
 {
     public partial class MainMenu : Form
     {
-        public MainMenu()
+        ATMClient atm;
+        public MainMenu(ATMClient atm)
         {
+            this.atm = atm;
             InitializeComponent();
         }
 
@@ -50,7 +52,7 @@ namespace ATM
 
         private void changePINBtn_Click(object sender, EventArgs e)
         {
-            Form form = new changePIN();
+            Form form = new changePIN(atm);
             form.Size = this.Size;/*new Size(700, 500);*/
             form.Show();
 

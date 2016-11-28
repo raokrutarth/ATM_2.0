@@ -35,9 +35,11 @@
             this.Insert_Message = new System.Windows.Forms.Label();
             this.moveOn = new System.Windows.Forms.Button();
             this.fbground = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.MockID = new System.Windows.Forms.TextBox();
+            this.DemoID = new System.Windows.Forms.Label();
             this.sendName = new System.Windows.Forms.Button();
+            this.DemoText = new System.Windows.Forms.Label();
+            this.ServerText = new System.Windows.Forms.Label();
             this.fbground.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,7 +90,6 @@
             this.cardIcon.Name = "cardIcon";
             this.cardIcon.Size = new System.Drawing.Size(156, 100);
             this.cardIcon.TabIndex = 3;
-            this.cardIcon.Click += new System.EventHandler(this.cardIcon_Click);
             // 
             // Insert_Message
             // 
@@ -104,19 +105,6 @@
             // 
             // moveOn
             // 
-            this.moveOn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.moveOn.BackColor = System.Drawing.Color.Transparent;
-            this.moveOn.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.moveOn.FlatAppearance.BorderSize = 0;
-            this.moveOn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.moveOn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.moveOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.moveOn.Location = new System.Drawing.Point(691, 198);
-            this.moveOn.Name = "moveOn";
-            this.moveOn.Size = new System.Drawing.Size(242, 326);
-            this.moveOn.TabIndex = 5;
-            this.moveOn.UseVisualStyleBackColor = false;
-            this.moveOn.Click += new System.EventHandler(this.moveOn_Click);
             // 
             // fbground
             // 
@@ -132,26 +120,25 @@
             this.fbground.Size = new System.Drawing.Size(990, 115);
             this.fbground.TabIndex = 6;
             // 
-            // textBox1
+            // MockID
             // 
-            this.textBox1.Location = new System.Drawing.Point(728, 474);
-            this.textBox1.MinimumSize = new System.Drawing.Size(4, 30);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(115, 22);
-            this.textBox1.TabIndex = 7;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.MockID.Location = new System.Drawing.Point(729, 435);
+            this.MockID.MinimumSize = new System.Drawing.Size(4, 30);
+            this.MockID.Name = "MockID";
+            this.MockID.Size = new System.Drawing.Size(115, 30);
+            this.MockID.TabIndex = 7;
+            this.MockID.TextChanged += new System.EventHandler(this.MockID_TextChanged);
             // 
-            // label1
+            // DemoID
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(600, 474);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 20);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "**Demo ID**";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.DemoID.AutoSize = true;
+            this.DemoID.BackColor = System.Drawing.Color.Transparent;
+            this.DemoID.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DemoID.Location = new System.Drawing.Point(598, 435);
+            this.DemoID.Name = "DemoID";
+            this.DemoID.Size = new System.Drawing.Size(113, 20);
+            this.DemoID.TabIndex = 8;
+            this.DemoID.Text = "**Demo ID**";
             // 
             // sendName
             // 
@@ -162,13 +149,35 @@
             this.sendName.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.sendName.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.sendName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sendName.Location = new System.Drawing.Point(858, 470);
+            this.sendName.Location = new System.Drawing.Point(869, 435);
             this.sendName.Name = "sendName";
             this.sendName.Size = new System.Drawing.Size(75, 31);
             this.sendName.TabIndex = 9;
             this.sendName.Text = "Submit";
             this.sendName.UseVisualStyleBackColor = false;
             this.sendName.Click += new System.EventHandler(this.sendName_Click);
+            // 
+            // DemoText
+            // 
+            this.DemoText.AutoSize = true;
+            this.DemoText.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.DemoText.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DemoText.Location = new System.Drawing.Point(12, 131);
+            this.DemoText.Name = "DemoText";
+            this.DemoText.Size = new System.Drawing.Size(75, 22);
+            this.DemoText.TabIndex = 11;
+            this.DemoText.Text = "ERROR";
+            // 
+            // ServerText
+            // 
+            this.ServerText.AutoSize = true;
+            this.ServerText.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.ServerText.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerText.Location = new System.Drawing.Point(45, 444);
+            this.ServerText.Name = "ServerText";
+            this.ServerText.Size = new System.Drawing.Size(177, 22);
+            this.ServerText.TabIndex = 12;
+            this.ServerText.Text = "Servers Response:";
             // 
             // welcomePage
             // 
@@ -177,9 +186,11 @@
             this.BackgroundImage = global::ATMClient.GUI.Properties.Resources.bbg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(982, 553);
+            this.Controls.Add(this.ServerText);
+            this.Controls.Add(this.DemoText);
             this.Controls.Add(this.sendName);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.DemoID);
+            this.Controls.Add(this.MockID);
             this.Controls.Add(this.Insert_Message);
             this.Controls.Add(this.cardIcon);
             this.Controls.Add(this.welcomeMessage);
@@ -206,9 +217,11 @@
         private System.Windows.Forms.Label Insert_Message;
         private System.Windows.Forms.Button moveOn;
         private System.Windows.Forms.Panel fbground;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox MockID;
+        private System.Windows.Forms.Label DemoID;
         private System.Windows.Forms.Button sendName;
+        private System.Windows.Forms.Label DemoText;
+        private System.Windows.Forms.Label ServerText;
     }
 }
 
