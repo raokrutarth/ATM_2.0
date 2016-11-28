@@ -33,13 +33,13 @@
             this.bankIcon = new System.Windows.Forms.Label();
             this.fbground = new System.Windows.Forms.Panel();
             this.photoMSG = new System.Windows.Forms.Label();
-            this.UserImage = new System.Windows.Forms.PictureBox();
+            this.userImage = new System.Windows.Forms.PictureBox();
             this.takePic = new System.Windows.Forms.Button();
             this.listOfCams = new System.Windows.Forms.ComboBox();
             this.CountDown = new System.Windows.Forms.Label();
             this.Count = new System.Windows.Forms.Timer(this.components);
             this.fbground.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.UserImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userImage)).BeginInit();
             this.SuspendLayout();
             // 
             // bankName
@@ -90,14 +90,14 @@
             this.photoMSG.TabIndex = 3;
             this.photoMSG.Text = "Please display face for recognition";
             // 
-            // UserImage
+            // userImage
             // 
-            this.UserImage.BackColor = System.Drawing.Color.Transparent;
-            this.UserImage.Location = new System.Drawing.Point(271, 137);
-            this.UserImage.Name = "UserImage";
-            this.UserImage.Size = new System.Drawing.Size(369, 310);
-            this.UserImage.TabIndex = 4;
-            this.UserImage.TabStop = false;
+            this.userImage.BackColor = System.Drawing.Color.Transparent;
+            this.userImage.Location = new System.Drawing.Point(271, 137);
+            this.userImage.Name = "userImage";
+            this.userImage.Size = new System.Drawing.Size(369, 310);
+            this.userImage.TabIndex = 4;
+            this.userImage.TabStop = false;
             // 
             // takePic
             // 
@@ -147,7 +147,7 @@
             this.Controls.Add(this.CountDown);
             this.Controls.Add(this.listOfCams);
             this.Controls.Add(this.takePic);
-            this.Controls.Add(this.UserImage);
+            this.Controls.Add(this.userImage);
             this.Controls.Add(this.photoMSG);
             this.Controls.Add(this.fbground);
             this.Name = "PhotoAuth";
@@ -156,7 +156,7 @@
             this.Load += new System.EventHandler(this.PhotoAuth_Load);
             this.fbground.ResumeLayout(false);
             this.fbground.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.UserImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,7 +168,7 @@
         private System.Windows.Forms.Label bankIcon;
         private System.Windows.Forms.Panel fbground;
         private System.Windows.Forms.Label photoMSG;
-        private System.Windows.Forms.PictureBox UserImage;
+        private System.Windows.Forms.PictureBox userImage;
         private System.Windows.Forms.Button takePic;
         private System.Windows.Forms.ComboBox listOfCams;
         private System.Windows.Forms.Label CountDown;
