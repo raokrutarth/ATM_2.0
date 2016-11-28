@@ -39,7 +39,7 @@ namespace AtmServer
             
 
             System.IO.DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
-                        AppDomain.CurrentDomain.BaseDirectory, "TestFiles") );
+                        AppDomain.CurrentDomain.BaseDirectory, "TestEncFiles") );
 
             Console.WriteLine("Write premission : " + IsDirectoryWritable(diRoot.FullName) );
 
@@ -63,9 +63,9 @@ namespace AtmServer
                 if (toDec.Contains(".enc"))
                 {                    
                     string orgName = fName.Remove(fName.IndexOf(".enc" ));
-                    string newName = diRoot.FullName + "\\dec_" + orgName;
-                    Console.WriteLine("Decrypted " + toDec + " to " + newName);
+                    string newName = diRoot.FullName + "\\dec_" + orgName;                    
                     Encryptor.DecryptFile(toDec, newName);
+                    Console.WriteLine("Decrypted " + toDec + " to " + newName);
                 }                    
             }
             Console.WriteLine("[+] files decrypted sucessfully");

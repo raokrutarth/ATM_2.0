@@ -21,7 +21,50 @@ namespace AtmServer
         {
            // init group and get customer info or files to cross check with           
         }
-                
+
+        /*
+         * newPhotoPath = complete path to the new photo
+         * 
+         */
+        internal static async Task<bool> verifyFace(string newPhotoPath, List<string> BaseFiles, string custID)
+        {
+            //Creating group
+            var group = await createGroup(groupId, groupName);
+
+            // chcek received file paths
+            foreach (string fn in BaseFiles)
+                Console.WriteLine("Base image :" + fn);
+
+            //Add person to group and related images. Person name = custID
+            addPersonToGroup(groupId, custID, BaseFiles); 
+            Console.WriteLine("Added " + custID + " to group");
+
+            trainPersonGroup(groupId);
+            var verifiedPersons = identifyPersons(groupId, newPhotoPath);
+
+            foreach (var VerifiedPerson in verifiedPersons.Result)
+            {
+                if (VerifiedPerson.Candidates.Length > 0)
+                {
+                    Console.WriteLine("Person detected");
+                    var person = getPersonById(groupId, VerifiedPerson.Candidates[0].PersonId);  // *****************
+                    person.Wait();
+                    Console.WriteLine("Name: " + person.Result.Name + " faceID.len: " +
+                        person.Result.PersistedFaceIds.Length + "  personID:" + VerifiedPerson.Candidates[0].PersonId.ToString() +
+                            " DetectionConfidence: " + VerifiedPerson.Candidates[0].Confidence);
+
+                    if (person.Result.Name.Equals(custID) && VerifiedPerson.Candidates[0].Confidence > 0.5)
+                        return true;                    
+                }
+                else
+                {
+                    Console.WriteLine("No known persons detected");
+                    break;
+                }
+            }
+            return false;
+        }
+
         public static async void testRun()
         {
             try
@@ -201,10 +244,20 @@ namespace AtmServer
                         return matchedFaces.Result;
                     }
                     else
-                        throw new ApplicationException("Faces detected. No match found");
+                    {
+                        // throw new ApplicationException("Faces detected. No match found");
+                        Console.WriteLine("faces detected but no match found in identifyPersons()");
+                        return null;
+                    }
+                        
                 }
                 else
-                    throw new ApplicationException("No Faces detected in new Image");
+                {
+                    // throw new ApplicationException("No Faces detected in new Image");
+                    Console.WriteLine("No Faces detected in new Image in identifyPersons()");
+                    return null;
+                }
+                    
             }
             catch (Exception)
             {
