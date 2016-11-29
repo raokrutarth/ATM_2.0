@@ -29,28 +29,31 @@ namespace AtmServer
 			this.auth = new Authenticator();
 			this.tcp = new TCPCommunicator();
 		}
-        public ServerController()
+        
+        public void executeCommand(ClientData clientData, Command command)
         {
-
-        }
-        public void executeCommand(ClientData clientData, Command command) {
 			// Call our callback here.
-			if (this.callbacks.ContainsKey(command.command)) {
+			if (this.callbacks.ContainsKey(command.command))
+            {
 				Console.WriteLine("Calling the callback: {0}", command.command);
 				bool success = this.callbacks[command.command](clientData, command);
-			} else {
+			}
+            else
+            {
 				Console.WriteLine("ERROR: Invalid message name received.");
 				Console.WriteLine("Name: {0} {1}", command.command, command.command.Length);
 			}
 		}
 
 		//registers callback functions
-		public bool RegisterCallback(string dataType, TCPDataCallback callback) {
+		public bool RegisterCallback(string dataType, TCPDataCallback callback)
+        {
 			this.callbacks[dataType] = callback;
 			return true;
 		}
 
-		public void setup() {
+		public void setup()
+        {
 			
 		}
         void serveClient()
@@ -74,8 +77,6 @@ namespace AtmServer
         }
         static void testEncryption()
         {
-            
-
             System.IO.DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
                         AppDomain.CurrentDomain.BaseDirectory, "TestEncFiles") );
 
@@ -108,15 +109,15 @@ namespace AtmServer
             }
             Console.WriteLine("[+] files decrypted sucessfully");
         }
-        void testFace()
+        static void testFace()
         {
-            FaceIdentification fi = new FaceIdentification("<new Image Path>", "<custID>");
+           FaceIdentification fi = new FaceIdentification("<new Image Path>", "<custID>");
            while (true)
            {
                FaceIdentification.testRun();
            }
         }
-        void testDB()
+        static void testDB()
         {
             DBCommunicator dbComm = new DBCommunicator();
 
@@ -158,12 +159,16 @@ namespace AtmServer
         {
             int width = 200, height = 30;
             Console.SetWindowSize(width, height);
-            Console.WriteLine("In ServerController Main()");            
+            Console.WriteLine("In ServerController Main()");
 
-            testEncryption();
+            //testDB();
+            //testEncryption();
 
             Console.ReadKey();
         }
+
+
+
 
 
         public static bool IsDirectoryWritable(string dirPath, bool throwIfFails = false)
