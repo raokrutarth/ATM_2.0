@@ -24,7 +24,6 @@ namespace AtmServer
 
         /*
          * newPhotoPath = complete path to the new photo
-         * 
          */
         internal static async Task<bool> verifyFace(string newPhotoPath, List<string> BaseFiles, string custID)
         {
@@ -33,11 +32,11 @@ namespace AtmServer
 
             // chcek received file paths
             foreach (string fn in BaseFiles)
-                Console.WriteLine("Base image :" + fn);
+                Console.WriteLine("Using base image :" + fn);
 
             //Add person to group and related images. Person name = custID
             addPersonToGroup(groupId, custID, BaseFiles); 
-            Console.WriteLine("Added " + custID + " to group");
+            Console.WriteLine("Added " + custID + " to " + groupName);
 
             trainPersonGroup(groupId);
             var verifiedPersons = identifyPersons(groupId, newPhotoPath);

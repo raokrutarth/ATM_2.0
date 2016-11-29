@@ -18,38 +18,41 @@ namespace AtmServer
         public Authenticator()
         {
 			// Register TCP callbacks.
-			ServerController.currentController.RegisterCallback("authenticateAccount", authenticateAccount);
+			ServerController.currentController.RegisterCallback("authenticateAccount", getName);
 			ServerController.currentController.RegisterCallback("authenticatePIN", authenticatePIN);
 			ServerController.currentController.RegisterCallback("authenticateFace", authenticateFace);
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
 			ServerController.currentController.RegisterCallback("setFingerImageSize", setFingerImageSize);
 		}
 
-		// returns true/ false given:
-        // image = new image taken by atm machine
-        // db_ImagePath = collection of images the customer provided during account creation 
-        public bool verifyFace(string[] db_ImagePath, Image image)
+        // returns true/ false given:
+        // newImagePath = path to new image taken by atm machine
+        // currentCust = Customer object that holds the paths to the encrypted files. 
+        public async System.Threading.Tasks.Task<bool> verifyFace(Customer currentCust, string newImagePath)
         {
-            // db
-            return false;
+            string encBases = currentCust.face_path;
+            string[] basePaths = encBases.Split(',');
+
+            List<string> bp = new List<string>();
+            foreach (string path in basePaths)
+                bp.Add(path);
+            return await FaceIdentification.verifyFace(newImagePath, bp, currentCust.CustomerID.ToString());
         }
 
-		/*
+        /*
 		 * Validates and stores the user's account number.
 		 */
-		public bool authenticateAccount(ClientData clientData, Command command)
+        public bool getName(ClientData clientData, Command command)
 		{
 			// Parse account number.
 			int accountNumber = Int32.Parse(command.data);
-
 			// Validate and store account number.
 			//TODO: validate account number here.
 			clientData.accountNumber = accountNumber;
-
+            // set global customer using clientData.setCust()
 			// Send response.
 			Command cmd = new Command("authResponse", "ok");
 			ServerController.currentController.tcp.Send(cmd);
-
 			return true;
 		}
 
@@ -62,7 +65,11 @@ namespace AtmServer
 			int pin = Int32.Parse(command.data);
 
 			// Validate PIN.
-			//TODO: validate PIN here.
+			//TODO: 
+            // compare clientData.custObj.pin == newPin
+
+
+            // 
 
 			// Send response.
 			Command cmd = new Command("authResponse", "ok");
@@ -81,12 +88,13 @@ namespace AtmServer
 			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(320, 480, data);
 			Stream fStream = new MemoryStream(bmp.BitmatFileData);
 			Bitmap image1 = new Bitmap(fStream);
+            string savedPath = "./<cust-ID>_newFace.png";
+            // save this image to a file like <cust-ID>_newFace.png
 
-			// Verify the image.
-			//TODO: this.verifyFace();
+            //bool faceResult =  this.verifyFace(<customer object>, savedPath_newfile );
 
-			// Send response.
-			Command cmd = new Command("authResponse", "ok");
+            // Send response.
+            Command cmd = new Command("authResponse", "ok");
 			ServerController.currentController.tcp.Send(cmd);
 
 			return true;
@@ -102,19 +110,27 @@ namespace AtmServer
 			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(clientData.fingerprintImageSize.Width,
 				clientData.fingerprintImageSize.Height, data);
 			Stream fStream = new MemoryStream(bmp.BitmatFileData);
-			Bitmap image1 = new Bitmap(fStream);
-			Bitmap image2 = new Bitmap(".\\test-img.bmp");
-			image1.Save(".\\img.bmp");
+			Bitmap image1 = new Bitmap(fStream); // new img
+            // fetch enc file path
+            // decrypt
+
+			Bitmap image2 = new Bitmap(".\\test-img.bmp"); //replace this file path with the path from the database
+            // db image
+			//image1.Save(".\\img.bmp");
 
 			// Extract features from images.
 			var featureExtractor = new MTripletsExtractor() {MtiaExtractor = new Ratha1995MinutiaeExtractor() };
 			var features1 = featureExtractor.ExtractFeatures(image1);
 			var features2 = featureExtractor.ExtractFeatures(image2);
 
+
+
 			// Perform matching.
 			var matcher = new M3gl();
 			double similarity = matcher.Match(features1, features2);
 			Console.WriteLine("Fingerprint similarity of {0}", similarity);
+
+            // delete decrypted file from db
 
 			// Return success or failure.
 			if(similarity >= MIN_FINGERPRINT_SIMILARITY)
