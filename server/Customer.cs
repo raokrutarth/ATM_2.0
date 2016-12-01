@@ -40,10 +40,46 @@ namespace AtmServer
 
 		//Reduces the Client's balance by sizeOfWithdrawal
 		public string makeWithdrawal(string sizeOfWithdrawal) {
+			double w = Convert.ToDouble(sizeOfWithdrawal);
 
-			return "";
+			this.balance = this.balance - w;
+
+			//TODO: Update the database balance
+
+			//success return
+			return sizeOfWithdrawal + " withdrawn";
+
+			//failure return
+			//return "Withdrawal Error";
 		}
 
+		//Adds the Clients balance by sizeOfDeposit
+		public string makeDeposit(string sizeOfDeposit)	{
+			double d = Convert.ToDouble(sizeOfDeposit);
+
+			this.balance = this.balance + d;
+
+			//TODO: Update the database balance
+			
+			//success return
+			return sizeOfDeposit + " deposited";
+
+			//failure return
+			//return "Deposit Error";
+		}
+
+		//Changes the old PIN for the Client to newPIN
+		public string changePIN(string newPIN) {
+			this.HPIN = newPIN;
+
+			//TODO: Update the PIN in the database
+
+			//success return
+			return "PIN Succesfully changed";
+
+			//failure return
+			//return "Error PIN not changed";
+		}
 
 	}
 
