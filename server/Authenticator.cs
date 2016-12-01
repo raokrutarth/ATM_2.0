@@ -44,14 +44,19 @@ namespace AtmServer
 		 */
         public bool getName(ClientData clientData, Command command)
 		{
-			// Parse account number.
-			int accountNumber = Int32.Parse(command.data);
-			// Validate and store account number.
-			//TODO: validate account number here.
-			clientData.accountNumber = accountNumber;
-            // set global customer using clientData.setCust()
-			// Send response.
-			Command cmd = new Command("authResponse", "ok");
+			string custID = command.data;
+			string name = "";
+
+			custID.PadLeft(32, '0');
+
+			Customer c = ServerController.currentController.database.getCustomer(custID);
+			clientData.setCust(c);
+
+			name += c.FirstName;
+			name += " " + c.LastName;
+
+			//Send response	
+			Command cmd = new Command("Response", name);
 			ServerController.currentController.tcp.Send(cmd);
 			return true;
 		}
@@ -61,18 +66,19 @@ namespace AtmServer
 		 */
 		public bool authenticatePIN(ClientData clientData, Command command)
 		{
-			// Parse PIN.
-			int pin = Int32.Parse(command.data);
-
+			
 			// Validate PIN.
-			//TODO: 
-            // compare clientData.custObj.pin == newPin
+			if (command.data == clientData.customerObj.HPIN) {
+				clientData.authPIN = true;
+				Command cmd = new Command("Response", "PIN Verified");
+				ServerController.currentController.tcp.Send(cmd);
+				return true;
 
-			// Send response.
-			Command cmd = new Command("authResponse", "ok");
-			ServerController.currentController.tcp.Send(cmd);
-
-			return true;
+			} else {
+				Command cmd = new Command("Response", "PIN Failure");
+				ServerController.currentController.tcp.Send(cmd);
+				return false;
+			}
 		}
 
 		/*
@@ -88,13 +94,16 @@ namespace AtmServer
             string savedPath = "./<cust-ID>_newFace.png";
             // save this image to a file like <cust-ID>_newFace.png
 
-            //bool faceResult =  this.verifyFace(<customer object>, savedPath_newfile );
+            //bool faceResult =  this.verifyFace(clientData.customerObj, savedPath_newfile );
 
             // Send response.
             Command cmd = new Command("authResponse", "ok");
 			ServerController.currentController.tcp.Send(cmd);
 
+			//if() verified
 			return true;
+
+			//else not verified
 		}
 
 		/*
