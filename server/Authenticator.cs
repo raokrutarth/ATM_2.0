@@ -28,7 +28,7 @@ namespace AtmServer
         // returns true/ false given:
         // newImagePath = path to new image taken by atm machine
         // currentCust = Customer object that holds the paths to the encrypted files. 
-        public async System.Threading.Tasks.Task<bool> verifyFace(Customer currentCust, string newImagePath)
+        public static async System.Threading.Tasks.Task<bool> verifyFace(Customer currentCust, string newImagePath)
         {
             string encBases = currentCust.face_path;
             string[] basePaths = encBases.Split(',');
@@ -67,9 +67,6 @@ namespace AtmServer
 			// Validate PIN.
 			//TODO: 
             // compare clientData.custObj.pin == newPin
-
-
-            // 
 
 			// Send response.
 			Command cmd = new Command("authResponse", "ok");

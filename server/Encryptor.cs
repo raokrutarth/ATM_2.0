@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AtmServer
 {
     internal sealed class Encryptor
     {
-        private const string Salt = "d5fg4df5sg4ds5fg45sdfg4";
+        private const string Salt = "d5fg49df5sg4ds5fg45sdfg4";
         private const int SizeOfBuffer = 1024 * 8; // buffer size for stream copy
         internal static string enc_key = ConfigurationManager.AppSettings["encKey"];
         internal static string enc_iv = ConfigurationManager.AppSettings["encIv"];
@@ -160,7 +157,6 @@ namespace AtmServer
             }
             return plaintext;
         }
-
 
     }
 }
