@@ -22,5 +22,30 @@ namespace AtmServer
         public String finger_path { get; set; }
         public String face_path { get; set; }
         public double balance { get; set; }
-    }
+
+		//returns the balance for the requested account
+		public string getAccountBalance(string accountName) {
+			string successReturn = accountName + ": ";
+			string accountBalance = "";
+
+			//get account balance from database
+
+			//success return
+			successReturn += accountBalance;
+			return successReturn;
+
+			//failure return
+			//return "Balance Error";
+		}
+
+		//Reduces the Client's balance by sizeOfWithdrawal
+		public string makeWithdrawal(string sizeOfWithdrawal) {
+
+			return "";
+		}
+
+
+	}
+
+	
 }
