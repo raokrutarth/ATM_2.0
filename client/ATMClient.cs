@@ -7,6 +7,10 @@ using System.Windows.Forms;
 namespace ATM {
 	public class ATMClient
 	{
+		// Default connection information.
+		private const string ATM_SERVER_ADDRESS = "atmserver.centralus.cloudapp.azure.com";
+		private const int ATM_SERVER_PORT = 11000;
+
 		public static ATMClient _atmClientObject = null;
 		private UserInterface ui;
 		private HardwareReader drivers;
@@ -49,8 +53,8 @@ namespace ATM {
             //Console.WriteLine("ATM client initializing.");
 			drivers = new HardwareReader();
 			ui = new UserInterface();
-            user = new CurrentUser();
-			serverConnection = new ServerConnection("192.168.1.230", 11000);
+			user = new CurrentUser();
+			serverConnection = new ServerConnection(ATM_SERVER_ADDRESS, ATM_SERVER_PORT);
 
 			while(!serverConnection.Connect())
 			{
