@@ -16,7 +16,7 @@ namespace ATM
 		private int interfaceNumber;
 		private Device scanner;
 		private byte[] image;
-		private Size imageSize;
+		public Size imageSize {  get; private set; }
 
 		/*
 		 * Creates an interface to the fingerprint reader.
@@ -106,7 +106,6 @@ namespace ATM
 			}
 			catch (ScanAPIException ex)
 			{
-				Console.WriteLine("Failed to retrieve image from scanner: {0}", ex.ToString());
 			}
 			return null;
 		}

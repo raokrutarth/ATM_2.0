@@ -154,7 +154,7 @@ namespace ATM
 				string response = string.Empty;
 				Int32 bytes = stream.Read(data, 0, data.Length);
 				response = Encoding.ASCII.GetString(data, 0, bytes);
-				Console.WriteLine("Got response of length {1}:\n\"\"\"\n{0}\n\"\"\"\n", response, response.Length);
+				//Console.WriteLine("Got response of length {1}:\n\"\"\"\n{0}\n\"\"\"\n", response, response.Length);
 
 				// Create Message instance.
 				Message result = new Message();
