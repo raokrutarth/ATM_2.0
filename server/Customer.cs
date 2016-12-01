@@ -23,6 +23,13 @@ namespace AtmServer
         public String face_path { get; set; }
         public double balance { get; set; }
 
+		/*public Customer() {
+			ServerController.currentController.registerCustomerCallback("getAccountBalance", getAccountBalance);
+			ServerController.currentController.registerCustomerCallback("makeWithdrawal", makeWithdrawal);
+			ServerController.currentController.registerCustomerCallback("makeDeposit", makeDeposit);
+			ServerController.currentController.registerCustomerCallback("changePIN", changePIN);
+		}*/
+
 		//returns the balance for the requested account
 		public string getAccountBalance(string accountName) {
 			string successReturn = accountName + ": ";
