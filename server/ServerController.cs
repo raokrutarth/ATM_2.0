@@ -9,22 +9,27 @@ using System.Threading.Tasks;
 
 namespace AtmServer
 {
-    class ServerController
+	//Delegates for Callback Functions
+	public delegate bool TCPDataCallback(ClientData clientData, Command command);
+	//public delegate string TCPCustomerCallback(string data);
+
+	class ServerController
     {  
     	public static ServerController currentController;
 
 		// Member fields.
 		Dictionary<string, TCPDataCallback> callbacks;
+		//Dictionary<string, TCPCustomerCallback> customerCallbacks;
 		public DBCommunicator database;
 		public Authenticator auth;
 		public TCPCommunicator tcp;
 
-		private string accountNumber = string.Empty;
 
 		public ServerController()
 		{
 			currentController = this;
 			this.callbacks = new Dictionary<string, TCPDataCallback>();
+			//this.customerCallbacks = new Dictionary<string, TCPCustomerCallback>();
 			this.database = new DBCommunicator();
 			this.auth = new Authenticator();
 			this.tcp = new TCPCommunicator();
@@ -37,7 +42,9 @@ namespace AtmServer
             {
 				Console.WriteLine("Calling the callback: {0}", command.command);
 				bool success = this.callbacks[command.command](clientData, command);
-			}
+			} /*else if (this.customerCallbacks.ContainsKey(command.command)) {
+				bool success = this.customerCallbacks[command.command](command.data);
+			}*/
             else
             {
 				Console.WriteLine("ERROR: Invalid message name received.");
@@ -51,6 +58,12 @@ namespace AtmServer
 			this.callbacks[dataType] = callback;
 			return true;
 		}
+
+		/*registers callbacks for 
+		public bool registerCustomerCallback (string dataType, TCPCustomerCallback callback) {
+			this.customerCallbacks[dataType] = callback;
+			return true;
+		}*/
 
 		public void setup()
         {
@@ -224,6 +237,6 @@ namespace AtmServer
             }
         }
     }
-	public delegate bool TCPDataCallback(ClientData clientData, Command command);
+	
 	
 }
