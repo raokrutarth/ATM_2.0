@@ -15,12 +15,7 @@ namespace AtmServer
         static string groupName = "test_customers";
 
         //FaceService Client object initilized with subscription key
-        static FaceServiceClient face_api = new FaceServiceClient("38e4c823cbc344a2b882c5b3ada6dbcd");
-
-        public FaceIdentification(string imagePath, string clientID)
-        {
-           // init group and get customer info or files to cross check with           
-        }
+        static FaceServiceClient face_api = new FaceServiceClient("7d6d05ad1bed4899ba1c9e848b2e8f7e");
 
         /*
          * newPhotoPath = complete path to the new photo
@@ -30,7 +25,7 @@ namespace AtmServer
             //Creating group
             var group = await createGroup(groupId, groupName);
 
-            // chcek received file paths
+            // check received file paths
             foreach (string fn in BaseFiles)
                 Console.WriteLine("Using base image :" + fn);
 
@@ -45,19 +40,22 @@ namespace AtmServer
             {
                 if (VerifiedPerson.Candidates.Length > 0)
                 {
-                    Console.WriteLine("Person detected");
-                    var person = getPersonById(groupId, VerifiedPerson.Candidates[0].PersonId);  // *****************
+                    var person = getPersonById(groupId, VerifiedPerson.Candidates[0].PersonId);
+                    //Console.WriteLine("Person detected");
+                    //Console.WriteLine("ID: " + person.Result.Name + "  personID:" + VerifiedPerson.Candidates[0].PersonId.ToString() +
+                    //        " DetectionConfidence: " + VerifiedPerson.Candidates[0].Confidence);
                     person.Wait();
-                    Console.WriteLine("Name: " + person.Result.Name + " faceID.len: " +
-                        person.Result.PersistedFaceIds.Length + "  personID:" + VerifiedPerson.Candidates[0].PersonId.ToString() +
-                            " DetectionConfidence: " + VerifiedPerson.Candidates[0].Confidence);
-
                     if (person.Result.Name.Equals(custID) && VerifiedPerson.Candidates[0].Confidence > 0.5)
-                        return true;                    
+                    {
+                        Console.WriteLine("ID: " + person.Result.Name + "  personID:" + VerifiedPerson.Candidates[0].PersonId.ToString() +
+                            " DetectionConfidence: " + VerifiedPerson.Candidates[0].Confidence);
+                        return true;
+                    }
+                                           
                 }
                 else
                 {
-                    Console.WriteLine("No known persons detected");
+                    Console.WriteLine("No known persons detected " + VerifiedPerson.Candidates.Length);
                     break;
                 }
             }
@@ -130,7 +128,7 @@ namespace AtmServer
                         }
                         else
                         {
-                            Console.WriteLine("No known persons detected");
+                            Console.WriteLine("No known persons detected. verifiedPerson.len: " + VerifiedPerson.Candidates.Length);
                         }
                     }
                 }
@@ -192,7 +190,7 @@ namespace AtmServer
                 {
                     System.IO.Stream ms = new System.IO.MemoryStream(System.IO.File.ReadAllBytes(imagePaths[i]));
                     addedFaces[i] = face_api.AddPersonFaceAsync(groupId, person.PersonId, ms);
-                    Console.WriteLine("Sending training image(" + imagePaths[i] + ") for person = " + personName);
+                    // Console.WriteLine("Sending training image(" + imagePaths[i] + ") for person = " + personName);
                 }
                 Task.WaitAll(addedFaces);
             }
@@ -208,7 +206,7 @@ namespace AtmServer
         {
             try
             {
-                Console.WriteLine("Training whole group with groupID = " + groupId);
+                Console.WriteLine("Training group with groupID = " + groupId);
                 var t = face_api.TrainPersonGroupAsync(groupId);
                 t.Wait();
                 
@@ -256,14 +254,18 @@ namespace AtmServer
                     Console.WriteLine("No Faces detected in new Image in identifyPersons()");
                     return null;
                 }
-                    
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Console.WriteLine("Error in identify person");
+                if (e.InnerException != null)
+                    Console.WriteLine(e.InnerException.Message);
+                else
+                    Console.WriteLine(e.Message);
                 throw;
             }
-        }
+}
 
         /// Return a PersonObject by personID within a group with groupId           
         private static async Task<Person> getPersonById(string groupId, Guid personId)

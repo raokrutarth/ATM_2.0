@@ -77,7 +77,7 @@ namespace AtmServer
         }
         static void testEncryption()
         {
-            System.IO.DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
+            DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
                         AppDomain.CurrentDomain.BaseDirectory, "TestEncFiles") );
 
             Console.WriteLine("Write premission : " + IsDirectoryWritable(diRoot.FullName) );
@@ -109,13 +109,45 @@ namespace AtmServer
             }
             Console.WriteLine("[+] files decrypted sucessfully");
         }
-        static void testFace()
+        static async void testFace(bool valid)
         {
-           FaceIdentification fi = new FaceIdentification("<new Image Path>", "<custID>");
-           while (true)
-           {
-               FaceIdentification.testRun();
-           }
+            
+            //while (true)
+            //{
+            //    FaceIdentification.testRun();
+            //}
+           DirectoryInfo diRoot = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "FaceVerifyTest"));
+
+            Random rnd = new Random();
+            int randValid = rnd.Next(4);
+            string tested;
+
+            foreach (var folder in diRoot.GetDirectories())
+            {
+                //Getting all training images and put into a list
+                DirectoryInfo di = new System.IO.DirectoryInfo(folder.FullName);
+                Console.WriteLine("in folder: " + folder.FullName);
+                List<string> imageFiles = new List<string>();
+                di.GetFiles().ToList().ForEach(f => imageFiles.Add(f.FullName));
+
+                // dhoni, duterte & rao are seperate paths to valid files
+                // used to verify against the base files provided above.
+                string[] validFaces = new string[] {
+                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\msd_verify.jpg",
+                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\duterte_verify2.jpg",
+                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\duterte_verify.jpg",
+                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\rao_verify.png" };
+               
+                if(valid)   // test valid verification image against base images
+                    tested = validFaces[randValid];
+                else // rickey doesn't exist in any base image folder so it should evaluate to false for all folders
+                    tested = @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\rickey_verify.jpg";
+
+                Console.WriteLine("testing with image " + tested);
+                bool detected = await FaceIdentification.verifyFace(tested, imageFiles, folder.Name);                
+                Console.WriteLine("[+] " + tested.Substring(tested.LastIndexOf('\\')+1) + " detected in base files: " + detected );
+                Thread.Sleep(3000);             
+            }
         }
         static void testDB()
         {
@@ -163,13 +195,10 @@ namespace AtmServer
 
             //testDB();
             //testEncryption();
+            testFace(true);
 
             Console.ReadKey();
         }
-
-
-
-
 
         public static bool IsDirectoryWritable(string dirPath, bool throwIfFails = false)
         {
