@@ -19,9 +19,17 @@ namespace ATM
     {
         private FilterInfoCollection webcam;
         private VideoCaptureDevice cam;
+        private ATMClient atm;
+        //private Bitmap bit;
         private int timeLeft;
         public PhotoAuth()
         {
+            InitializeComponent();
+        }
+
+        public PhotoAuth(ATMClient atm)
+        {
+            this.atm = atm;
             InitializeComponent();
         }
         private int getTime()
@@ -60,7 +68,7 @@ namespace ATM
         private void cam_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             Bitmap bit = (Bitmap)eventArgs.Frame.Clone();
-            UserImage.Image = bit;
+            userImage.Image = bit;
         }
 
         private void Count_Tick(object sender, EventArgs e)
@@ -83,23 +91,32 @@ namespace ATM
                 Count.Stop();
                 try
                 {
-                    UserImage.Image.Save(name);
+                    userImage.Image.Save(name);
+
                 }
                 catch (Exception)
                 {
                     success = false;
+                    photoMSG.Text = "pathing wrong";
                 }
                 if (success)
                 {
                     if (cam.IsRunning)
                     {
                         cam.Stop();
+                        //Message msg = atm.serverConnection.SendData("PhotoAuth", ImageToByte(userImage.Image), true);
                     }
                     this.Close();
                 }
 
             }
         }
+        public static byte[] ImageToByte(System.Drawing.Image img)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
+        }
     }
+
     }
 

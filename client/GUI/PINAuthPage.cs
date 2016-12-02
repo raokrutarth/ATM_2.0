@@ -10,17 +10,14 @@ using System.Windows.Forms;
 
 namespace ATM
 {
-    public partial class loginPage : Form
+    public partial class PinPage : Form
     {
+        ATMClient atm;
 
-        public loginPage()
+        public PinPage(ATMClient atm)
         {
+            this.atm = atm;
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void txtPIN_TextChanged(object sender, EventArgs e)
@@ -36,6 +33,7 @@ namespace ATM
                     txtPIN.Clear();
                     ErrorMessage.Visible = true;
                     //Clear doesn't work?
+
                     thePIN.Text = "";
                     return;
                 }
@@ -55,19 +53,42 @@ namespace ATM
 
                 }
                 //This is where we will send the PIN to the server
-                //for now we will just close
+                /*if (atm.serverConnection.Connect())
+                {
+                    
+                    Message msg = atm.serverConnection.SendData("authenticatePIN", txtPIN.Text, true);
+                    //for now we will just close
+                }
+             */
                 Close();
+                
             }
             
-        }
-        private void moveOn_Click(object sender, EventArgs e)
-        {
-            Close();
         }
 
         private void loginPage_Load(object sender, EventArgs e)
         {
 
+            if (!(atm == null))
+            {
+
+
+                if (!(atm.user == null) && !(atm.user.getName() == null))
+                {
+                    greetingText.Text = greetingText.Text + " " + atm.user.getName()  + "!";
+                }
+
+                if (atm.serverConnection == null)
+                {
+                    greetingText.Text = "server connection is null";
+                } else
+                {
+                    if (!atm.serverConnection.Connect())
+                    {
+                        greetingText.Text = "not connected to the server";
+                    }
+                }
+            }
         }
     }
 }
