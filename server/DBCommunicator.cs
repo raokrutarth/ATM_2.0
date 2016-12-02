@@ -14,7 +14,7 @@ namespace AtmServer
         enum RequestType { Query, Insert, Peek};
         public enum UpdateType { ID, fName, lName, h_pin, finger_path, face_path, balance };
 
-        string connectionString;
+        static string connectionString;
 
         public DBCommunicator()
         {
@@ -66,7 +66,7 @@ namespace AtmServer
             }
         }
 
-        public void printDB()
+        public static void printDB()
         {
             // ID     Fname     Lname     HPIN     HFINGER     HFACE     Balance   
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -102,7 +102,7 @@ namespace AtmServer
             }
         }
 
-        public bool InsertEntry(string CustID, string firstName, 
+        public static bool InsertEntry(string CustID, string firstName, 
             string lastName, string hPin, string hFace, string hFinger, double balance)
         {
             // define INSERT query with parameters
@@ -147,7 +147,7 @@ namespace AtmServer
                 }
             }            
         }
-        public bool update(string custID, UpdateType t, string data )
+        public static bool update(string custID, UpdateType t, string data )
         {
             try
             {
@@ -247,11 +247,11 @@ namespace AtmServer
         }
 
 
-        public bool remove(string custID, UpdateType t, string data)
+        public static bool remove(string custID, UpdateType t, string data)
         {
             return true;
         }
-        public Customer getCustomer(string custID)
+        public static Customer getCustomer(string custID)
         {
             Guid f_custID = new Guid(custID);
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -328,7 +328,7 @@ namespace AtmServer
                 return null;
             }            
         }
-        public bool testDbConnection()
+        public static bool testDbConnection()
         {
             Console.WriteLine("testDbconnection called()");
             using (var connection = new SqlConnection(connectionString))

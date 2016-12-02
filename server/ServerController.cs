@@ -144,59 +144,74 @@ namespace AtmServer
                     tested = @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\rickey_verify.jpg";
 
                 Console.WriteLine("testing with image " + tested);
-                bool detected = await FaceIdentification.verifyFace(tested, imageFiles, folder.Name);                
+                bool detected;
+                try
+                {
+                    detected = await FaceIdentification.verifyFace(tested, imageFiles, folder.Name);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Exception occured wehn FaceIdentification.verifyFace() called");
+                    Console.WriteLine(e.Message);
+                    if(e.InnerException != null)
+                        Console.WriteLine(e.InnerException.Message);
+                    continue;
+                }                                
                 Console.WriteLine("[+] " + tested.Substring(tested.LastIndexOf('\\')+1) + " detected in base files: " + detected );
-                Thread.Sleep(3000);             
+                //Thread.Sleep(3000);          
             }
         }
         static void testDB()
         {
-            DBCommunicator dbComm = new DBCommunicator();
-
-            dbComm.testDbConnection();
+            
+            DBCommunicator.testDbConnection();
             //Console.WriteLine("Printing database...");
-            //dbComm.printDB();
+            //DBCommunicator.printDB();
 
             string toChange = "00000000-0000-0000-3586-123193050990";
-            Customer orgCust = dbComm.getCustomer(toChange);
-            string newName = "Bob";
+            Customer orgCust = DBCommunicator.getCustomer(toChange);
+            string newName = "Yan";
             Console.WriteLine("Before :");
-            dbComm.getCustomer(toChange);
+            DBCommunicator.getCustomer(toChange);
             Console.WriteLine("Changing " + toChange + " first name to " + newName);
-            bool done = dbComm.update(toChange, DBCommunicator.UpdateType.fName, newName);
+            bool done = DBCommunicator.update(toChange, DBCommunicator.UpdateType.fName, newName);
             Console.WriteLine("After :");
-            dbComm.getCustomer(toChange);
+            DBCommunicator.getCustomer(toChange);
 
             Console.WriteLine("Before :");
-            dbComm.getCustomer(toChange);
-            double nb = 500;
+            DBCommunicator.getCustomer(toChange);
+            double nb = 54300;
             Console.WriteLine("Changing " + toChange + " balance to to " + nb);
-            done = dbComm.update(toChange, DBCommunicator.UpdateType.balance, nb.ToString());
+            done = DBCommunicator.update(toChange, DBCommunicator.UpdateType.balance, nb.ToString());
             Console.WriteLine("After :");
-            dbComm.getCustomer(toChange);
+            DBCommunicator.getCustomer(toChange);
 
             Console.WriteLine("Before :");
-            dbComm.getCustomer(toChange);
+            DBCommunicator.getCustomer(toChange);
             string newFingerPath = orgCust.finger_path;
-            newFingerPath += "/new/path/to/file,";
+            newFingerPath += "/new/path/to/file2,";
             Console.WriteLine("Changing " + toChange + " Finger file path to " + newFingerPath);
-            done = dbComm.update(toChange, DBCommunicator.UpdateType.finger_path, newFingerPath);
+            done = DBCommunicator.update(toChange, DBCommunicator.UpdateType.finger_path, newFingerPath);
             Console.WriteLine("After :");
-            dbComm.getCustomer(toChange);
+            DBCommunicator.getCustomer(toChange);
         }
 
 
         [STAThread]
         static void Main(string[] args)
         {
-            int width = 200, height = 30;
-            Console.SetWindowSize(width, height);
-            Console.WriteLine("In ServerController Main()");
+            //int width = 200, height = 30;
+            //Console.SetWindowSize(width, height);
+            //Console.WriteLine("In ServerController Main()");
 
-            //testDB();
+            testDB();
             //testEncryption();
-            testFace(true);
+            //testFace(true);
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            System.IO.DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory, "Images"));
 
+            Console.WriteLine(diRoot + "\\tempImg.bmp");
             Console.ReadKey();
         }
 
