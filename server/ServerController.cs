@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AtmServer
 {
@@ -20,7 +16,7 @@ namespace AtmServer
 		// Member fields.
 		Dictionary<string, TCPDataCallback> callbacks;
 		//Dictionary<string, TCPCustomerCallback> customerCallbacks;
-		public DBCommunicator database;
+		public DBCommunicator database = new DBCommunicator();
 		public Authenticator auth;
 		public TCPCommunicator tcp;
 
@@ -174,8 +170,29 @@ namespace AtmServer
                 //Thread.Sleep(3000);          
             }
         }
+        static string getTestFilePaths()
+        {
+            string[] UnEncFiles = {
+                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\Duterte\dt-1.jpg",
+                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\Duterte\dt-3.jpg",
+                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\Duterte\rodrigo-duterte-2.jpg",
+                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\Duterte\rodrigo-duterte-5.jpg",
+                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\Duterte\RodrigoDuterte4.jpg"
+                };
+            string res = "";
+            int n = 0;
+            foreach (string encFile in UnEncFiles)
+            {
+                string newPath = Directory.GetCurrentDirectory() + "\\duterte_baseFile" + n++ + ".enc";
+                Encryptor.EncryptFile(encFile, newPath);
+                res += newPath + ",";
+            }
+            Console.WriteLine("sending encFiles str: " + res);
+            return res;
+        }
         static void testDB()
         {
+            DBCommunicator d = new DBCommunicator();
             
             DBCommunicator.testDbConnection();
             //Console.WriteLine("Printing database...");
@@ -201,7 +218,7 @@ namespace AtmServer
 
             Console.WriteLine("Before :");
             DBCommunicator.getCustomer(toChange);
-            string newFingerPath = orgCust.finger_path;
+            string newFingerPath = getTestFilePaths();// orgCust.finger_path;
             newFingerPath += "/new/path/to/file2,";
             Console.WriteLine("Changing " + toChange + " Finger file path to " + newFingerPath);
             done = DBCommunicator.update(toChange, DBCommunicator.UpdateType.finger_path, newFingerPath);
@@ -220,11 +237,12 @@ namespace AtmServer
             testDB();
             //testEncryption();
             //testFace(true);
-            Console.WriteLine(Directory.GetCurrentDirectory());
-            System.IO.DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
-                        AppDomain.CurrentDomain.BaseDirectory, "Images"));
+            //Console.WriteLine(getTestFilePaths());
+            //Console.WriteLine(Directory.GetCurrentDirectory());
+            //DirectoryInfo diRoot = new DirectoryInfo(System.IO.Path.Combine(
+            //            AppDomain.CurrentDomain.BaseDirectory, "Images"));
 
-            Console.WriteLine(diRoot + "\\tempImg.bmp");
+            //Console.WriteLine(diRoot + "\\tempImg.bmp");
             Console.ReadKey();
         }
 

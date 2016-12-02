@@ -15,6 +15,7 @@ namespace AtmServer
         public enum UpdateType { ID, fName, lName, h_pin, finger_path, face_path, balance };
 
         static string connectionString;
+        
 
         public DBCommunicator()
         {
