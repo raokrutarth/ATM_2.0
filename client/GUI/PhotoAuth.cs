@@ -7,18 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AForge.Controls;
-using AForge.Imaging;
-using AForge.Math;
-using AForge.Video;
-using AForge.Video.DirectShow;
+//using AForge.Controls;
+//using AForge.Imaging;
+//using AForge.Math;
+//using AForge.Video;
+//using AForge.Video.DirectShow;
 
 namespace ATM
 {
     public partial class PhotoAuth : Form
     {
-        private FilterInfoCollection webcam;
-        private VideoCaptureDevice cam;
+        //private FilterInfoCollection webcam;
+        //private VideoCaptureDevice cam;
         private ATMClient atm;
         //private Bitmap bit;
         private int timeLeft;
@@ -57,7 +57,8 @@ namespace ATM
              * FOR HAL AND RAO
              *
              */
-            Message msg = atm.serverConnection.SendData(/*not correct type*/"PhotoAuth", ImageToByte(userImage.Image), true);
+            Console.Write("Height: " + userImage.Image.Height + "\nWidth: " + userImage.Width + "\n");
+            Message msg = atm.serverConnection.SendData("authenticateFace", ImageToByte(userImage.Image), true);
             Console.Write(msg.type + " " + msg.data+ "\n");
             /*
             webcam = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -72,7 +73,7 @@ namespace ATM
             cam.Start();
             */
         }
-
+        /*
         private void cam_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             Bitmap bit = (Bitmap)eventArgs.Frame.Clone();
@@ -96,7 +97,7 @@ namespace ATM
             {
                 // If the user ran out of time, stop the timer, show
                 // a MessageBox, and fill in the answers.
-                Count.Stop();
+          Count.Stop();
                 try
                 {
                     if (atm.serverConnection.Connect())
@@ -142,12 +143,13 @@ namespace ATM
 
             }
         }
+        */
         public static byte[] ImageToByte(System.Drawing.Image img)
         {
             ImageConverter converter = new ImageConverter();
             return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
     }
-
+    
     }
 
