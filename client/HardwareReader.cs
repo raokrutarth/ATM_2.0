@@ -16,7 +16,7 @@ namespace ATM
 		public HardwareReader()
 		{
 			cameraReader = new CameraDataReader();
-			fingerprintReader = new FingerPrintDataReader(true);
+			//fingerprintReader = new FingerPrintDataReader(true);
 			touch = new TouchScreenDataReader();
 			buttonReader = new ButtonReader();
 		}
