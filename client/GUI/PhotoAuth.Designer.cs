@@ -93,6 +93,7 @@
             // userImage
             // 
             this.userImage.BackColor = System.Drawing.Color.Transparent;
+            this.userImage.Image = global::ATMClient.Properties.Resources.Awesome;
             this.userImage.Location = new System.Drawing.Point(271, 137);
             this.userImage.Name = "userImage";
             this.userImage.Size = new System.Drawing.Size(369, 310);
@@ -135,7 +136,6 @@
             // Count
             // 
             this.Count.Interval = 1000;
-            this.Count.Tick += new System.EventHandler(this.Count_Tick);
             // 
             // PhotoAuth
             // 
