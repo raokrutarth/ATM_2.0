@@ -12,8 +12,10 @@ namespace ATM
 {
     public partial class Confirmation : Form
     {
-        public Confirmation()
+        ATMClient atm;
+        public Confirmation(ATMClient atm)
         {
+            this.atm = atm;
             InitializeComponent();
         }
 
@@ -24,6 +26,7 @@ namespace ATM
 
         private void button1_Click(object sender, EventArgs e)
         {
+            atm.user.logout();
             Close();
         }
     }

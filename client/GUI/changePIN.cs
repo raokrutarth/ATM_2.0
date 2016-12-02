@@ -12,8 +12,10 @@ namespace ATM
 {
     public partial class changePIN : Form
     {
-        public changePIN()
+        ATMClient atm;
+        public changePIN(ATMClient atm)
         {
+            this.atm = atm;
             InitializeComponent();
         }
 
@@ -73,6 +75,7 @@ namespace ATM
                     }
                 }
                 //If all conditions are met then this should be sent to the server
+                //Message msg = atm.serverConnection.SendData("changePIN", newPIN2.Text, true);
                 Close();
             }
         }
