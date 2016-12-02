@@ -53,6 +53,13 @@ namespace ATM
 
         private void PhotoAuth_Load(object sender, EventArgs e)
         {
+            /* PHOTO TESTING
+             * FOR HAL AND RAO
+             *
+             */
+            Message msg = atm.serverConnection.SendData(/*not correct type*/"PhotoAuth", ImageToByte(userImage.Image), true);
+            Console.Write(msg.type + " " + msg.data+ "\n");
+            /*
             webcam = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             foreach (FilterInfo VideoCaptureDevice in webcam)
             {
@@ -63,6 +70,7 @@ namespace ATM
             cam = new VideoCaptureDevice(webcam[0].MonikerString);
             cam.NewFrame += new NewFrameEventHandler(cam_NewFrame);
             cam.Start();
+            */
         }
 
         private void cam_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -91,6 +99,13 @@ namespace ATM
                 Count.Stop();
                 try
                 {
+                    if (atm.serverConnection.Connect())
+                    {
+                        Console.Write("still connected");
+                    } else
+                    {
+                        Console.Write("Broken");
+                    }
                     userImage.Image.Save(name);
 
                 }
@@ -103,8 +118,24 @@ namespace ATM
                 {
                     if (cam.IsRunning)
                     {
+                        if (atm.serverConnection.Connect())
+                        {
+                            Console.Write("still connected");
+                        }
+                        else
+                        {
+                            Console.Write("Broken");
+                        }
                         cam.Stop();
                         //Message msg = atm.serverConnection.SendData("PhotoAuth", ImageToByte(userImage.Image), true);
+                    }
+                    if (atm.serverConnection.Connect())
+                    {
+                        Console.Write("still connected");
+                    }
+                    else
+                    {
+                        Console.Write("Broken");
                     }
                     this.Close();
                 }
