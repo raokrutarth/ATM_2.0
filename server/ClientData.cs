@@ -23,6 +23,10 @@ namespace AtmServer
             this.customerObj = newCust;
             return true;
         }
+        public Customer getCust()
+        {
+            return customerObj;
+        }
 
 		/*
 		 * Creates a new ClientData object.

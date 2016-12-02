@@ -47,18 +47,19 @@ namespace AtmServer
                     person.Wait();
                     if (person.Result.Name.Equals(custID) && VerifiedPerson.Candidates[0].Confidence > 0.5)
                     {
-                        Console.WriteLine("ID: " + person.Result.Name + "  personID:" + VerifiedPerson.Candidates[0].PersonId.ToString() +
+                        Console.WriteLine("[+] ID: " + person.Result.Name + "  personID:" + VerifiedPerson.Candidates[0].PersonId.ToString() +
                             " DetectionConfidence: " + VerifiedPerson.Candidates[0].Confidence);
+                        deleteGroup(groupId);
                         return true;
-                    }
-                                           
+                    }                                           
                 }
                 else
                 {
-                    Console.WriteLine("No known persons detected " + VerifiedPerson.Candidates.Length);
+                    Console.WriteLine("No known persons detected (VerifiedPerson.Candidates.Length = " + VerifiedPerson.Candidates.Length + ")" );
                     break;
                 }
             }
+            deleteGroup(groupId);
             return false;
         }
 
@@ -169,6 +170,29 @@ namespace AtmServer
                 Console.WriteLine("Group created with groupID = " + groupId + " groupName = " + groupName);
             }
             return result.Result;
+        }
+        /// Get or create a PersonGroup
+        private static async void deleteGroup(string groupId)
+        {
+            //Trying to get group specified by groupId
+            try
+            {
+                var tGet = face_api.GetPersonGroupAsync(groupId);
+                tGet.Wait();
+                // group exists, delete it
+                var tDel = face_api.DeletePersonGroupAsync(groupId);
+                tDel.Wait();
+                Console.WriteLine("Group deleted with groupID = " + groupId);
+            }
+            catch (Exception ex)
+            {
+                // If the group doesn't exists
+                // when the exception is about no group present,
+                // program is deleting a group before creating it 
+                Console.WriteLine("Attempted to delete uninitiated group");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.InnerException.Message);
+            }
         }
 
 
