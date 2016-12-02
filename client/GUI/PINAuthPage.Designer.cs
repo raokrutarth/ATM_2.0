@@ -1,6 +1,6 @@
 ﻿namespace ATM
 {
-    partial class loginPage
+    partial class PinPage
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(loginPage));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PinPage));
             this.bankIcon = new System.Windows.Forms.Label();
             this.greetingText = new System.Windows.Forms.Label();
             this.messagePIN = new System.Windows.Forms.Label();
@@ -61,9 +61,9 @@
             this.greetingText.Font = new System.Drawing.Font("Rockwell", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.greetingText.Location = new System.Drawing.Point(382, 163);
             this.greetingText.Name = "greetingText";
-            this.greetingText.Size = new System.Drawing.Size(225, 54);
+            this.greetingText.Size = new System.Drawing.Size(141, 54);
             this.greetingText.TabIndex = 4;
-            this.greetingText.Text = "Hi Stacy !";
+            this.greetingText.Text = "Hello";
             // 
             // messagePIN
             // 
@@ -76,7 +76,6 @@
             this.messagePIN.Size = new System.Drawing.Size(157, 22);
             this.messagePIN.TabIndex = 5;
             this.messagePIN.Text = "Please enter PIN";
-            this.messagePIN.Click += new System.EventHandler(this.label1_Click);
             // 
             // txtPIN
             // 
@@ -156,7 +155,7 @@
             this.fbground.Size = new System.Drawing.Size(990, 115);
             this.fbground.TabIndex = 11;
             // 
-            // loginPage
+            // PinPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -171,7 +170,7 @@
             this.Controls.Add(this.messagePIN);
             this.Controls.Add(this.greetingText);
             this.DoubleBuffered = true;
-            this.Name = "loginPage";
+            this.Name = "PinPage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PIN Authentication";
             this.Load += new System.EventHandler(this.loginPage_Load);
