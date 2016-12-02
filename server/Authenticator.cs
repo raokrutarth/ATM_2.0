@@ -20,7 +20,7 @@ namespace AtmServer
 			// Register TCP callbacks.
 			ServerController.currentController.RegisterCallback("authenticateAccount", getName);
 			ServerController.currentController.RegisterCallback("authenticatePIN", authenticatePIN);
-			// ServerController.currentController.RegisterCallback("authenticateFace", authenticateFace);
+			ServerController.currentController.RegisterCallback("authenticateFace", authenticateFaceCallback);
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
 			ServerController.currentController.RegisterCallback("setFingerImageSize", setFingerImageSize);
 			ServerController.currentController.RegisterCallback("authRequired", authRequired);
@@ -37,22 +37,17 @@ namespace AtmServer
             Customer currCust = DBCommunicator.getCustomer(accountNumber.ToString());
             clientData.setCust(currCust);			
             // set global customer using clientData.setCust()
-			// Send response.
-			Command cmd = new Command("authResponse", "ok");
 
 			string custID = command.data;
 			string name = "";
 
 			custID.PadLeft(32, '0');
 
-			//Customer c = ServerController.currentController.database.getCustomer(custID);
-			clientData.setCust(c);
-
-			name += c.FirstName;
-			name += " " + c.LastName;
+			name += currCust.FirstName;
+			name += " " + currCust.LastName;
 
 			//Send response	
-			//Command cmd = new Command("Response", name);
+			Command cmd = new Command("Response", name);
 
 			ServerController.currentController.tcp.Send(cmd);
 			return true;
@@ -71,23 +66,10 @@ namespace AtmServer
 			// Send response.
             if(db_pin.Equals(command.data))
             {
-                Command cmd = new Command("authResponse", "ok");
-                ServerController.currentController.tcp.Send(cmd);
-            }
-            else
-            {
-                // invalid pin
-                return false;
-            }
-			return true;
-            			
-			// Validate PIN.
-			if (command.data == clientData.customerObj.HPIN) {
 				clientData.authPIN = true;
 				Command cmd = new Command("Response", "PIN Verified");
 				ServerController.currentController.tcp.Send(cmd);
 				return true;
-
 			} else {
 				clientData.authPIN = false;
 				Command cmd = new Command("Response", "PIN Failure");
@@ -117,17 +99,26 @@ namespace AtmServer
             }                
             return await FaceIdentification.verifyFace(newImagePath, bp, currentCust.CustomerID.ToString());
         }
+
+		public bool authenticateFaceCallback(ClientData clientData, Command command)
+		{
+			this.authenticateFace(clientData, command);
+			return true;
+		}
         /*
 		 * Verify face image sent from client and send response.
 		 */
         public async System.Threading.Tasks.Task<bool> authenticateFace(ClientData clientData, Command command)
         {
-            // Parse bytes as image.
-            byte[] data = Encoding.ASCII.GetBytes(command.data);
+			//Parse bytes as image.
+			Console.WriteLine("Made it here");
+			byte[] data = Encoding.ASCII.GetBytes(command.data);
             ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(320, 480, data);
             Stream fStream = new MemoryStream(bmp.BitmatFileData);
             Bitmap fromAtm = new Bitmap(fStream);
-            string currentDir = Directory.GetCurrentDirectory();
+			Console.WriteLine("Made it here");
+			string currentDir = Directory.GetCurrentDirectory();
+			Console.WriteLine("Made it here");
             Customer currCust = clientData.getCust();
             string faceFileDest = currentDir + "\\" + currCust.CustomerID.ToString().Trim('-') + "_NewFace.bmp";
             try
@@ -166,39 +157,40 @@ namespace AtmServer
                 return false;
             }
             
-        }
-//		public bool authenticateFace(ClientData clientData, Command command)
-//		{
-//			// Parse bytes as image.
-//			byte[] data = Encoding.ASCII.GetBytes(command.data);
-//			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(320, 480, data);
-//			Stream fStream = new MemoryStream(bmp.BitmatFileData);
-//			Bitmap image1 = new Bitmap(fStream);
-//			string savedPath = "./<cust-ID>_newFace.png";
-//			// save this image to a file like <cust-ID>_newFace.png
+			return false;
+		}
+		//		public bool authenticateFace(ClientData clientData, Command command)
+		//		{
+		//			// Parse bytes as image.
+		//			byte[] data = Encoding.ASCII.GetBytes(command.data);
+		//			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(320, 480, data);
+		//			Stream fStream = new MemoryStream(bmp.BitmatFileData);
+		//			Bitmap image1 = new Bitmap(fStream);
+		//			string savedPath = "./<cust-ID>_newFace.png";
+		//			// save this image to a file like <cust-ID>_newFace.png
 
-//			//TODO: Need an object ref to FaceIdentification to call verifiyFace
-//			//bool faceResult =  verifyFace(clientData.customerObj, savedPath);
+		//			//TODO: Need an object ref to FaceIdentification to call verifiyFace
+		//			//bool faceResult =  verifyFace(clientData.customerObj, savedPath);
 
-//			// Send response.
-//			//if (faceResult) {
-//			clientData.authFace = true;
-//			Command cmd = new Command("Response", "Face Verified");
-//			ServerController.currentController.tcp.Send(cmd);
-//			return true;
-//			//} else {
-//			//clientData.authFace = false;
-//			//Command cmd = new Command("authResponse", "ok");
-//			//ServerController.currentController.tcp.Send(cmd);
-//			//return false
-//			//}
-//		}
-//>>>>>>> 95eb637aa6066f2f9bcbc535a195c3f30b6b9f9d
+		//			// Send response.
+		//			//if (faceResult) {
+		//			clientData.authFace = true;
+		//			Command cmd = new Command("Response", "Face Verified");
+		//			ServerController.currentController.tcp.Send(cmd);
+		//			return true;
+		//			//} else {
+		//			//clientData.authFace = false;
+		//			//Command cmd = new Command("authResponse", "ok");
+		//			//ServerController.currentController.tcp.Send(cmd);
+		//			//return false
+		//			//}
+		//		}
+		//>>>>>>> 95eb637aa6066f2f9bcbc535a195c3f30b6b9f9d
 
-        /*
+		/*
 		 * Verify fingerprint image sent from client and send response.
 		 */
-        public bool authenticateFinger(ClientData clientData, Command command)
+		public bool authenticateFinger(ClientData clientData, Command command)
 		{
 			// Parse bytes as image.
 			byte[] data = Encoding.ASCII.GetBytes(command.data);
