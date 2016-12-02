@@ -230,20 +230,21 @@ namespace AtmServer
         [STAThread]
         static void Main(string[] args)
         {
-            //int width = 200, height = 30;
-            //Console.SetWindowSize(width, height);
-            //Console.WriteLine("In ServerController Main()");
+			//int width = 200, height = 30;
+			//Console.SetWindowSize(width, height);
+			//Console.WriteLine("In ServerController Main()");
 
-            testDB();
-            //testEncryption();
-            //testFace(true);
-            //Console.WriteLine(getTestFilePaths());
-            //Console.WriteLine(Directory.GetCurrentDirectory());
-            //DirectoryInfo diRoot = new DirectoryInfo(System.IO.Path.Combine(
-            //            AppDomain.CurrentDomain.BaseDirectory, "Images"));
+			//testDB();
+			//testEncryption();
+			//testFace(true);
+			//Console.WriteLine(Directory.GetCurrentDirectory());
+			//System.IO.DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
+			//            AppDomain.CurrentDomain.BaseDirectory, "Images"));
 
-            //Console.WriteLine(diRoot + "\\tempImg.bmp");
-            Console.ReadKey();
+			//Console.WriteLine(diRoot + "\\tempImg.bmp");
+			//Console.ReadKey();
+			ServerController s = new ServerController();
+			s.tcp.StartListening();
         }
 
         public static bool IsDirectoryWritable(string dirPath, bool throwIfFails = false)
@@ -269,7 +270,8 @@ namespace AtmServer
                     return false;
             }
         }
-    }
+
+	}
 	
 	
 }
