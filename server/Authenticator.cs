@@ -23,12 +23,14 @@ namespace AtmServer
 			// ServerController.currentController.RegisterCallback("authenticateFace", authenticateFace);
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
 			ServerController.currentController.RegisterCallback("setFingerImageSize", setFingerImageSize);
+			ServerController.currentController.RegisterCallback("authRequired", authRequired);
 		}
         /*
 		 * Validates and stores the user's account number.
 		 */
         public bool getName(ClientData clientData, Command command)
 		{
+
 			// Parse account number.
 			Guid accountNumber = new Guid(command.data.PadLeft(32, '0'));
             // Validate and store account number.
@@ -37,6 +39,21 @@ namespace AtmServer
             // set global customer using clientData.setCust()
 			// Send response.
 			Command cmd = new Command("authResponse", "ok");
+
+			string custID = command.data;
+			string name = "";
+
+			custID.PadLeft(32, '0');
+
+			//Customer c = ServerController.currentController.database.getCustomer(custID);
+			clientData.setCust(c);
+
+			name += c.FirstName;
+			name += " " + c.LastName;
+
+			//Send response	
+			//Command cmd = new Command("Response", name);
+
 			ServerController.currentController.tcp.Send(cmd);
 			return true;
 		}
@@ -63,6 +80,20 @@ namespace AtmServer
                 return false;
             }
 			return true;
+            			
+			// Validate PIN.
+			if (command.data == clientData.customerObj.HPIN) {
+				clientData.authPIN = true;
+				Command cmd = new Command("Response", "PIN Verified");
+				ServerController.currentController.tcp.Send(cmd);
+				return true;
+
+			} else {
+				clientData.authPIN = false;
+				Command cmd = new Command("Response", "PIN Failure");
+				ServerController.currentController.tcp.Send(cmd);
+				return false;
+			}
 		}
 
         // returns true/ false given:
@@ -136,6 +167,33 @@ namespace AtmServer
             }
             
         }
+//		public bool authenticateFace(ClientData clientData, Command command)
+//		{
+//			// Parse bytes as image.
+//			byte[] data = Encoding.ASCII.GetBytes(command.data);
+//			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(320, 480, data);
+//			Stream fStream = new MemoryStream(bmp.BitmatFileData);
+//			Bitmap image1 = new Bitmap(fStream);
+//			string savedPath = "./<cust-ID>_newFace.png";
+//			// save this image to a file like <cust-ID>_newFace.png
+
+//			//TODO: Need an object ref to FaceIdentification to call verifiyFace
+//			//bool faceResult =  verifyFace(clientData.customerObj, savedPath);
+
+//			// Send response.
+//			//if (faceResult) {
+//			clientData.authFace = true;
+//			Command cmd = new Command("Response", "Face Verified");
+//			ServerController.currentController.tcp.Send(cmd);
+//			return true;
+//			//} else {
+//			//clientData.authFace = false;
+//			//Command cmd = new Command("authResponse", "ok");
+//			//ServerController.currentController.tcp.Send(cmd);
+//			//return false
+//			//}
+//		}
+//>>>>>>> 95eb637aa6066f2f9bcbc535a195c3f30b6b9f9d
 
         /*
 		 * Verify fingerprint image sent from client and send response.
@@ -173,6 +231,7 @@ namespace AtmServer
 			if(similarity >= MIN_FINGERPRINT_SIMILARITY)
 			{
 				clientData.authFinger = true;
+				clientData.authenticated = true; //all steps of verification have been completed
 				Command cmd = new Command("authResponse", "ok");
 				ServerController.currentController.tcp.Send(cmd);
 				return true;
@@ -196,6 +255,17 @@ namespace AtmServer
 			clientData.fingerprintImageSize.Height = Int32.Parse(lines[1]);
 			Console.WriteLine("Client is using fingerprint image size of {0}", clientData.fingerprintImageSize.ToString());
 			return true;
+		}
+
+		//Determines whether biometric verification is required
+		public bool authRequired(ClientData clientData, Command command) {
+
+			return false;
+			/*
+			 * Notes:
+			 * 1) Need a new field in the database to hold in a customer obj to determine if they need biometric auth
+			 * 
+			 */
 		}
 	}
 }
