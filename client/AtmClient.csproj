@@ -155,7 +155,6 @@
     <Compile Include="GUI\FingerAuthPage.Designer.cs">
       <DependentUpon>FingerAuthPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Program.cs" />
     <EmbeddedResource Include="GUI\changePIN.resx">
       <DependentUpon>changePIN.cs</DependentUpon>
     </EmbeddedResource>
