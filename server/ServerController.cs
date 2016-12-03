@@ -57,11 +57,11 @@ namespace AtmServer
 			return true;
 		}
 
-		/*registers callbacks for 
+		//registers callbacks for 
 		public bool registerCustomerCallback (string dataType, TCPCustomerCallback callback) {
 			this.customerCallbacks[dataType] = callback;
 			return true;
-		}*/
+		}
 
 		public void setup()
         {
