@@ -49,8 +49,11 @@ namespace ATM
 					Console.WriteLine("AUTH STAGE 2, PIN: {0}", response.data);
 					if (response.data == "PIN Verified")
 					{
-						var photoPage = new PhotoAuth(atm);
-						photoPage.Show();
+						//var photoPage = new PhotoAuth(atm);
+						//photoPage.Show();
+						//var fingerPage = new FingerAuthPage(atm);
+						//fingerPage.Show();
+						this.Close();
 					}
 					else
 					{

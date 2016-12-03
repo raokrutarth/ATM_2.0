@@ -10,7 +10,7 @@ using ScanAPIHelper;
 
 namespace ATM
 {
-	class FingerPrintDataReader
+	public class FingerPrintDataReader
 	{
 		private bool connected;
 		private int interfaceNumber;
