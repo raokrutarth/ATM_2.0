@@ -50,6 +50,7 @@ namespace ATM
 			serverConnection = new ServerConnection(ATM_SERVER_ADDRESS, ATM_SERVER_PORT);
 
 			// Wait for server connection.
+			Console.WriteLine("Connecting to server at {0}:{1}.", ATM_SERVER_ADDRESS, ATM_SERVER_PORT);
 			while(!serverConnection.Connect())
 			{
 				Console.WriteLine("Failed to connect to server. Retrying...");
