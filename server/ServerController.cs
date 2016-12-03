@@ -179,7 +179,7 @@ namespace AtmServer
             Console.WriteLine("sending encFiles str: " + res);
             return res;
         }
-        static void testDB()
+        static void initTestCustomer()
         {
 			DBCommunicator db = new DBCommunicator();
             DBCommunicator.testDbConnection();
@@ -188,7 +188,7 @@ namespace AtmServer
 
             string toChange = "00000000-0000-0000-3586-123193050990";
             Customer orgCust = DBCommunicator.getCustomer(toChange);
-            string newName = "Yan";
+            string newName = "John";
             Console.WriteLine("Before :");
             DBCommunicator.getCustomer(toChange);
             Console.WriteLine("Changing " + toChange + " first name to " + newName);
@@ -198,7 +198,7 @@ namespace AtmServer
 
             Console.WriteLine("Before :");
             DBCommunicator.getCustomer(toChange);
-            double nb = 54300;
+            double nb = 20;
             Console.WriteLine("Changing " + toChange + " balance to to " + nb);
             done = DBCommunicator.update(toChange, DBCommunicator.UpdateType.balance, nb.ToString());
             Console.WriteLine("After :");
@@ -206,10 +206,18 @@ namespace AtmServer
 
             Console.WriteLine("Before :");
             DBCommunicator.getCustomer(toChange);
-            string newFingerPath = getTestFilePaths();// orgCust.finger_path;
-            newFingerPath += "/new/path/to/file2,";
+            string newFingerPath = ""; //put the path to the encrypted file here
             Console.WriteLine("Changing " + toChange + " Finger file path to " + newFingerPath);
             done = DBCommunicator.update(toChange, DBCommunicator.UpdateType.finger_path, newFingerPath);
+            Console.WriteLine("After :");
+
+
+            DBCommunicator.getCustomer(toChange);
+            Console.WriteLine("Before :");
+            DBCommunicator.getCustomer(toChange);
+            string newFacePath = ""; //put the path to the encrypted face files here (comma seperated)
+            Console.WriteLine("Changing " + toChange + " Face file path to " + newFacePath);
+            done = DBCommunicator.update(toChange, DBCommunicator.UpdateType.face_path, newFacePath);
             Console.WriteLine("After :");
             DBCommunicator.getCustomer(toChange);
         }
@@ -218,8 +226,11 @@ namespace AtmServer
         [STAThread]
         static void Main(string[] args) {
 			ServerController s = new ServerController();
-
-			s.tcp.StartListening();
+            string orgImg = @".\FingerVerifyTest\finger-anthony.bmp";
+            string dest = @".\finger-anthony.enc";
+            //Encryptor.EncryptFile(orgImg, dest);
+            //Encryptor.DecryptFile(dest, @"./dec_fg_an.bmp");
+            s.tcp.StartListening();
 			Console.ReadKey();
         }
 
