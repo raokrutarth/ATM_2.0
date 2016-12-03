@@ -12,6 +12,7 @@ using AForge.Imaging;
 using AForge.Math;
 using AForge.Video;
 using AForge.Video.DirectShow;
+using System.IO;
 
 namespace ATM
 {
@@ -42,15 +43,13 @@ namespace ATM
             time = time.Substring(time.Length - 3);
             return Int32.Parse(time);
         }
+
         private void takePic_Click(object sender, EventArgs e)
         {
             timeLeft = 6;
             Count.Enabled = true;
-                
         }
         
-    
-
         private void PhotoAuth_Load(object sender, EventArgs e)
         {
             webcam = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -73,10 +72,6 @@ namespace ATM
 
         private void Count_Tick(object sender, EventArgs e)
         {
-            Boolean success = true;
-            string name = Convert.ToString(DateTime.Now);
-            string path = "C:\\Users\\Rashon\\Documents\\Github\\ATM_2.0\\client\\pictures\\";
-            name = path + "Awesome.jpg";
             if (timeLeft > 1)
             {
                 // Display the new time left
@@ -91,24 +86,41 @@ namespace ATM
                 Count.Stop();
                 try
                 {
-                    userImage.Image.Save(name);
+					// Convert image to a useable format.
+					MemoryStream ms = new MemoryStream();
+					userImage.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
 
-                }
-                catch (Exception)
-                {
-                    success = false;
-                    photoMSG.Text = "pathing wrong";
-                }
-                if (success)
-                {
-                    if (cam.IsRunning)
-                    {
-                        cam.Stop();
-                        //Message msg = atm.serverConnection.SendData("PhotoAuth", ImageToByte(userImage.Image), true);
-                    }
-                    this.Close();
-                }
+					// Send the image size.
+					Size imgSize = userImage.Image.Size;
+					string sizeString = imgSize.Width.ToString() + "\n" + imgSize.Height.ToString();
+					atm.serverConnection.SendData("setFaceImageSize", sizeString);
 
+					// Send image for verification.
+					Message response = atm.serverConnection.SendData("authenticateFace", ms.ToArray(), true);
+					Console.WriteLine("AUTH STAGE 3, FACE: {0}", response.data);
+					if (response.data == "Face Verified")
+					{
+						if (cam.IsRunning)
+						{
+							cam.Stop();
+						}
+						var fingerPage = new FingerAuthPage(atm);
+						fingerPage.Show();
+					}
+					else
+					{
+						photoMSG.Text = "Please try again.";
+					}
+                }
+                catch (Exception exc)
+                {
+					Console.WriteLine(exc.ToString());
+                    photoMSG.Text = "Please try again.";
+					if (cam.IsRunning)
+					{
+						cam.Stop();
+					}
+				}
             }
         }
         public static byte[] ImageToByte(System.Drawing.Image img)

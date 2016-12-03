@@ -23,6 +23,7 @@ namespace AtmServer
 			ServerController.currentController.RegisterCallback("authenticateFace", authenticateFace);
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
 			ServerController.currentController.RegisterCallback("authRequired", authRequired);
+			ServerController.currentController.RegisterCallback("setFingerImageSize", setFaceImageSize);
 			ServerController.currentController.RegisterCallback("setFingerImageSize", setFingerImageSize);
 		}
 
@@ -162,6 +163,18 @@ namespace AtmServer
 			clientData.fingerprintImageSize.Width = Int32.Parse(lines[0]);
 			clientData.fingerprintImageSize.Height = Int32.Parse(lines[1]);
 			Console.WriteLine("Client is using fingerprint image size of {0}", clientData.fingerprintImageSize.ToString());
+			return true;
+		}
+
+		/*
+		 * Sets the expected size of received fingerprint images.
+		 */
+		public bool setFaceImageSize(ClientData clientData, Command command)
+		{
+			string[] lines = command.data.Split('\n');
+			clientData.faceImageSize.Width = Int32.Parse(lines[0]);
+			clientData.faceImageSize.Height = Int32.Parse(lines[1]);
+			Console.WriteLine("Client is using face image size of {0}", clientData.faceImageSize.ToString());
 			return true;
 		}
 	}

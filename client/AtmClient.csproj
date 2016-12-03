@@ -100,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATMClient.cs" />
-    <Compile Include="ButtonCtrl.cs" />
     <Compile Include="ButtonReader.cs" />
     <Compile Include="CameraDataReader.cs" />
     <Compile Include="CurrentUser.cs" />
