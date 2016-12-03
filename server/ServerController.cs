@@ -76,7 +76,7 @@ namespace AtmServer
         static void testEncryption()
         {
             DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
-                        AppDomain.CurrentDomain.BaseDirectory, "TestEncFiles") );
+                        AppDomain.CurrentDomain.BaseDirectory, "FaceVerifyTest\\Rao") );
 
             Console.WriteLine("Write premission : " + IsDirectoryWritable(diRoot.FullName) );
 
@@ -197,20 +197,26 @@ namespace AtmServer
             DBCommunicator.getCustomer(toChange);
 
             Console.WriteLine("Before :");
-            DBCommunicator.getCustomer(toChange);
+            orgCust = DBCommunicator.getCustomer(toChange);
+            Console.WriteLine("Changing " + toChange + " Pin to to " + "1111");
+            done = DBCommunicator.update(toChange, DBCommunicator.UpdateType.h_pin, "1111");
+            Console.WriteLine("After :");
+            orgCust = DBCommunicator.getCustomer(toChange);
+
+            Console.WriteLine("Before :");
+            orgCust = DBCommunicator.getCustomer(toChange);
             double nb = 20;
             Console.WriteLine("Changing " + toChange + " balance to to " + nb);
             done = DBCommunicator.update(toChange, DBCommunicator.UpdateType.balance, nb.ToString());
             Console.WriteLine("After :");
-            DBCommunicator.getCustomer(toChange);
+            orgCust = DBCommunicator.getCustomer(toChange);
 
             Console.WriteLine("Before :");
-            DBCommunicator.getCustomer(toChange);
+            orgCust = DBCommunicator.getCustomer(toChange);
             string newFingerPath = ""; //put the path to the encrypted file here
             Console.WriteLine("Changing " + toChange + " Finger file path to " + newFingerPath);
             done = DBCommunicator.update(toChange, DBCommunicator.UpdateType.finger_path, newFingerPath);
             Console.WriteLine("After :");
-
 
             DBCommunicator.getCustomer(toChange);
             Console.WriteLine("Before :");
@@ -230,7 +236,9 @@ namespace AtmServer
             string dest = @".\finger-anthony.enc";
             //Encryptor.EncryptFile(orgImg, dest);
             //Encryptor.DecryptFile(dest, @"./dec_fg_an.bmp");
-            s.tcp.StartListening();
+            testEncryption();           
+
+                s.tcp.StartListening();
 			Console.ReadKey();
         }
 
