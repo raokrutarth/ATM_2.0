@@ -23,7 +23,7 @@ namespace AtmServer
 			ServerController.currentController.RegisterCallback("authenticateFace", authenticateFace);
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
 			ServerController.currentController.RegisterCallback("authRequired", authRequired);
-			ServerController.currentController.RegisterCallback("setFingerImageSize", setFaceImageSize);
+			ServerController.currentController.RegisterCallback("setFaceImageSize", setFaceImageSize);
 			ServerController.currentController.RegisterCallback("setFingerImageSize", setFingerImageSize);
 		}
 
