@@ -54,10 +54,10 @@ namespace AtmServer
 
 			this.balance = this.balance - w;
 
-			//TODO: Update the database balance
-
-			//success return
-			return sizeOfWithdrawal + " withdrawn";
+            //TODO: Update the database balance
+            bool done = DBCommunicator.update(CustomerID.ToString(), DBCommunicator.UpdateType.balance, this.balance.ToString());
+            //success return
+            return sizeOfWithdrawal + " withdrawn";
 
 			//failure return
 			//return "Withdrawal Error";
@@ -69,10 +69,10 @@ namespace AtmServer
 
 			this.balance = this.balance + d;
 
-			//TODO: Update the database balance
-			
-			//success return
-			return sizeOfDeposit + " deposited";
+            //TODO: Update the database balance
+            bool done = DBCommunicator.update(CustomerID.ToString(), DBCommunicator.UpdateType.balance, this.balance.ToString() );
+            //success return
+            return sizeOfDeposit + " deposited";
 
 			//failure return
 			//return "Deposit Error";
@@ -86,12 +86,11 @@ namespace AtmServer
 
 			//success return
 			return "PIN Succesfully changed";
-
-			//failure return
-			//return "Error PIN not changed";
-		}
+            bool done = DBCommunicator.update(CustomerID.ToString(), DBCommunicator.UpdateType.h_pin, this.HPIN);
+            //failure return
+            //return "Error PIN not changed";
+        }
 
 	}
-
 	
 }
