@@ -49,13 +49,5 @@ namespace ATM
         {
             userName = name;
         }
-
-		public void setLoggedIn(bool value) {
-			this.loggedIn = value;
-		}
-
-		public bool getLoggedIn() {
-			return this.loggedIn;
-		}
 	}
 }

@@ -276,22 +276,10 @@ namespace AtmServer {
 
 			Console.WriteLine("Reveived command: {0}", this.currentCommand.command);
 			
-			if (this.currentCommand.command.Equals("logout")) {
-				this.logout();
-				return;
-			}
-
 			this.currentCommand.data = data.Substring(index, size - index + 1);
 			Console.WriteLine("data length: {0}", this.currentCommand.data.Length);
             ServerController.currentController.executeCommand(clientData, this.currentCommand);
 		}
-
-		public void logout() {
-			this.listener.Shutdown(SocketShutdown.Both);
-			this.listener.Close();
-			StartListening();
-		}
-
 		/*
 		private void decoder(byte[] data, int size) {
 			string[] temp;

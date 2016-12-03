@@ -60,7 +60,7 @@ namespace ATM
 				Console.WriteLine("Failed to connect to server. Retrying...");
 			}
 
-			/* Send initial data, including image sizes.
+			// Send initial data, including image sizes.
 			System.Drawing.Size imgSize = drivers.fingerprintReader.imageSize;
 			string sizeString = imgSize.Width.ToString() + "\n" + imgSize.Height.ToString();
 			serverConnection.SendData("setFingerImageSize", sizeString);
@@ -107,96 +107,6 @@ namespace ATM
 				atm.iterate();
 				//System.Threading.Thread.Sleep(5000);
 			}
-
-		/*private bool login(string username) {
-			//intialize user and server
-			Message m;
-			string PIN = "";
-			bool check = false;
-			byte[] data;
-
-			m = serverConnection.SendData("getName", username, true);
-
-			user.setUserName(m.data);
-
-			//Begin Authentication
-			//TODO: Get PIN from the GUI
-			for (int i = 0; i < 3; i++) {
-				m = serverConnection.SendData("authenticatePIN", PIN, true);
-				if (m.data.Equals("PIN Verified")) {
-					check = true;
-					break;
-				}
-			}
-			//Verify that the PIN entered was correct and max attempts was not exceeded
-			if (!check) {
-				//TODO:Return the GUI to the first page
-				return false;
-			}
-			check = false;
-
-			//Check if biometric auth is required
-			m = serverConnection.SendData("authRequired", "", true);
-
-			//Biometric auth required
-			if (m.data.Equals("Yes")) {
-				for (int i = 0; i < 3; i++) {
-					//TODO: Grab fingerprint image and send for auth from GUI
-					data = Encoding.ASCII.GetBytes("JunkForNow");
-					m = serverConnection.SendData("authenticateFinger", data, true);
-					if (m.data.Equals("Fingerprint Verified")) {
-						check = true;
-						break;
-					}
-				}
-				
-				//Verify that fingerprint matched and max number of attempts not exceeded
-				if (!check) {
-					//TODO: Print max attempts exceeded and return to first page in GUI
-					return false;
-				}
-				check = false;
-				
-				for(int i = 0; i < 3; i++) {
-					//TODO: Grab picture from GUI
-					data = Encoding.ASCII.GetBytes("JunkForNow");
-					m = serverConnection.SendData("authenticateFace", data, true);
-					if (m.data.Equals("Face Verified"))
-					{
-						check = true;
-						break;
-					}
-				}
-
-				//Verify that face matched and max number of attempts not exceeded
-				if (!check)
-				{
-					//TODO: Print max attempts exceeded and return to first page in GUI
-					return false;
-				}
-
-				this.user.setLoggedIn(true);
-				return true;
-
-			//Biometric auth not required
-			} else {
-				this.user.setLoggedIn(true);
-				return true;
-			}
-		}
-		*/
-
-		/*private void testFace() {
-			string filePath = ""; //Put picture file path here
-			Message m;
-
-			Bitmap pic = new Bitmap(filePath);
-			ImageConverter converter = new ImageConverter();
-			byte[] data = (byte[])converter.ConvertTo(pic, typeof(byte[]));
-
-			m = this.serverConnection.SendData("authenticateFace", data, true);
-			Console.WriteLine("Response from server: {0}", m.data);
-			Console.ReadKey();*/
 		}
 	}
 }
