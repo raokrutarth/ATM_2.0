@@ -67,7 +67,9 @@
   <ItemGroup>
     <Compile Include="Authenticator.cs" />
     <Compile Include="ClientData.cs" />
+    <Compile Include="Customer.cs" />
     <Compile Include="DBCommunicator.cs" />
+    <Compile Include="Encryptor.cs" />
     <Compile Include="FaceIdentification.cs" />
     <Compile Include="MyBitmapFile.cs" />
     <Compile Include="ServerController.cs" />
