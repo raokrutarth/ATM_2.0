@@ -131,15 +131,15 @@ namespace AtmServer
                 // dhoni, duterte & rao are seperate paths to valid files
                 // used to verify against the base files provided above.
                 string[] validFaces = new string[] {
-                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\msd_verify.jpg",
-                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\duterte_verify2.jpg",
-                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\duterte_verify.jpg",
-                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\rao_verify.png" };
+                @".\FaceVerifyTest\msd_verify.jpg",
+                @".\FaceVerifyTest\duterte_verify2.jpg",
+                @".\FaceVerifyTest\duterte_verify.jpg",
+                @".\FaceVerifyTest\rao_verify.png" };
                
                 if(valid)   // test valid verification image against base images
                     tested = validFaces[randValid];
                 else // rickey doesn't exist in any base image folder so it should evaluate to false for all folders
-                    tested = @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\rickey_verify.jpg";
+                    tested = @".\FaceVerifyTest\rickey_verify.jpg";
 
                 Console.WriteLine("testing with image " + tested);
                 bool detected;
@@ -162,12 +162,12 @@ namespace AtmServer
         static string getTestFilePaths()
         {
             string[] UnEncFiles = {
-                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\Duterte\dt-1.jpg",
-                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\Duterte\dt-3.jpg",
-                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\Duterte\rodrigo-duterte-2.jpg",
-                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\Duterte\rodrigo-duterte-5.jpg",
-                @"D:\CS 307\ATM_2.0\server\bin\Debug\FaceVerifyTest\Duterte\RodrigoDuterte4.jpg"
-                };
+                @".\FaceVerifyTest\Duterte\dt-1.jpg",
+                @".\FaceVerifyTest\Duterte\dt-3.jpg",
+                @".\FaceVerifyTest\Duterte\rodrigo-duterte-2.jpg",
+                @".\FaceVerifyTest\Duterte\rodrigo-duterte-5.jpg",
+                @".\FaceVerifyTest\Duterte\RodrigoDuterte4.jpg"
+            };
             string res = "";
             int n = 0;
             foreach (string encFile in UnEncFiles)

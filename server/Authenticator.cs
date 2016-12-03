@@ -55,7 +55,7 @@ namespace AtmServer
             string db_pin = clientData.getCust().HPIN;
 
 			// Send response.
-            if(db_pin.Equals(command.data) {
+            if(db_pin.Equals(command.data) ){
 				clientData.authPIN = true;
 				checkAuthentication(clientData);
 				Command cmd = new Command("Response", "PIN Verified");
@@ -160,8 +160,10 @@ namespace AtmServer
 			Bitmap image1 = new Bitmap(fStream); // new img
             // fetch enc file path
             // decrypt
-
-			Bitmap image2 = new Bitmap(".\\test-img.bmp"); //replace this file path with the path from the database
+            string encFingerFile = clientData.getCust().finger_path;
+            string dest_unenc = Directory.GetCurrentDirectory() + "\\unEnc_finger.bmp";
+            Encryptor.DecryptFile(encFingerFile, dest_unenc);
+			Bitmap image2 = new Bitmap(dest_unenc); //replace this file path with the path from the database
             // db image
 			//image1.Save(".\\img.bmp");
 
