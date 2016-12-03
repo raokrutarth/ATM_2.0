@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +52,7 @@ namespace ATM {
 				Console.WriteLine("Failed to connect to server. Retrying...");
 			}
 
-			// Send initial data, including image sizes.
+			/* Send initial data, including image sizes.
 			System.Drawing.Size imgSize = drivers.fingerprintReader.imageSize;
 			string sizeString = imgSize.Width.ToString() + "\n" + imgSize.Height.ToString();
 			serverConnection.SendData("setFingerImageSize", sizeString);
@@ -62,13 +63,13 @@ namespace ATM {
 				Console.WriteLine("Place finger 1");
 				System.Threading.Thread.Sleep(2000);
 
-				/*fingerprintReader.SaveImage(".\\finger1.bmp", true);
+				fingerprintReader.SaveImage(".\\finger1.bmp", true);
 				Console.WriteLine("Place finger 2");
 				System.Threading.Thread.Sleep(5000);
 				fingerprintReader.SaveImage(".\\finger2.bmp", true);
 				Console.WriteLine("Place finger 3");
 				System.Threading.Thread.Sleep(5000);
-				fingerprintReader.SaveImage(".\\finger3.bmp", true);*/
+				fingerprintReader.SaveImage(".\\finger3.bmp", true);
 
 				// TEST TRANSMIT
 				byte[] data;
@@ -188,13 +189,28 @@ namespace ATM {
 			string accountNumber = "";
 
 			//TODO: Grab the account number from the user in the GUI
-
+			/*
 			atm.login(accountNumber);
 			// Main program loop.
 			while (atm.user.getLoggedIn()) {
 				atm.iterate();
 				System.Threading.Thread.Sleep(5000);
-			}
+			}*/
+
+			atm.testFace();
+		}
+
+		private void testFace() {
+			string filePath = ""; //Put picture file path here
+			Message m;
+
+			Bitmap pic = new Bitmap(filePath);
+			ImageConverter converter = new ImageConverter();
+			byte[] data = (byte[])converter.ConvertTo(pic, typeof(byte[]));
+
+			m = this.serverConnection.SendData("authenticateFace", data, true);
+			Console.WriteLine("Response from server: {0}", m.data);
+			Console.ReadKey();
 		}
 	}
 }
