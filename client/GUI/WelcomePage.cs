@@ -69,8 +69,7 @@ namespace ATM
 					else
 					{
 						atm.user.setName(response.data);
-						var pinPage = new PinPage(atm);
-						pinPage.Show();
+						this.Close();
 					}
                 }
                 else

@@ -6,16 +6,16 @@ namespace ATM
 	public class ATMClient
 	{
 		// Default connection information.
-		//private const string ATM_SERVER_ADDRESS = "atmserver.centralus.cloudapp.azure.com";
-		private const string ATM_SERVER_ADDRESS = "10.186.55.45";
+		private const string ATM_SERVER_ADDRESS = "atmserver.centralus.cloudapp.azure.com";
+		//private const string ATM_SERVER_ADDRESS = "10.186.55.45";
 		private const int ATM_SERVER_PORT = 11000;
 
 		// Hard-coded values for demonstration.
-		public const string USER_ID = "00000000000000000000000000000000";
+		public const string USER_ID = "00000000000000003586123193050990";
 
 		public static ATMClient _atmClientObject = null;
 		private UserInterface ui;
-		private HardwareReader drivers;
+		public HardwareReader drivers;
 		public ServerConnection serverConnection;
 		public CurrentUser user;
         
@@ -65,7 +65,8 @@ namespace ATM
 			string sizeString = imgSize.Width.ToString() + "\n" + imgSize.Height.ToString();
 			serverConnection.SendData("setFingerImageSize", sizeString);
 
-			/* // Send fingerprints as a test.
+			// Send fingerprints as a test.
+			/*int index = 0;
 			while (true)
 			{
 				Console.WriteLine("Place finger 1");
@@ -78,10 +79,12 @@ namespace ATM
 					Console.WriteLine("Please put your finger on the scanner.");
 					System.Threading.Thread.Sleep(2000);
 				}
-				Console.WriteLine("Sending data of length {0}", data.Length);
-				Message msg = serverConnection.SendData("authenticateFinger", data, true);
-				Console.WriteLine("Got response: {0}; {1}; {2}", msg.type, msg.data, msg.size);
-			} */
+				drivers.fingerprintReader.SaveImage(".\\" + index.ToString() + ".bmp", false);
+				index ++;
+				//Console.WriteLine("Sending data of length {0}", data.Length);
+				//Message msg = serverConnection.SendData("authenticateFinger", data, true);
+				//Console.WriteLine("Got response: {0}; {1}; {2}", msg.type, msg.data, msg.size);
+			}*/
         }
 
         /*
@@ -90,11 +93,11 @@ namespace ATM
         private void iterate()
 		{
 			Application.Run(new welcomePage(this));
-			/*Application.Run(new PinPage(this));
+			Application.Run(new PinPage(this));
 			Application.Run(new PhotoAuth(this));
 			Application.Run(new FingerAuthPage(this));
 			Application.Run(new MainMenu(this));
-			Application.Run(new Confirmation(this));*/
+			Application.Run(new Confirmation(this));
 		}
 
 		public static void Main(string[] args)

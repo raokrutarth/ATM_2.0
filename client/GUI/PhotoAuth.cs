@@ -104,8 +104,7 @@ namespace ATM
 						{
 							cam.Stop();
 						}
-						var fingerPage = new FingerAuthPage(atm);
-						fingerPage.Show();
+						this.Close();
 					}
 					else
 					{
