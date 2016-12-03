@@ -40,7 +40,7 @@ namespace AtmServer
 				bool success = this.callbacks[command.command](clientData, command);
 
 			} else if (this.customerCallbacks.ContainsKey(command.command)) {
-				string response = this.customerCallbacks[command.command](command.data);
+				string response = this.customerCallbacks[command.command](clientData, command.data);
 				Command cmd = new Command("Response", response);
 				ServerController.currentController.tcp.Send(cmd);
 
