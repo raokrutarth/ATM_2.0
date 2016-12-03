@@ -100,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATMClient.cs" />
-    <Compile Include="ButtonReader.cs" />
     <Compile Include="CameraDataReader.cs" />
     <Compile Include="CurrentUser.cs" />
     <Compile Include="FingerPrintDataReader.cs" />
@@ -108,7 +107,6 @@
     <Compile Include="MyBitmapFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerConnection.cs" />
-    <Compile Include="TouchScreenDataReader.cs" />
     <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
