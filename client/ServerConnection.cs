@@ -117,7 +117,7 @@ namespace ATM
 			}
 			catch (SocketException e)
 			{
-				Console.WriteLine("SocketException: {0}", e);
+				//Console.WriteLine("SocketException: {0}", e);
 				return false;
 			}
 			return true;
