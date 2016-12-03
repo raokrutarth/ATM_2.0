@@ -28,33 +28,20 @@ namespace AtmServer
         /*
 		 * Validates and stores the user's account number.
 		 */
-        public bool getName(ClientData clientData, Command command)
-		{
+        public bool getName(ClientData clientData, Command command) {
+			string name = "";
 
 			// Parse account number.
 			Guid accountNumber = new Guid(command.data.PadLeft(32, '0'));
             // Validate and store account number.
             Customer currCust = DBCommunicator.getCustomer(accountNumber.ToString());
             clientData.setCust(currCust);			
-            // set global customer using clientData.setCust()
-
-			string custID = command.data;
-			string name = "";
-
-			custID.PadLeft(32, '0');
-
-			//Customer c = ServerController.currentController.database.getCustomer(custID);
-			//clientData.setCust(c);
-
-			//name += c.FirstName;
-			//name += " " + c.LastName;
 
 			name += currCust.FirstName;
 			name += " " + currCust.LastName;
 
 			//Send response	
 			Command cmd = new Command("Response", name);
-
 			ServerController.currentController.tcp.Send(cmd);
 			return true;
 		}
