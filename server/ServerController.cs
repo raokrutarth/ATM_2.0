@@ -22,8 +22,7 @@ namespace AtmServer
 		public TCPCommunicator tcp;
 
 
-		public ServerController()
-		{
+		public ServerController() {
 			currentController = this;
 			this.callbacks = new Dictionary<string, TCPDataCallback>();
 			this.customerCallbacks = new Dictionary<string, TCPCustomerCallback>();
@@ -32,6 +31,7 @@ namespace AtmServer
 			this.tcp = new TCPCommunicator();
 		}
         
+		//executes the command given by the client
         public void executeCommand(ClientData clientData, Command command)
         {
 			// Call our callback here.
@@ -56,7 +56,7 @@ namespace AtmServer
 			return true;
 		}
 
-		//registers callbacks for 
+		//registers callbacks for Customer class
 		public bool registerCustomerCallback (string dataType, TCPCustomerCallback callback) {
 			this.customerCallbacks[dataType] = callback;
 			return true;
@@ -72,6 +72,7 @@ namespace AtmServer
             return true;
         }
 
+		//Test methods
         static void testEncryption()
         {
             DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
