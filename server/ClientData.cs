@@ -16,6 +16,17 @@ namespace AtmServer
 		public bool authFinger { get; set; }
 		public bool authenticated { get; set; }
 		public Size fingerprintImageSize;
+        public Customer customerObj;
+
+        public bool setCust(Customer newCust)
+        {
+            this.customerObj = newCust;
+            return true;
+        }
+        public Customer getCust()
+        {
+            return customerObj;
+        }
 
 		/*
 		 * Creates a new ClientData object.
