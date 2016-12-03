@@ -24,7 +24,7 @@ namespace AtmServer
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
 			ServerController.currentController.RegisterCallback("setFingerImageSize", setFingerImageSize);
 			ServerController.currentController.RegisterCallback("setFaceImageSize", setFaceImageSize);
-			ServerController.currentController.RegisterCallback("authRequired", authRequired);
+			//ServerController.currentController.RegisterCallback("authRequired", authRequired);
 		}
         /*
 		 * Validates and stores the user's account number.
