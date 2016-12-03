@@ -16,6 +16,7 @@ namespace AtmServer
 		public bool authFinger { get; set; }
 		public bool authenticated { get; set; }
 		public Size fingerprintImageSize;
+		public Size faceImageSize;
         public Customer customerObj;
 
         public bool setCust(Customer newCust)
