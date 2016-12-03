@@ -42,24 +42,25 @@ namespace ATM
                 //Enables for future usage
                 txtPIN.Enabled = true;
 
-
-                //This will be taken care of on the server side
-                if (!txtPIN.Text.Equals("1000"))
-                {
-                    txtPIN.Clear();
-                    WrongPINMessage.Visible = true;
-                    thePIN.Text = "";
-                    return;
-
-                }
                 //This is where we will send the PIN to the server
-                /*if (atm.serverConnection.Connect())
+                if (atm.serverConnection.isConnected())
                 {
-                    
-                    Message msg = atm.serverConnection.SendData("authenticatePIN", txtPIN.Text, true);
-                    //for now we will just close
+                    Message response = atm.serverConnection.SendData("authenticatePIN", txtPIN.Text, true);
+					Console.WriteLine("AUTH STAGE 2, PIN: {0}", response.data);
+					if (response.data == "PIN Verified")
+					{
+						var photoPage = new PhotoAuth(atm);
+						photoPage.Show();
+					}
+					else
+					{
+						txtPIN.Clear();
+						WrongPINMessage.Visible = true;
+						thePIN.Text = "";
+						return;
+					}
                 }
-             */
+
                 Close();
                 
             }
@@ -83,7 +84,7 @@ namespace ATM
                     greetingText.Text = "server connection is null";
                 } else
                 {
-                    if (!atm.serverConnection.Connect())
+                    if (!atm.serverConnection.isConnected())
                     {
                         greetingText.Text = "not connected to the server";
                     }
