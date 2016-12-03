@@ -22,6 +22,7 @@ namespace AtmServer
         public String finger_path { get; set; }
         public String face_path { get; set; }
         public double balance { get; set; }
+		public bool biometricRequired { get; set; }
 
 		public Customer() {
 			ServerController.currentController.registerCustomerCallback("getAccountBalance", getAccountBalance);
