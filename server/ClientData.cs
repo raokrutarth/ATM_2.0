@@ -16,6 +16,7 @@ namespace AtmServer
 		public bool authFinger { get; set; }
 		public bool authenticated { get; set; }
 		public Size fingerprintImageSize;
+		public Size faceImageSize;
 
 		/*
 		 * Creates a new ClientData object.
@@ -28,6 +29,7 @@ namespace AtmServer
 			this.authFinger = false;
 			this.authenticated = false;
 			this.fingerprintImageSize = new Size();
+			this.faceImageSize = new Size();
 		}
 	}
 }
