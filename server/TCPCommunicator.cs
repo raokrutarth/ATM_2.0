@@ -37,6 +37,12 @@ namespace AtmServer {
             this.data = String.Empty;
         }
 
+		public Command(string c) {
+			this.command = c;
+			this.data = String.Empty;
+			this.size = c.Length;
+		}
+
         public Command(string c, string d) {
             this.command = c;
             this.data = d;
@@ -66,10 +72,7 @@ namespace AtmServer {
 		public Socket listener;		
 		//constructor
 		public TCPCommunicator() {
-			//this.callbacks = new Dictionary<string, TCPDataCallback>();
 			this.currentCommand = new Command();
-			//ServerController.currentController.RegisterCallback("authenticatePIN", Send);
-			//ServerController.currentController.RegisterCallback("Send", Send);
 		}
 
         public void StartListening() {
@@ -291,21 +294,6 @@ namespace AtmServer {
 			this.listener.Close();
 			StartListening();
 		}
-
-		/*
-		private void decoder(byte[] data, int size) {
-			string[] temp;
-
-			//begin decoding
-			//temp = data.Split('\n');
-			data.
-
-			this.currentCommand.command = temp[1];
-			this.currentCommand.size = size;
-			this.currentCommand.data = temp[2];
-
-			ServerController.currentController.executeCommand(this.currentCommand);
-		}*/
 
     }
 }
