@@ -108,14 +108,14 @@ namespace AtmServer
             ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(clientData.faceImageSize.Width, 
 				clientData.faceImageSize.Height, data);
             Stream fStream = new MemoryStream(bmp.BitmatFileData);
-            Bitmap image1 = new Bitmap(fStream);
+            Bitmap fromAtm = new Bitmap(fStream);
 			string currentDir = Directory.GetCurrentDirectory();
             Customer currCust = clientData.getCust();
             string faceFileDest = currentDir + "\\" + currCust.CustomerID.ToString().Trim('-') + "_NewFace.bmp";
 
 			try {
-                if (image1 != null) {
-					image1.Save(faceFileDest);
+                if (fromAtm != null) {
+                    fromAtm.Save(faceFileDest);
                     Console.WriteLine("New face saved to " + faceFileDest);
 
 				} else {
