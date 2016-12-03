@@ -94,39 +94,104 @@ namespace ATM {
 		/*
 		 * Called once per main loop iteration. This is where program logic is performed.
 		 */
-		private void iterate()
-		{
-			//Message result = serverConnection.SendData("authenticatePIN", "this is some test data\n1 2 3<EOF>", true);
-			//Console.WriteLine("Got type \"{0}\" and message \"{1}\".", result.type, result.data);
+		private void iterate() {
+			string request = "";
+			string data = "";
+			Message m;
+
+			//TODO: Get request from the user in the GUI
+
+			m = this.serverConnection.SendData(request, data, true);
+
+			//TODO: Print out result on the GUI
 		}
 
-		private bool login(string username)
-		{
-			//check for username and PIN
-/*			if (true) {
+		private bool login(string username) {
+			//intialize user and server
+			Message m;
+			string PIN = "";
+			bool check = false;
+			byte[] data;
 
+			m = serverConnection.SendData("getName", username, true);
+
+			user.setUserName(m.data);
+
+			//Begin Authentication
+			//TODO: Get PIN from the GUI
+			for (int i = 0; i < 3; i++) {
+				m = serverConnection.SendData("authenticatePIN", PIN, true);
+				if (m.data.Equals("PIN Verified")) {
+					check = true;
+					break;
+				}
 			}
-
-			//check for fingerprint match
-			if (true) {
-
+			//Verify that the PIN entered was correct and max attempts was not exceeded
+			if (!check) {
+				//TODO:Return the GUI to the first page
+				return false;
 			}
+			check = false;
 
-			//check for facial recognition
-			if (true) {
+			//Check if biometric auth is required
+			m = serverConnection.SendData("authRequired", "", true);
 
+			//Biometric auth required
+			if (m.data.Equals("Yes")) {
+				for (int i = 0; i < 3; i++) {
+					//TODO: Grab fingerprint image and send for auth from GUI
+					data = Encoding.ASCII.GetBytes("JunkForNow");
+					m = serverConnection.SendData("authenticateFinger", data, true);
+					if (m.data.Equals("Fingerprint Verified")) {
+						check = true;
+						break;
+					}
+				}
+				
+				//Verify that fingerprint matched and max number of attempts not exceeded
+				if (!check) {
+					//TODO: Print max attempts exceeded and return to first page in GUI
+					return false;
+				}
+				check = false;
+				
+				for(int i = 0; i < 3; i++) {
+					//TODO: Grab picture from GUI
+					data = Encoding.ASCII.GetBytes("JunkForNow");
+					m = serverConnection.SendData("authenticateFace", data, true);
+					if (m.data.Equals("Face Verified"))
+					{
+						check = true;
+						break;
+					}
+				}
+
+				//Verify that face matched and max number of attempts not exceeded
+				if (!check)
+				{
+					//TODO: Print max attempts exceeded and return to first page in GUI
+					return false;
+				}
+
+				this.user.setLoggedIn(true);
+				return true;
+
+			//Biometric auth not required
+			} else {
+				this.user.setLoggedIn(true);
+				return true;
 			}
-*/
-			return false;
 		}
 
-		public static void Main(string[] args)
-		{
+		public static void Main(string[] args) {
 			ATMClient atm = new ATMClient();
+			string accountNumber = "";
 
+			//TODO: Grab the account number from the user in the GUI
+
+			atm.login(accountNumber);
 			// Main program loop.
-			while (true)
-			{
+			while (atm.user.getLoggedIn()) {
 				atm.iterate();
 				System.Threading.Thread.Sleep(5000);
 			}
