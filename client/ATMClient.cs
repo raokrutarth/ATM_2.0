@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-namespace ATM {
+
+namespace ATM
+{
 	public class ATMClient
 	{
 		// Default connection information.
@@ -17,8 +15,6 @@ namespace ATM {
 		public ServerConnection serverConnection;
 		public CurrentUser user;
         
-        //this will be initialized after someone attempts a login
-
         /*
 		 * Creates the ATMClient root class. This is a singleton - only one can exist.
 		 */
@@ -48,39 +44,27 @@ namespace ATM {
 		 */
 		private void initialize()
 		{
-            //AUSTIN'S COMMENT: 
-            //This is unecessary now
-            //Console.WriteLine("ATM client initializing.");
 			drivers = new HardwareReader();
 			ui = new UserInterface();
 			user = new CurrentUser();
 			serverConnection = new ServerConnection(ATM_SERVER_ADDRESS, ATM_SERVER_PORT);
 
+			// Wait for server connection.
 			while(!serverConnection.Connect())
 			{
 				Console.WriteLine("Failed to connect to server. Retrying...");
 			}
-           
-
 
 			// Send initial data, including image sizes.
 			System.Drawing.Size imgSize = drivers.fingerprintReader.imageSize;
 			string sizeString = imgSize.Width.ToString() + "\n" + imgSize.Height.ToString();
 			serverConnection.SendData("setFingerImageSize", sizeString);
 
-			// Send fingerprints as a test.
+			/* // Send fingerprints as a test.
 			while (true)
 			{
 				Console.WriteLine("Place finger 1");
 				System.Threading.Thread.Sleep(2000);
-
-				/*fingerprintReader.SaveImage(".\\finger1.bmp", true);
-				Console.WriteLine("Place finger 2");
-				System.Threading.Thread.Sleep(5000);
-				fingerprintReader.SaveImage(".\\finger2.bmp", true);
-				Console.WriteLine("Place finger 3");
-				System.Threading.Thread.Sleep(5000);
-				fingerprintReader.SaveImage(".\\finger3.bmp", true);*/
 
 				// TEST TRANSMIT
 				byte[] data;
@@ -92,15 +76,7 @@ namespace ATM {
 				Console.WriteLine("Sending data of length {0}", data.Length);
 				Message msg = serverConnection.SendData("authenticateFinger", data, true);
 				Console.WriteLine("Got response: {0}; {1}; {2}", msg.type, msg.data, msg.size);
-			}
-
-			/*int i = 1;
-			while (true)
-			{
-				Message msg = serverConnection.SendData("authenticatePIN", "COUNTING IS FUN! " + i.ToString(), true);
-				Console.WriteLine("Got response: {0}; {1}; {2}", msg.type, msg.data, msg.size);
-				System.Threading.Thread.Sleep(1000);
-			}*/
+			} */
         }
 
         /*
@@ -108,28 +84,12 @@ namespace ATM {
 		 */
         private void iterate()
 		{
-			//Message result = serverConnection.SendData("authenticatePIN", "this is some test data\n1 2 3<EOF>", true);
-			//Console.WriteLine("Got type \"{0}\" and message \"{1}\".", result.type, result.data);
-		}
-
-		private bool login(string username)
-		{
-			//check for username and PIN
-/*			if (true) {
-
-			}
-
-			//check for fingerprint match
-			if (true) {
-
-			}
-
-			//check for facial recognition
-			if (true) {
-
-			}
-*/
-			return false;
+			Application.Run(new welcomePage(this));
+			Application.Run(new PinPage(this));
+			Application.Run(new PhotoAuth(this));
+			Application.Run(new FingerAuthPage(this));
+			Application.Run(new MainMenu(this));
+			Application.Run(new Confirmation(this));
 		}
 
 		public static void Main(string[] args)
@@ -137,21 +97,10 @@ namespace ATM {
             ATMClient atm = new ATMClient();
 
             // Main program loop.
-            Boolean debug = true;
-            while (debug)
-            {
-                Application.Run(new welcomePage(atm));
-                Application.Run(new PinPage(atm));
-                Application.Run(new PhotoAuth(atm));
-                Application.Run(new FingerAuthPage(atm));
-                Application.Run(new MainMenu(atm));
-                Application.Run(new Confirmation(atm));
-                
-            }
             while (true)
 			{
 				atm.iterate();
-				System.Threading.Thread.Sleep(5000);
+				//System.Threading.Thread.Sleep(5000);
 			}
 		}
 	}
