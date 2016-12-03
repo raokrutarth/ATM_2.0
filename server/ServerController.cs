@@ -51,8 +51,7 @@ namespace AtmServer
 		}
 
 		//registers callback functions
-		public bool RegisterCallback(string dataType, TCPDataCallback callback)
-        {
+		public bool RegisterCallback(string dataType, TCPDataCallback callback) {
 			this.callbacks[dataType] = callback;
 			return true;
 		}
@@ -63,17 +62,7 @@ namespace AtmServer
 			return true;
 		}
 
-		public void setup()
-        {
-			
-		}
-        void serveClient()
-        {
-            /// identify client ID
-            /// assign new TCP communicator object
-            /// assign new DBcomm object
-            /// terminate connection when needed
-        }
+
         bool saveEncryptedImage(string data)
         {
             // get the file from tcpcomm
@@ -82,10 +71,7 @@ namespace AtmServer
             // update/insert the file path to db
             return true;
         }
-        void recoverSession()
-        {
-            // plausible feature
-        }
+
         static void testEncryption()
         {
             DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
@@ -231,21 +217,12 @@ namespace AtmServer
         [STAThread]
         static void Main(string[] args)
         {
-			//int width = 200, height = 30;
-			//Console.SetWindowSize(width, height);
-			//Console.WriteLine("In ServerController Main()");
 
-			testDB();
-			//testEncryption();
-			//testFace(true);
-			//Console.WriteLine(Directory.GetCurrentDirectory());
-			//System.IO.DirectoryInfo diRoot = new System.IO.DirectoryInfo(System.IO.Path.Combine(
-			//            AppDomain.CurrentDomain.BaseDirectory, "Images"));
+			ServerController s = new ServerController();
+			s.tcp.StartListening();
 
-			//Console.WriteLine(diRoot + "\\tempImg.bmp");
 			Console.ReadKey();
-			//ServerController s = new ServerController();
-			//s.tcp.StartListening();
+			
         }
 
         public static bool IsDirectoryWritable(string dirPath, bool throwIfFails = false)
