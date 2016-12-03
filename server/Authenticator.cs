@@ -41,12 +41,9 @@ namespace AtmServer
 		 */
 		public bool authenticateAccount(ClientData clientData, Command command)
 		{
-			// Parse account number.
-			int accountNumber = Int32.Parse(command.data);
-
 			// Validate and store account number.
 			//TODO: validate account number here.
-			clientData.accountNumber = accountNumber;
+			//clientData.accountNumber = accountNumber;
 
 			// Send response.
 			Command cmd = new Command("authResponse", "Anthony Goeckner");
