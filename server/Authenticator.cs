@@ -223,6 +223,11 @@ namespace AtmServer
 			return true;
 		}
 
+		public bool setFaceImageSize(ClientData clientData, Command command) {
+
+			return true;
+		}
+
 		//Determines whether biometric verification is required
 		public bool authRequired(ClientData clientData, Command command) {
 			/*
