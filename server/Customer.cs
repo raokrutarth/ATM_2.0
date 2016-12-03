@@ -31,11 +31,13 @@ namespace AtmServer
 		}
 
 		//returns the balance for the requested account
-		public string getAccountBalance(string accountName) {
+		public string getAccountBalance(ClientData clientData, string accountName) {
 			string successReturn = accountName + ": ";
 			string accountBalance = "";
 
 			//get account balance from database
+			Customer c = clientData.getCust();
+			accountBalance = c.balance.ToString();
 
 			//success return
 			successReturn += accountBalance;
@@ -46,7 +48,7 @@ namespace AtmServer
 		}
 
 		//Reduces the Client's balance by sizeOfWithdrawal
-		public string makeWithdrawal(string sizeOfWithdrawal) {
+		public string makeWithdrawal(ClientData clientData, string sizeOfWithdrawal) {
 			double w = Convert.ToDouble(sizeOfWithdrawal);
 
 			this.balance = this.balance - w;
@@ -61,7 +63,7 @@ namespace AtmServer
 		}
 
 		//Adds the Clients balance by sizeOfDeposit
-		public string makeDeposit(string sizeOfDeposit)	{
+		public string makeDeposit(ClientData clientData, string sizeOfDeposit)	{
 			double d = Convert.ToDouble(sizeOfDeposit);
 
 			this.balance = this.balance + d;
@@ -76,7 +78,7 @@ namespace AtmServer
 		}
 
 		//Changes the old PIN for the Client to newPIN
-		public string changePIN(string newPIN) {
+		public string changePIN(ClientData clientData, string newPIN) {
 			this.HPIN = newPIN;
 
 			//TODO: Update the PIN in the database

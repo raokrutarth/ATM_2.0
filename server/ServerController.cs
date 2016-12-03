@@ -8,7 +8,7 @@ namespace AtmServer
 {
 	//Delegates for Callback Functions
 	public delegate bool TCPDataCallback(ClientData clientData, Command command);
-	public delegate string TCPCustomerCallback(string data);
+	public delegate string TCPCustomerCallback(ClientData clientData, string data);
 
 	class ServerController
     {  
