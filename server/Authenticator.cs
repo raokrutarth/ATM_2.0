@@ -62,15 +62,14 @@ namespace AtmServer
 		/*
 		 * Validate PIN sent from client and send response.
 		 */
-		public bool authenticatePIN(ClientData clientData, Command command)
-		{
+		public bool authenticatePIN(ClientData clientData, Command command) {
 			// Validate PIN.
             string db_pin = clientData.getCust().HPIN;
 
 			// Send response.
-            if(db_pin.Equals(command.data))
-            {
+            if(db_pin.Equals(command.data) {
 				clientData.authPIN = true;
+				checkAuthentication(clientData);
 				Command cmd = new Command("Response", "PIN Verified");
 				ServerController.currentController.tcp.Send(cmd);
 				return true;
@@ -115,8 +114,7 @@ namespace AtmServer
         /*
 		 * Verify face image sent from client and send response.
 		 */
-        public async System.Threading.Tasks.Task<bool> authenticateFace(ClientData clientData, Command command)
-        {
+        public async System.Threading.Tasks.Task<bool> authenticateFace(ClientData clientData, Command command) {
 			//Parse bytes as image.
 			Console.WriteLine("Made it here");
 			byte[] data = Encoding.ASCII.GetBytes(command.data);
@@ -128,47 +126,46 @@ namespace AtmServer
 			Console.WriteLine("Made it here");
             Customer currCust = clientData.getCust();
             string faceFileDest = currentDir + "\\" + currCust.CustomerID.ToString().Trim('-') + "_NewFace.bmp";
-            try
-            {
-                if (fromAtm != null)
-                {
+
+			try {
+                if (fromAtm != null) {
                     fromAtm.Save(faceFileDest);
                     Console.WriteLine("New face saved to " + faceFileDest);
-                }
-                else
-                {
+
+				} else {
                     Console.WriteLine("Empty face image recieved in Authenticator");
                     return false;
                 }
                     
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Console.WriteLine("Error saving recieved face file");
                 Console.WriteLine(e.Message);
                 return false;
             }
+
             bool faceResult = await verifyFace(currCust, faceFileDest);
-            // delete all un encrypted files here
-            if(faceResult)
-            {
-                // Send response.
-                Command cmd = new Command("authResponse", "ok");
+			
+			// delete all unencrypted files here
+
+
+			if (faceResult) {
+				// Send response.
+				clientData.authFace = true;
+				checkAuthentication(clientData);
+				Command cmd = new Command("Response", "Face Verified");
                 ServerController.currentController.tcp.Send(cmd);
                 return true;
-            }
-            else
-            {
-                // face verification failed
-                // send a response to the client
+            } else {
+				clientData.authFace = false;
+				Command cmd = new Command("Response", "Face Failure");
+				ServerController.currentController.tcp.Send(cmd);
                 return false;
             }
         }
         /*
 		 * Verify fingerprint image sent from client and send response.
 		 */
-		public bool authenticateFinger(ClientData clientData, Command command)
-		{
+		public bool authenticateFinger(ClientData clientData, Command command) {
 			// Parse bytes as image.
 			byte[] data = Encoding.ASCII.GetBytes(command.data);
 			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(clientData.fingerprintImageSize.Width,
@@ -200,15 +197,15 @@ namespace AtmServer
 			if(similarity >= MIN_FINGERPRINT_SIMILARITY)
 			{
 				clientData.authFinger = true;
-				clientData.authenticated = true; //all steps of verification have been completed
-				Command cmd = new Command("authResponse", "ok");
+				checkAuthentication(clientData);
+				Command cmd = new Command("Response", "Fingerprint Verified");
 				ServerController.currentController.tcp.Send(cmd);
 				return true;
 			}
 			else
 			{
 				clientData.authFinger = false;
-				Command cmd = new Command("authResponse", "denied");
+				Command cmd = new Command("Response", "Fingerprint Failure");
 				ServerController.currentController.tcp.Send(cmd);
 				return false;
 			}
@@ -234,6 +231,14 @@ namespace AtmServer
 			 */
 			Customer c = clientData.getCust();
 			return c.biometricRequired;
+		}
+
+		//checks if the client is completely authenticated
+		//if they are then it sets the authenticated variable to true
+		public void checkAuthentication(ClientData clientData) {
+			if (clientData.authFace && clientData.authFinger && clientData.authPIN) {
+				clientData.authenticated = true;
+			}
 		}
 	}
 }
