@@ -18,10 +18,11 @@ namespace AtmServer
         public Authenticator()
         {
 			// Register TCP callbacks.
-			ServerController.currentController.RegisterCallback("authenticateAccount", authenticateAccount);
+			ServerController.currentController.RegisterCallback("getName", authenticateAccount);
 			ServerController.currentController.RegisterCallback("authenticatePIN", authenticatePIN);
 			ServerController.currentController.RegisterCallback("authenticateFace", authenticateFace);
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
+			ServerController.currentController.RegisterCallback("authRequired", authRequired);
 			ServerController.currentController.RegisterCallback("setFingerImageSize", setFingerImageSize);
 		}
 
@@ -47,7 +48,7 @@ namespace AtmServer
 			clientData.accountNumber = accountNumber;
 
 			// Send response.
-			Command cmd = new Command("authResponse", "ok");
+			Command cmd = new Command("authResponse", "Anthony Goeckner");
 			ServerController.currentController.tcp.Send(cmd);
 
 			return true;
@@ -65,9 +66,16 @@ namespace AtmServer
 			//TODO: validate PIN here.
 
 			// Send response.
-			Command cmd = new Command("authResponse", "ok");
+			Command cmd = new Command("authResponse", "PIN Verified");
 			ServerController.currentController.tcp.Send(cmd);
 
+			return true;
+		}
+
+		public bool authRequired(ClientData clientData, Command command)
+		{
+			Command cmd = new Command("authResponse", "Yes");
+			ServerController.currentController.tcp.Send(cmd);
 			return true;
 		}
 
@@ -86,7 +94,7 @@ namespace AtmServer
 			//TODO: this.verifyFace();
 
 			// Send response.
-			Command cmd = new Command("authResponse", "ok");
+			Command cmd = new Command("authResponse", "Face Verified");
 			ServerController.currentController.tcp.Send(cmd);
 
 			return true;
@@ -97,6 +105,18 @@ namespace AtmServer
 		 */
 		public bool authenticateFinger(ClientData clientData, Command command)
 		{
+
+			// FOR TESTING
+			Command c = new Command("authResponse", "Fingerprint Verified");
+			ServerController.currentController.tcp.Send(c);
+			return true;
+
+
+
+
+
+
+
 			// Parse bytes as image.
 			byte[] data = Encoding.ASCII.GetBytes(command.data);
 			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(clientData.fingerprintImageSize.Width,
