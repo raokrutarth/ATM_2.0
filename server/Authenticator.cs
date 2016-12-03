@@ -99,25 +99,23 @@ namespace AtmServer
 			this.authenticateFace(clientData, command);
 			return true;
 		}
-        /*
+		/*
 		 * Verify face image sent from client and send response.
+		 * 
 		 */
-        public async System.Threading.Tasks.Task<bool> authenticateFace(ClientData clientData, Command command) {
-			//Parse bytes as image.
-			Console.WriteLine("Made it here");
+		public async System.Threading.Tasks.Task<bool> authenticateFace(ClientData clientData, Command command) {
 			byte[] data = Encoding.ASCII.GetBytes(command.data);
-            ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(320, 480, data);
+            ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(clientData.faceImageSize.Width, 
+				clientData.faceImageSize.Height, data);
             Stream fStream = new MemoryStream(bmp.BitmatFileData);
-            Bitmap fromAtm = new Bitmap(fStream);
-			Console.WriteLine("Made it here");
+            Bitmap image1 = new Bitmap(fStream);
 			string currentDir = Directory.GetCurrentDirectory();
-			Console.WriteLine("Made it here");
             Customer currCust = clientData.getCust();
             string faceFileDest = currentDir + "\\" + currCust.CustomerID.ToString().Trim('-') + "_NewFace.bmp";
 
 			try {
-                if (fromAtm != null) {
-                    fromAtm.Save(faceFileDest);
+                if (image1 != null) {
+					image1.Save(faceFileDest);
                     Console.WriteLine("New face saved to " + faceFileDest);
 
 				} else {
