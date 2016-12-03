@@ -6,8 +6,12 @@ namespace ATM
 	public class ATMClient
 	{
 		// Default connection information.
-		private const string ATM_SERVER_ADDRESS = "atmserver.centralus.cloudapp.azure.com";
+		//private const string ATM_SERVER_ADDRESS = "atmserver.centralus.cloudapp.azure.com";
+		private const string ATM_SERVER_ADDRESS = "192.168.1.230";
 		private const int ATM_SERVER_PORT = 11000;
+
+		// Hard-coded values for demonstration.
+		public const string USER_ID = "00000000000000000000000000000000";
 
 		public static ATMClient _atmClientObject = null;
 		private UserInterface ui;
@@ -46,7 +50,7 @@ namespace ATM
 		{
 			drivers = new HardwareReader();
 			ui = new UserInterface();
-			user = new CurrentUser();
+			user = new CurrentUser(this);
 			serverConnection = new ServerConnection(ATM_SERVER_ADDRESS, ATM_SERVER_PORT);
 
 			// Wait for server connection.
@@ -86,11 +90,11 @@ namespace ATM
         private void iterate()
 		{
 			Application.Run(new welcomePage(this));
-			Application.Run(new PinPage(this));
+			/*Application.Run(new PinPage(this));
 			Application.Run(new PhotoAuth(this));
 			Application.Run(new FingerAuthPage(this));
 			Application.Run(new MainMenu(this));
-			Application.Run(new Confirmation(this));
+			Application.Run(new Confirmation(this));*/
 		}
 
 		public static void Main(string[] args)
