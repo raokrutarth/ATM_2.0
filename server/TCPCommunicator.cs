@@ -73,10 +73,6 @@ namespace AtmServer {
 		}
 
         public void StartListening() {
-            // Data buffer for incoming data.
-            byte[] bytes = new Byte[1024];
-
-
 			try
 			{
 				// Establish the local endpoint for the socket.
