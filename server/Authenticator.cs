@@ -217,15 +217,15 @@ namespace AtmServer
 			return true;
 		}
 
-		//Determines whether biometric verification is required
+		/*Determines whether biometric verification is required
 		public bool authRequired(ClientData clientData, Command command) {
 			/*
 			 * TODO:
 			 * 1) Need a new field in the database to hold in a customer obj to determine if they need biometric auth
-			 */
+			 
 			Customer c = clientData.getCust();
 			return c.biometricRequired;
-		}
+		}*/
 
 		//checks if the client is completely authenticated
 		//if they are then it sets the authenticated variable to true
