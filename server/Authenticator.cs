@@ -224,7 +224,10 @@ namespace AtmServer
 		}
 
 		public bool setFaceImageSize(ClientData clientData, Command command) {
-
+			string[] lines = command.data.Split('\n');
+			clientData.faceImageSize.Width = Int32.Parse(lines[0]);
+			clientData.faceImageSize.Height = Int32.Parse(lines[1]);
+			Console.WriteLine("Client is using face image size of {0}", clientData.fingerprintImageSize.ToString());
 			return true;
 		}
 
