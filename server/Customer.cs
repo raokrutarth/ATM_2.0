@@ -56,11 +56,16 @@ namespace AtmServer
 
             //TODO: Update the database balance
             bool done = DBCommunicator.update(CustomerID.ToString(), DBCommunicator.UpdateType.balance, this.balance.ToString());
-            //success return
-            return sizeOfWithdrawal + " withdrawn";
 
-			//failure return
-			//return "Withdrawal Error";
+			if (done) {
+				//success return
+				return sizeOfWithdrawal + " withdrawn";
+
+			} else {
+				//failure return
+				return "Withdrawal Error";
+			}
+			
 		}
 
 		//Adds the Clients balance by sizeOfDeposit
@@ -69,27 +74,34 @@ namespace AtmServer
 
 			this.balance = this.balance + d;
 
-            //TODO: Update the database balance
-            bool done = DBCommunicator.update(CustomerID.ToString(), DBCommunicator.UpdateType.balance, this.balance.ToString() );
-            //success return
-            return sizeOfDeposit + " deposited";
+            bool done = DBCommunicator.update(CustomerID.ToString(), DBCommunicator.UpdateType.balance, this.balance.ToString() );            
 
-			//failure return
-			//return "Deposit Error";
+			if (done) {
+				//success return
+				return sizeOfDeposit + " deposited";
+
+			} else {
+				//failure return
+				return "Deposit Error";
+			}
 		}
 
 		//Changes the old PIN for the Client to newPIN
 		public string changePIN(ClientData clientData, string newPIN) {
 			this.HPIN = newPIN;
 
-			//TODO: Update the PIN in the database
-
-			//success return
-			return "PIN Succesfully changed";
             bool done = DBCommunicator.update(CustomerID.ToString(), DBCommunicator.UpdateType.h_pin, this.HPIN);
-            //failure return
-            //return "Error PIN not changed";
-        }
+
+			if (done) {
+				//success return
+				return "PIN Succesfully changed";
+
+			} else {
+				//failure return
+				return "Error PIN not changed";
+			}
+
+		}
 
 	}
 	
