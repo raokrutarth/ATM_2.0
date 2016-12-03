@@ -215,14 +215,11 @@ namespace AtmServer
 
 
         [STAThread]
-        static void Main(string[] args)
-        {
-
+        static void Main(string[] args) {
 			ServerController s = new ServerController();
-			s.tcp.StartListening();
 
+			s.tcp.StartListening();
 			Console.ReadKey();
-			
         }
 
         public static bool IsDirectoryWritable(string dirPath, bool throwIfFails = false)
