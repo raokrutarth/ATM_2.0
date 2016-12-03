@@ -114,21 +114,13 @@ namespace AtmServer {
 					allDone.WaitOne();
 				}
 
-			}
-			catch (SocketException s) {
-				try
-				{
-					this.listener.Shutdown(SocketShutdown.Both);
-				}
-				catch (Exception e)
-				{
-					
-				}
+			} catch (SocketException s) {
+				Console.WriteLine("{0}", s.ToString());
+				this.listener.Shutdown(SocketShutdown.Both);
 				this.listener.Close();
 				StartListening();
 
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				Console.WriteLine(e.ToString());
 			}
 
@@ -154,9 +146,6 @@ namespace AtmServer {
         public void ReadCallback(IAsyncResult ar) {
             String content = String.Empty;
 			//Console.WriteLine("Reading Data");
-
-
-
 
 			try {
 
@@ -215,21 +204,6 @@ namespace AtmServer {
 				StartListening();
 			}
         }
-
-       /* public void Send(Socket handler, String data) {
-			// Calculate packet size.
-			int size = Encoding.ASCII.GetByteCount(data);
-			Console.WriteLine("Sending {0} bytes of data.", size);
-
-			// Prepend header to packet.
-			data = "$Size: " + size.ToString() + "\n" + data;
-
-			// Convert the string data to byte data using ASCII encoding.
-			byte[] byteData = Encoding.ASCII.GetBytes(data);
-
-            // Begin sending the data to the remote device.
-            handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
-        }*/
 
 		public bool Send(Command c) {
 			Socket handler = this.listener;
