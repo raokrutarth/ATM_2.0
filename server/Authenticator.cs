@@ -43,6 +43,12 @@ namespace AtmServer
 
 			custID.PadLeft(32, '0');
 
+			//Customer c = ServerController.currentController.database.getCustomer(custID);
+			//clientData.setCust(c);
+
+			//name += c.FirstName;
+			//name += " " + c.LastName;
+
 			name += currCust.FirstName;
 			name += " " + currCust.LastName;
 
@@ -93,9 +99,12 @@ namespace AtmServer
             // decrypt each file and send all base file to verifyFace()
             foreach (string path in basePaths)
             {
-                DecryptedFilePath = currentDir + "\\" + currentCust.CustomerID.ToString().Trim('-') + "_Baseface" + n++ + ".bmp";
-                Encryptor.DecryptFile(path, DecryptedFilePath);
-                bp.Add(DecryptedFilePath);
+                if(path.Length > 1 )
+                {
+                    DecryptedFilePath = currentDir + "\\" + currentCust.CustomerID.ToString().Trim('-') + "_Baseface" + n++ + ".bmp";
+                    Encryptor.DecryptFile(path, DecryptedFilePath);
+                    bp.Add(DecryptedFilePath);
+                }                
             }                
             return await FaceIdentification.verifyFace(newImagePath, bp, currentCust.CustomerID.ToString());
         }
@@ -156,38 +165,8 @@ namespace AtmServer
                 // send a response to the client
                 return false;
             }
-            
-			return false;
-		}
-		//		public bool authenticateFace(ClientData clientData, Command command)
-		//		{
-		//			// Parse bytes as image.
-		//			byte[] data = Encoding.ASCII.GetBytes(command.data);
-		//			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(320, 480, data);
-		//			Stream fStream = new MemoryStream(bmp.BitmatFileData);
-		//			Bitmap image1 = new Bitmap(fStream);
-		//			string savedPath = "./<cust-ID>_newFace.png";
-		//			// save this image to a file like <cust-ID>_newFace.png
-
-		//			//TODO: Need an object ref to FaceIdentification to call verifiyFace
-		//			//bool faceResult =  verifyFace(clientData.customerObj, savedPath);
-
-		//			// Send response.
-		//			//if (faceResult) {
-		//			clientData.authFace = true;
-		//			Command cmd = new Command("Response", "Face Verified");
-		//			ServerController.currentController.tcp.Send(cmd);
-		//			return true;
-		//			//} else {
-		//			//clientData.authFace = false;
-		//			//Command cmd = new Command("authResponse", "ok");
-		//			//ServerController.currentController.tcp.Send(cmd);
-		//			//return false
-		//			//}
-		//		}
-		//>>>>>>> 95eb637aa6066f2f9bcbc535a195c3f30b6b9f9d
-
-		/*
+        }
+        /*
 		 * Verify fingerprint image sent from client and send response.
 		 */
 		public bool authenticateFinger(ClientData clientData, Command command)

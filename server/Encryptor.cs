@@ -136,7 +136,7 @@ namespace AtmServer
 
             // string used to hold the decrypted text.
             string plaintext;
-            using (var rijAlg = new RijndaelManaged())
+            using (var rijAlg = new RijndaelManaged() )
             {
                 rijAlg.Key = key;
                 rijAlg.IV = iv;
