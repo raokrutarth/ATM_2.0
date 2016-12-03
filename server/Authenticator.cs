@@ -64,9 +64,7 @@ namespace AtmServer
 		 */
 		public bool authenticatePIN(ClientData clientData, Command command)
 		{
-			// Parse PIN.
 			// Validate PIN.
-            // compare clientData.custObj.pin == newPin
             string db_pin = clientData.getCust().HPIN;
 
 			// Send response.
@@ -230,13 +228,12 @@ namespace AtmServer
 
 		//Determines whether biometric verification is required
 		public bool authRequired(ClientData clientData, Command command) {
-
-			return false;
 			/*
-			 * Notes:
+			 * TODO:
 			 * 1) Need a new field in the database to hold in a customer obj to determine if they need biometric auth
-			 * 
 			 */
+			Customer c = clientData.getCust();
+			return c.biometricRequired;
 		}
 	}
 }
