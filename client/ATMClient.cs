@@ -105,6 +105,7 @@ namespace ATM
             while (true)
 			{
 				atm.iterate();
+				break; //TODO: Main loop
 				//System.Threading.Thread.Sleep(5000);
 			}
 		}
