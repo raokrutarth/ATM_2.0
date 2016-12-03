@@ -11,7 +11,7 @@ namespace AtmServer
 {
 	//Delegates for Callback Functions
 	public delegate bool TCPDataCallback(ClientData clientData, Command command);
-	//public delegate string TCPCustomerCallback(string data);
+	public delegate string TCPCustomerCallback(string data);
 
 	class ServerController
     {  
@@ -19,7 +19,7 @@ namespace AtmServer
 
 		// Member fields.
 		Dictionary<string, TCPDataCallback> callbacks;
-		//Dictionary<string, TCPCustomerCallback> customerCallbacks;
+		Dictionary<string, TCPCustomerCallback> customerCallbacks;
 		public DBCommunicator database;
 		public Authenticator auth;
 		public TCPCommunicator tcp;
@@ -29,7 +29,7 @@ namespace AtmServer
 		{
 			currentController = this;
 			this.callbacks = new Dictionary<string, TCPDataCallback>();
-			//this.customerCallbacks = new Dictionary<string, TCPCustomerCallback>();
+			this.customerCallbacks = new Dictionary<string, TCPCustomerCallback>();
 			this.database = new DBCommunicator();
 			this.auth = new Authenticator();
 			this.tcp = new TCPCommunicator();
@@ -38,15 +38,16 @@ namespace AtmServer
         public void executeCommand(ClientData clientData, Command command)
         {
 			// Call our callback here.
-			if (this.callbacks.ContainsKey(command.command))
-            {
+			if (this.callbacks.ContainsKey(command.command)) {
 				Console.WriteLine("Calling the callback: {0}", command.command);
 				bool success = this.callbacks[command.command](clientData, command);
-			} /*else if (this.customerCallbacks.ContainsKey(command.command)) {
-				bool success = this.customerCallbacks[command.command](command.data);
-			}*/
-            else
-            {
+
+			} else if (this.customerCallbacks.ContainsKey(command.command)) {
+				string response = this.customerCallbacks[command.command](command.data);
+				Command cmd = new Command("Response", response);
+				ServerController.currentController.tcp.Send(cmd);
+
+			} else {
 				Console.WriteLine("ERROR: Invalid message name received.");
 				Console.WriteLine("Name: {0} {1}", command.command, command.command.Length);
 			}
@@ -176,7 +177,7 @@ namespace AtmServer
         }
         static void testDB()
         {
-            
+			DBCommunicator db = new DBCommunicator();
             DBCommunicator.testDbConnection();
             //Console.WriteLine("Printing database...");
             //DBCommunicator.printDB();
@@ -217,7 +218,7 @@ namespace AtmServer
 			//Console.SetWindowSize(width, height);
 			//Console.WriteLine("In ServerController Main()");
 
-			//testDB();
+			testDB();
 			//testEncryption();
 			//testFace(true);
 			//Console.WriteLine(Directory.GetCurrentDirectory());
@@ -225,9 +226,9 @@ namespace AtmServer
 			//            AppDomain.CurrentDomain.BaseDirectory, "Images"));
 
 			//Console.WriteLine(diRoot + "\\tempImg.bmp");
-			//Console.ReadKey();
-			ServerController s = new ServerController();
-			s.tcp.StartListening();
+			Console.ReadKey();
+			//ServerController s = new ServerController();
+			//s.tcp.StartListening();
         }
 
         public static bool IsDirectoryWritable(string dirPath, bool throwIfFails = false)
