@@ -232,12 +232,7 @@ namespace AtmServer
         [STAThread]
         static void Main(string[] args) {
 			ServerController s = new ServerController();
-            string orgImg = @".\FingerVerifyTest\finger-anthony.bmp";
-            string dest = @".\finger-anthony.enc";
-            //Encryptor.EncryptFile(orgImg, dest);
-            //Encryptor.DecryptFile(dest, @"./dec_fg_an.bmp");
-            testEncryption();           
-
+            // keep file paths to demo files here in comments for backup
                 s.tcp.StartListening();
 			Console.ReadKey();
         }
