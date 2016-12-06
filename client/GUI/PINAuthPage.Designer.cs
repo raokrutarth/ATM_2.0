@@ -55,7 +55,7 @@
             // 
             // greetingText
             // 
-            this.greetingText.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.greetingText.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.greetingText.AutoSize = true;
             this.greetingText.BackColor = System.Drawing.Color.Transparent;
             this.greetingText.Font = new System.Drawing.Font("Rockwell", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -67,7 +67,7 @@
             // 
             // messagePIN
             // 
-            this.messagePIN.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.messagePIN.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.messagePIN.AutoSize = true;
             this.messagePIN.BackColor = System.Drawing.Color.Transparent;
             this.messagePIN.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -79,7 +79,7 @@
             // 
             // txtPIN
             // 
-            this.txtPIN.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.txtPIN.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.txtPIN.Location = new System.Drawing.Point(512, 304);
             this.txtPIN.MaxLength = 4;
             this.txtPIN.Name = "txtPIN";
@@ -173,6 +173,7 @@
             this.Name = "PinPage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PIN Authentication";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.loginPage_Load);
             this.fbground.ResumeLayout(false);
             this.fbground.PerformLayout();

@@ -95,7 +95,7 @@ namespace ATM
 		 */
         private void iterate()
 		{
-            Application.Run(new withdrawPage(this));
+            //Application.Run(new withdrawPage(this));
 			Application.Run(new welcomePage(this));
 			Application.Run(new PinPage(this));
 			Application.Run(new PhotoAuth(this));

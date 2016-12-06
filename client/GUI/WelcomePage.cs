@@ -24,14 +24,6 @@ namespace ATM
 
         private void welcomePage_Load(object sender, EventArgs e)
         {
-            if (atm.serverConnection.isConnected())
-            {
-                DemoText.Text = "Connected to Server";
-            }
-			else
-            {
-                DemoText.Text = "Connection Error";
-            }
 
 			//Card reader will listen here for actual account number.
 			//TODO: Don't hardcode the account number
@@ -56,15 +48,13 @@ namespace ATM
                 }
 
                 if (atm.serverConnection.isConnected())
-				{
-					DemoText.Text = DemoText.Text + "\n Data Sent.";
+                { 
 
 					// Interact with the server.
 					Message response = atm.serverConnection.SendData("getName", MockID.Text, true);
 					Console.WriteLine("AUTH STAGE 1, ACCOUNT: {0}", response.data);
 					if (response.data == "Error client does not exist")
 					{
-						DemoText.Text = "Invalid card. Please try again.";
 					}
 					else
 					{
@@ -72,12 +62,15 @@ namespace ATM
 						this.Close();
 					}
                 }
-                else
-                {
-                    DemoText.Text = DemoText.Text + " Connection Issue.";
-                }
+              
             }
         }
 
+        private void welcomeMessage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+      
     }
 }
