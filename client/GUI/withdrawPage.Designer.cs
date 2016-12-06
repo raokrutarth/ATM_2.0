@@ -83,6 +83,7 @@
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Rockwell", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -94,6 +95,7 @@
             // 
             // cashCount
             // 
+            this.cashCount.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cashCount.Enabled = false;
             this.cashCount.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cashCount.Location = new System.Drawing.Point(277, 201);
@@ -106,6 +108,7 @@
             // 
             // singleButton
             // 
+            this.singleButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.singleButton.BackColor = System.Drawing.Color.Transparent;
             this.singleButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.singleButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -124,6 +127,7 @@
             // 
             // clearButton
             // 
+            this.clearButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.clearButton.BackgroundImage = global::ATMClient.Properties.Resources.cancel_button;
             this.clearButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.clearButton.FlatAppearance.BorderSize = 0;
@@ -139,6 +143,7 @@
             // 
             // withdrawButton
             // 
+            this.withdrawButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.withdrawButton.BackgroundImage = global::ATMClient.Properties.Resources.accept_button;
             this.withdrawButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.withdrawButton.FlatAppearance.BorderSize = 0;
@@ -154,6 +159,7 @@
             // 
             // hundredButton
             // 
+            this.hundredButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.hundredButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.hundredButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.hundredButton.FlatAppearance.BorderSize = 0;
@@ -169,6 +175,7 @@
             // 
             // fiftyButton
             // 
+            this.fiftyButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.fiftyButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.fiftyButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.fiftyButton.FlatAppearance.BorderSize = 0;
@@ -184,6 +191,7 @@
             // 
             // twentyButton
             // 
+            this.twentyButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.twentyButton.BackColor = System.Drawing.Color.Transparent;
             this.twentyButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.twentyButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -200,6 +208,7 @@
             // 
             // tenButton
             // 
+            this.tenButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tenButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.tenButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.tenButton.FlatAppearance.BorderSize = 0;
@@ -215,6 +224,7 @@
             // 
             // fiveButton
             // 
+            this.fiveButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.fiveButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.fiveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.fiveButton.FlatAppearance.BorderSize = 0;
@@ -248,6 +258,7 @@
             this.Controls.Add(this.fbground);
             this.Name = "withdrawPage";
             this.Text = "withdrawPage";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.withdrawPage_Load);
             this.fbground.ResumeLayout(false);
             this.fbground.PerformLayout();

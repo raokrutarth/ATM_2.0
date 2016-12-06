@@ -81,7 +81,7 @@
             // 
             // changePINtext
             // 
-            this.changePINtext.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.changePINtext.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.changePINtext.AutoSize = true;
             this.changePINtext.BackColor = System.Drawing.Color.Transparent;
             this.changePINtext.Font = new System.Drawing.Font("Rockwell", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -93,7 +93,7 @@
             // 
             // newPIN1
             // 
-            this.newPIN1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.newPIN1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.newPIN1.Location = new System.Drawing.Point(498, 275);
             this.newPIN1.MaxLength = 4;
             this.newPIN1.Name = "newPIN1";
@@ -104,7 +104,7 @@
             // 
             // changePIN1Label
             // 
-            this.changePIN1Label.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.changePIN1Label.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.changePIN1Label.AutoSize = true;
             this.changePIN1Label.BackColor = System.Drawing.Color.Transparent;
             this.changePIN1Label.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -117,7 +117,7 @@
             // 
             // changePIN2Label
             // 
-            this.changePIN2Label.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.changePIN2Label.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.changePIN2Label.AutoSize = true;
             this.changePIN2Label.BackColor = System.Drawing.Color.Transparent;
             this.changePIN2Label.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -129,7 +129,7 @@
             // 
             // newPIN2
             // 
-            this.newPIN2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.newPIN2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.newPIN2.Location = new System.Drawing.Point(498, 330);
             this.newPIN2.MaxLength = 4;
             this.newPIN2.Name = "newPIN2";
@@ -140,7 +140,7 @@
             // 
             // invalidPINMessage
             // 
-            this.invalidPINMessage.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.invalidPINMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.invalidPINMessage.BackColor = System.Drawing.Color.Transparent;
             this.invalidPINMessage.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.invalidPINMessage.ForeColor = System.Drawing.SystemColors.ButtonFace;
@@ -155,7 +155,7 @@
             // 
             // unequalPINMessage
             // 
-            this.unequalPINMessage.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.unequalPINMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.unequalPINMessage.BackColor = System.Drawing.Color.Transparent;
             this.unequalPINMessage.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.unequalPINMessage.ForeColor = System.Drawing.SystemColors.ButtonFace;
