@@ -232,8 +232,11 @@ namespace AtmServer
         [STAThread]
         static void Main(string[] args) {
 			ServerController s = new ServerController();
-            // keep file paths to demo files here in comments for backup
-                s.tcp.StartListening();
+			// keep file paths to demo files here in comments for backup
+			while (true) {
+				s.tcp.StartListening();
+			}
+			
 			Console.ReadKey();
         }
 

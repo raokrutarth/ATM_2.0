@@ -106,8 +106,6 @@ namespace AtmServer {
 				Console.WriteLine("{0}", s.ToString());
 				this.listener.Shutdown(SocketShutdown.Both);
 				this.listener.Close();
-				StartListening();
-
 			} catch (Exception e) {
 				Console.WriteLine(e.ToString());
 			}
@@ -186,7 +184,6 @@ namespace AtmServer {
 
 				this.listener.Shutdown(SocketShutdown.Both);
 				this.listener.Close();
-				StartListening();
 			}
         }
 
@@ -251,7 +248,6 @@ namespace AtmServer {
 		public void logout() {
 			this.listener.Shutdown(SocketShutdown.Both);
 			this.listener.Close();
-			StartListening();
 		}
 
     }
