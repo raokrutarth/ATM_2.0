@@ -234,7 +234,10 @@ namespace AtmServer
         [STAThread]
         static void Main(string[] args) {
 			ServerController s = new ServerController();
-			// keep file paths to demo files here in comments for backup
+            // keep file paths to demo files here in comments for backup
+            DBCommunicator dbc = new DBCommunicator();
+            DBCommunicator.update("00000000-0000-0000-3586-123193050990", DBCommunicator.UpdateType.h_pin, "1111");
+            Customer c = DBCommunicator.getCustomer("00000000-0000-0000-3586-123193050990");
 			while (true) {
 				s.tcp.StartListening();
 			}

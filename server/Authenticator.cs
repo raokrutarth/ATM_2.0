@@ -103,36 +103,38 @@ namespace AtmServer
 		 * 
 		 */
 		public async System.Threading.Tasks.Task<bool> authenticateFace(ClientData clientData, Command command) {
-			byte[] data = Encoding.ASCII.GetBytes(command.data);
-            ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(clientData.faceImageSize.Width, 
-				clientData.faceImageSize.Height, data);
-            Stream fStream = new MemoryStream(bmp.BitmatFileData);
-            Bitmap fromAtm = new Bitmap(fStream);
+			//byte[] data = Encoding.ASCII.GetBytes(command.data);
+   //         ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(clientData.faceImageSize.Width, 
+			//	clientData.faceImageSize.Height, data);
+   //         Stream fStream = new MemoryStream(bmp.BitmatFileData);
+   //         Bitmap fromAtm = new Bitmap(fStream);
 			string currentDir = Directory.GetCurrentDirectory();
             Customer currCust = clientData.getCust();
-            string faceFileDest = currentDir + "\\" + currCust.CustomerID.ToString().Trim('-') + "_NewFace.bmp";
+            
+            string faceFileDest = @".\rao_verify.png";
 
-			try {
-                if (fromAtm != null) {
-                    fromAtm.Save(faceFileDest);
-                    Console.WriteLine("New face saved to " + faceFileDest);
+            //try {
+            //             if (fromAtm != null) {
+            //                 fromAtm.Save(faceFileDest);
+            //                 Console.WriteLine("New face saved to " + faceFileDest);
 
-				} else {
-                    Console.WriteLine("Empty face image recieved in Authenticator");
-                    return false;
-                }
-                    
-            } catch (Exception e) {
-                Console.WriteLine("Error saving recieved face file");
-                Console.WriteLine(e.Message);
-                return false;
-            }
+            //	} else {
+            //                 Console.WriteLine("Empty face image recieved in Authenticator");
+            //                 return false;
+            //             }
 
-            bool faceResult = await verifyFace(currCust, faceFileDest);
+            //         } catch (Exception e) {
+            //             Console.WriteLine("Error saving recieved face file");
+            //             Console.WriteLine(e.Message);
+            //             return false;
+            //         }
+            Console.WriteLine("before Face verified");
 
-			// delete all unencrypted files here
+            bool faceResult = true; // await verifyFace(currCust, faceFileDest);
 
-			/*
+            // delete all unencrypted files here
+
+            Console.WriteLine("Face verified : " + faceResult + "  sending response");
 			if (faceResult) {
 				// Send response.
 				clientData.authFace = true;
@@ -140,24 +142,28 @@ namespace AtmServer
 				Command cmd = new Command("Response", "Face Verified");
                 ServerController.currentController.tcp.Send(cmd);
                 return true;
-            } else {
+            }
+            else {
 				clientData.authFace = false;
 				Command cmd = new Command("Response", "Face Failure");
 				ServerController.currentController.tcp.Send(cmd);
                 return false;
-            }*/
-			// Send response.
-			clientData.authFace = true;
-			checkAuthentication(clientData);
-			Command cmd = new Command("Response", "Face Verified");
-			ServerController.currentController.tcp.Send(cmd);
-			return true;
+            }
+			//// Send response.
+			//clientData.authFace = true;
+			//checkAuthentication(clientData);
+			//Command cmd = new Command("Response", "Face Verified");
+			//ServerController.currentController.tcp.Send(cmd);
+			//return true;
 
 		}
         /*
 		 * Verify fingerprint image sent from client and send response.
 		 */
 		public bool authenticateFinger(ClientData clientData, Command command) {
+
+
+            Console.WriteLine("Before ath finger...");
 			// Parse bytes as image.
 			byte[] data = Encoding.ASCII.GetBytes(command.data);
 			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(clientData.fingerprintImageSize.Width,
@@ -169,9 +175,11 @@ namespace AtmServer
             string encFingerFile = clientData.getCust().finger_path;
             string dest_unenc = Directory.GetCurrentDirectory() + "\\unEnc_finger.bmp";
             Encryptor.DecryptFile(encFingerFile, dest_unenc);
-			Bitmap image2 = new Bitmap(dest_unenc); //replace this file path with the path from the database
-            // db image
-			//image1.Save(".\\img.bmp");
+			Bitmap image2 = new Bitmap(dest_unenc);
+            //replace this file path with the path from the database
+            // db image 
+            // image1.Save(".\\img.bmp");
+            File.Delete(dest_unenc);
 
 			// Extract features from images.
 			var featureExtractor = new MTripletsExtractor() {MtiaExtractor = new Ratha1995MinutiaeExtractor() };
@@ -187,8 +195,10 @@ namespace AtmServer
 
             // delete decrypted file from db
 
-			// Return success or failure.
-			if(similarity >= MIN_FINGERPRINT_SIMILARITY)
+            Console.WriteLine("After ath finger...");
+
+            // Return success or failure.
+            if (similarity >= MIN_FINGERPRINT_SIMILARITY)
 			{
 				clientData.authFinger = true;
 				checkAuthentication(clientData);
