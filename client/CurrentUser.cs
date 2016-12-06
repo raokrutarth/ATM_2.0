@@ -4,25 +4,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATM {
-	public class CurrentUser {
+namespace ATM
+{
+	public class CurrentUser
+	{
+		private ATMClient atm;
 		private string userName;
 		private bool loggedIn;
 
-		public void setUserName(string name) {
-			this.userName = name;
-		}
+        public CurrentUser(ATMClient atm)
+        {
+			this.atm = atm;
+            userName = null;
+            loggedIn = false;
+        }
 
-		public void setLoggedIn(bool value) {
-			this.loggedIn = value;
-		}
+        public CurrentUser(ATMClient atm, string name)
+        {
+			this.atm = atm;
+            userName = name;
+            loggedIn = false;
+        }
 
-		public bool getLoggedIn() {
-			return this.loggedIn;
-		}
+        public void login()
+        {
+            loggedIn = true;
+        }
 
-		public string getUserName() {
-			return this.userName;
-		}
+        public void logout()
+        {
+            loggedIn = false;
+        }
+
+        public String getName()
+        {
+            if (userName == null)
+            {
+                return "null";
+            }
+            return userName;
+        }
+
+        public void setName(String name)
+        {
+            userName = name;
+        }
 	}
 }

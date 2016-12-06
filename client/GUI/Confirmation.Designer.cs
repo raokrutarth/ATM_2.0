@@ -133,6 +133,7 @@
             this.Name = "Confirmation";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Confirmation";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Confirmation_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
