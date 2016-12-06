@@ -87,16 +87,17 @@ namespace ATM
                 try
                 {
 					// Convert image to a useable format.
-					MemoryStream ms = new MemoryStream();
+					/*MemoryStream ms = new MemoryStream();
 					userImage.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
 
 					// Send the image size.
 					Size imgSize = userImage.Image.Size;
 					string sizeString = imgSize.Width.ToString() + "\n" + imgSize.Height.ToString();
-					atm.serverConnection.SendData("setFaceImageSize", sizeString);
+					atm.serverConnection.SendData("setFaceImageSize", sizeString);*/
 
 					// Send image for verification.
-					Message response = atm.serverConnection.SendData("authenticateFace", ms.ToArray(), true);
+					//Message response = atm.serverConnection.SendData("authenticateFace", ms.ToArray(), true);
+					Message response = atm.serverConnection.SendData("authenticateFace", "haha we have no face", true);
 					Console.WriteLine("AUTH STAGE 3, FACE: {0}", response.data);
 					if (response.data == "Face Verified")
 					{
