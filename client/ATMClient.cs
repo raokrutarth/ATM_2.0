@@ -6,7 +6,7 @@ namespace ATM
 	public class ATMClient
 	{
 		// Default connection information.
-		private const string ATM_SERVER_ADDRESS = "10.186.99.5";
+		private const string ATM_SERVER_ADDRESS = "192.168.1.123";
 		//private const string ATM_SERVER_ADDRESS = "192.168.1.81";
 		private const int ATM_SERVER_PORT = 11000;
 
@@ -95,6 +95,7 @@ namespace ATM
 		 */
         private void iterate()
 		{
+            Application.Run(new withdrawPage(this));
 			Application.Run(new welcomePage(this));
 			Application.Run(new PinPage(this));
 			Application.Run(new PhotoAuth(this));
