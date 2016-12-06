@@ -1,4 +1,4 @@
-﻿namespace ATMClient.GUI
+﻿namespace ATM
 {
     partial class withdrawPage
     {
@@ -32,15 +32,15 @@
             this.bankName = new System.Windows.Forms.Label();
             this.fbground = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
+            this.cashCount = new System.Windows.Forms.TextBox();
+            this.singleButton = new System.Windows.Forms.Button();
+            this.clearButton = new System.Windows.Forms.Button();
+            this.withdrawButton = new System.Windows.Forms.Button();
+            this.hundredButton = new System.Windows.Forms.Button();
+            this.fiftyButton = new System.Windows.Forms.Button();
+            this.twentyButton = new System.Windows.Forms.Button();
+            this.tenButton = new System.Windows.Forms.Button();
+            this.fiveButton = new System.Windows.Forms.Button();
             this.fbground.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,90 +86,144 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Rockwell", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(236, 159);
+            this.label1.Location = new System.Drawing.Point(247, 135);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(516, 46);
             this.label1.TabIndex = 4;
             this.label1.Text = "How much would you like?";
             // 
-            // textBox1
+            // cashCount
             // 
-            this.textBox1.Location = new System.Drawing.Point(301, 236);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(387, 22);
-            this.textBox1.TabIndex = 5;
+            this.cashCount.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cashCount.Location = new System.Drawing.Point(277, 201);
+            this.cashCount.Name = "cashCount";
+            this.cashCount.ReadOnly = true;
+            this.cashCount.Size = new System.Drawing.Size(387, 39);
+            this.cashCount.TabIndex = 5;
+            this.cashCount.Text = "$0";
+            this.cashCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // button1
+            // singleButton
             // 
-            this.button1.Location = new System.Drawing.Point(301, 305);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.singleButton.BackColor = System.Drawing.Color.Transparent;
+            this.singleButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
+            this.singleButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.singleButton.FlatAppearance.BorderSize = 0;
+            this.singleButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.singleButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.singleButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.singleButton.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.singleButton.Location = new System.Drawing.Point(277, 267);
+            this.singleButton.Name = "singleButton";
+            this.singleButton.Size = new System.Drawing.Size(140, 50);
+            this.singleButton.TabIndex = 6;
+            this.singleButton.Text = "$1";
+            this.singleButton.UseVisualStyleBackColor = false;
+            this.singleButton.Click += new System.EventHandler(this.singleButton_Click);
             // 
-            // button2
+            // clearButton
             // 
-            this.button2.Location = new System.Drawing.Point(451, 488);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.clearButton.BackgroundImage = global::ATMClient.Properties.Resources.cancel_button;
+            this.clearButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.clearButton.FlatAppearance.BorderSize = 0;
+            this.clearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.clearButton.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clearButton.Location = new System.Drawing.Point(713, 441);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(140, 50);
+            this.clearButton.TabIndex = 7;
+            this.clearButton.Text = "Clear";
+            this.clearButton.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // withdrawButton
             // 
-            this.button3.Location = new System.Drawing.Point(763, 236);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.withdrawButton.BackgroundImage = global::ATMClient.Properties.Resources.accept_button;
+            this.withdrawButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.withdrawButton.FlatAppearance.BorderSize = 0;
+            this.withdrawButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.withdrawButton.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.withdrawButton.Location = new System.Drawing.Point(713, 270);
+            this.withdrawButton.Name = "withdrawButton";
+            this.withdrawButton.Size = new System.Drawing.Size(140, 50);
+            this.withdrawButton.TabIndex = 8;
+            this.withdrawButton.Text = "Withdraw";
+            this.withdrawButton.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // hundredButton
             // 
-            this.button4.Location = new System.Drawing.Point(613, 444);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 9;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.hundredButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
+            this.hundredButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.hundredButton.FlatAppearance.BorderSize = 0;
+            this.hundredButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.hundredButton.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hundredButton.Location = new System.Drawing.Point(524, 441);
+            this.hundredButton.Name = "hundredButton";
+            this.hundredButton.Size = new System.Drawing.Size(140, 50);
+            this.hundredButton.TabIndex = 9;
+            this.hundredButton.Text = "$100";
+            this.hundredButton.UseVisualStyleBackColor = true;
+            this.hundredButton.Click += new System.EventHandler(this.hundredButton_Click);
             // 
-            // button5
+            // fiftyButton
             // 
-            this.button5.Location = new System.Drawing.Point(613, 372);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 10;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
+            this.fiftyButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
+            this.fiftyButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.fiftyButton.FlatAppearance.BorderSize = 0;
+            this.fiftyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fiftyButton.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fiftyButton.Location = new System.Drawing.Point(524, 357);
+            this.fiftyButton.Name = "fiftyButton";
+            this.fiftyButton.Size = new System.Drawing.Size(140, 50);
+            this.fiftyButton.TabIndex = 10;
+            this.fiftyButton.Text = "$50";
+            this.fiftyButton.UseVisualStyleBackColor = true;
+            this.fiftyButton.Click += new System.EventHandler(this.fiftyButton_Click);
             // 
-            // button6
+            // twentyButton
             // 
-            this.button6.Location = new System.Drawing.Point(613, 305);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 11;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
+            this.twentyButton.BackColor = System.Drawing.Color.Transparent;
+            this.twentyButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
+            this.twentyButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.twentyButton.FlatAppearance.BorderSize = 0;
+            this.twentyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.twentyButton.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.twentyButton.Location = new System.Drawing.Point(524, 267);
+            this.twentyButton.Name = "twentyButton";
+            this.twentyButton.Size = new System.Drawing.Size(140, 50);
+            this.twentyButton.TabIndex = 11;
+            this.twentyButton.Text = "$20";
+            this.twentyButton.UseVisualStyleBackColor = false;
+            this.twentyButton.Click += new System.EventHandler(this.twentyButton_Click);
             // 
-            // button7
+            // tenButton
             // 
-            this.button7.Location = new System.Drawing.Point(301, 444);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 12;
-            this.button7.Text = "button7";
-            this.button7.UseVisualStyleBackColor = true;
+            this.tenButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
+            this.tenButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.tenButton.FlatAppearance.BorderSize = 0;
+            this.tenButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.tenButton.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tenButton.Location = new System.Drawing.Point(277, 441);
+            this.tenButton.Name = "tenButton";
+            this.tenButton.Size = new System.Drawing.Size(140, 50);
+            this.tenButton.TabIndex = 12;
+            this.tenButton.Text = "$10";
+            this.tenButton.UseVisualStyleBackColor = true;
+            this.tenButton.Click += new System.EventHandler(this.tenButton_Click);
             // 
-            // button8
+            // fiveButton
             // 
-            this.button8.Location = new System.Drawing.Point(301, 372);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 13;
-            this.button8.Text = "button8";
-            this.button8.UseVisualStyleBackColor = true;
+            this.fiveButton.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
+            this.fiveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.fiveButton.FlatAppearance.BorderSize = 0;
+            this.fiveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fiveButton.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fiveButton.Location = new System.Drawing.Point(277, 357);
+            this.fiveButton.Name = "fiveButton";
+            this.fiveButton.Size = new System.Drawing.Size(140, 50);
+            this.fiveButton.TabIndex = 13;
+            this.fiveButton.Text = "$5";
+            this.fiveButton.UseVisualStyleBackColor = true;
+            this.fiveButton.Click += new System.EventHandler(this.fiveButton_Click);
             // 
             // withdrawPage
             // 
@@ -178,19 +232,20 @@
             this.BackgroundImage = global::ATMClient.GUI.Properties.Resources.bbg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(982, 553);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.fiveButton);
+            this.Controls.Add(this.tenButton);
+            this.Controls.Add(this.twentyButton);
+            this.Controls.Add(this.fiftyButton);
+            this.Controls.Add(this.hundredButton);
+            this.Controls.Add(this.withdrawButton);
+            this.Controls.Add(this.clearButton);
+            this.Controls.Add(this.singleButton);
+            this.Controls.Add(this.cashCount);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.fbground);
             this.Name = "withdrawPage";
             this.Text = "withdrawPage";
+            this.Load += new System.EventHandler(this.withdrawPage_Load);
             this.fbground.ResumeLayout(false);
             this.fbground.PerformLayout();
             this.ResumeLayout(false);
@@ -204,14 +259,14 @@
         private System.Windows.Forms.Label bankName;
         private System.Windows.Forms.Panel fbground;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.TextBox cashCount;
+        private System.Windows.Forms.Button singleButton;
+        private System.Windows.Forms.Button clearButton;
+        private System.Windows.Forms.Button withdrawButton;
+        private System.Windows.Forms.Button hundredButton;
+        private System.Windows.Forms.Button fiftyButton;
+        private System.Windows.Forms.Button twentyButton;
+        private System.Windows.Forms.Button tenButton;
+        private System.Windows.Forms.Button fiveButton;
     }
 }
