@@ -4,19 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATM {
-	public class CurrentUser {
+namespace ATM
+{
+	public class CurrentUser
+	{
+		private ATMClient atm;
 		private string userName;
 		private bool loggedIn;
 
-        public CurrentUser()
+        public CurrentUser(ATMClient atm)
         {
+			this.atm = atm;
             userName = null;
             loggedIn = false;
         }
 
-        public CurrentUser(string name)
+        public CurrentUser(ATMClient atm, string name)
         {
+			this.atm = atm;
             userName = name;
             loggedIn = false;
         }

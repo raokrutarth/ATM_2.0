@@ -27,6 +27,7 @@ namespace ATM
 		// The client socket.
 		private TcpClient client;
 		private NetworkStream stream;
+		private bool connected;
 
 		/*
 		 * Creates a new ServerConnection object. This connection will remain
@@ -108,6 +109,7 @@ namespace ATM
 			{
 				this.client = new TcpClient(this.server, this.port);
 				this.stream = this.client.GetStream();
+				this.connected = true;
 				Console.WriteLine("Connected to {0}:{1}", this.server, this.port);
 			}
 			catch (ArgumentNullException e)
@@ -117,10 +119,18 @@ namespace ATM
 			}
 			catch (SocketException e)
 			{
-				Console.WriteLine("SocketException: {0}", e);
+				//Console.WriteLine("SocketException: {0}", e);
 				return false;
 			}
 			return true;
+		}
+
+		/*
+		 * Checks whether the connection is open.
+		 */
+		public bool isConnected()
+		{
+			return this.connected;
 		}
 
 		/*
@@ -129,6 +139,7 @@ namespace ATM
 		 */
 		public void Close()
 		{
+			this.connected = false;
 			try
 			{
 				// Release the socket.

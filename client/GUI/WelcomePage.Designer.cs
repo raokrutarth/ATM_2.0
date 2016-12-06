@@ -38,8 +38,6 @@
             this.MockID = new System.Windows.Forms.TextBox();
             this.DemoID = new System.Windows.Forms.Label();
             this.sendName = new System.Windows.Forms.Button();
-            this.DemoText = new System.Windows.Forms.Label();
-            this.ServerText = new System.Windows.Forms.Label();
             this.fbground.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,30 +60,31 @@
             this.bankIcon.AutoSize = true;
             this.bankIcon.BackColor = System.Drawing.Color.Transparent;
             this.bankIcon.Image = global::ATMClient.GUI.Properties.Resources.HSVC_image1;
-            this.bankIcon.Location = new System.Drawing.Point(530, 20);
-            this.bankIcon.MinimumSize = new System.Drawing.Size(110, 60);
+            this.bankIcon.Location = new System.Drawing.Point(531, 20);
+            this.bankIcon.MinimumSize = new System.Drawing.Size(109, 60);
             this.bankIcon.Name = "bankIcon";
-            this.bankIcon.Size = new System.Drawing.Size(110, 60);
+            this.bankIcon.Size = new System.Drawing.Size(109, 60);
             this.bankIcon.TabIndex = 1;
             // 
             // welcomeMessage
             // 
-            this.welcomeMessage.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.welcomeMessage.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.welcomeMessage.AutoSize = true;
             this.welcomeMessage.BackColor = System.Drawing.Color.Transparent;
             this.welcomeMessage.Font = new System.Drawing.Font("Rockwell", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.welcomeMessage.Location = new System.Drawing.Point(244, 163);
+            this.welcomeMessage.Location = new System.Drawing.Point(244, 162);
             this.welcomeMessage.Name = "welcomeMessage";
             this.welcomeMessage.Size = new System.Drawing.Size(484, 54);
             this.welcomeMessage.TabIndex = 2;
             this.welcomeMessage.Text = "Welcome to ATM 2.0";
+            this.welcomeMessage.Click += new System.EventHandler(this.welcomeMessage_Click);
             // 
             // cardIcon
             // 
-            this.cardIcon.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.cardIcon.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cardIcon.BackColor = System.Drawing.Color.Transparent;
             this.cardIcon.Image = global::ATMClient.GUI.Properties.Resources.Card1;
-            this.cardIcon.Location = new System.Drawing.Point(242, 320);
+            this.cardIcon.Location = new System.Drawing.Point(243, 320);
             this.cardIcon.MinimumSize = new System.Drawing.Size(100, 100);
             this.cardIcon.Name = "cardIcon";
             this.cardIcon.Size = new System.Drawing.Size(156, 100);
@@ -93,7 +92,7 @@
             // 
             // Insert_Message
             // 
-            this.Insert_Message.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.Insert_Message.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Insert_Message.AutoSize = true;
             this.Insert_Message.BackColor = System.Drawing.Color.Transparent;
             this.Insert_Message.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -105,6 +104,11 @@
             // 
             // moveOn
             // 
+            this.moveOn.Location = new System.Drawing.Point(0, 0);
+            this.moveOn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.moveOn.Name = "moveOn";
+            this.moveOn.Size = new System.Drawing.Size(75, 23);
+            this.moveOn.TabIndex = 13;
             // 
             // fbground
             // 
@@ -116,25 +120,29 @@
             this.fbground.Controls.Add(this.bankIcon);
             this.fbground.Controls.Add(this.bankName);
             this.fbground.Location = new System.Drawing.Point(0, 0);
+            this.fbground.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fbground.Name = "fbground";
-            this.fbground.Size = new System.Drawing.Size(990, 115);
+            this.fbground.Size = new System.Drawing.Size(989, 114);
             this.fbground.TabIndex = 6;
             // 
             // MockID
             // 
-            this.MockID.Location = new System.Drawing.Point(729, 435);
+            this.MockID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.MockID.Location = new System.Drawing.Point(621, 436);
+            this.MockID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MockID.MinimumSize = new System.Drawing.Size(4, 30);
             this.MockID.Name = "MockID";
-            this.MockID.Size = new System.Drawing.Size(115, 30);
+            this.MockID.Size = new System.Drawing.Size(165, 30);
             this.MockID.TabIndex = 7;
             this.MockID.TextChanged += new System.EventHandler(this.MockID_TextChanged);
             // 
             // DemoID
             // 
+            this.DemoID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DemoID.AutoSize = true;
             this.DemoID.BackColor = System.Drawing.Color.Transparent;
             this.DemoID.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DemoID.Location = new System.Drawing.Point(598, 435);
+            this.DemoID.Location = new System.Drawing.Point(481, 436);
             this.DemoID.Name = "DemoID";
             this.DemoID.Size = new System.Drawing.Size(113, 20);
             this.DemoID.TabIndex = 8;
@@ -142,6 +150,7 @@
             // 
             // sendName
             // 
+            this.sendName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.sendName.BackColor = System.Drawing.Color.Transparent;
             this.sendName.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.sendName.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -149,35 +158,14 @@
             this.sendName.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.sendName.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.sendName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sendName.Location = new System.Drawing.Point(869, 435);
+            this.sendName.Location = new System.Drawing.Point(810, 425);
+            this.sendName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.sendName.Name = "sendName";
-            this.sendName.Size = new System.Drawing.Size(75, 31);
+            this.sendName.Size = new System.Drawing.Size(89, 56);
             this.sendName.TabIndex = 9;
             this.sendName.Text = "Submit";
             this.sendName.UseVisualStyleBackColor = false;
             this.sendName.Click += new System.EventHandler(this.sendName_Click);
-            // 
-            // DemoText
-            // 
-            this.DemoText.AutoSize = true;
-            this.DemoText.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.DemoText.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DemoText.Location = new System.Drawing.Point(12, 131);
-            this.DemoText.Name = "DemoText";
-            this.DemoText.Size = new System.Drawing.Size(75, 22);
-            this.DemoText.TabIndex = 11;
-            this.DemoText.Text = "ERROR";
-            // 
-            // ServerText
-            // 
-            this.ServerText.AutoSize = true;
-            this.ServerText.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ServerText.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerText.Location = new System.Drawing.Point(45, 444);
-            this.ServerText.Name = "ServerText";
-            this.ServerText.Size = new System.Drawing.Size(177, 22);
-            this.ServerText.TabIndex = 12;
-            this.ServerText.Text = "Servers Response:";
             // 
             // welcomePage
             // 
@@ -185,9 +173,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::ATMClient.GUI.Properties.Resources.bbg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(982, 553);
-            this.Controls.Add(this.ServerText);
-            this.Controls.Add(this.DemoText);
+            this.ClientSize = new System.Drawing.Size(981, 553);
             this.Controls.Add(this.sendName);
             this.Controls.Add(this.DemoID);
             this.Controls.Add(this.MockID);
@@ -197,9 +183,11 @@
             this.Controls.Add(this.fbground);
             this.Controls.Add(this.moveOn);
             this.DoubleBuffered = true;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "welcomePage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Welcome";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.welcomePage_Load);
             this.fbground.ResumeLayout(false);
             this.fbground.PerformLayout();
@@ -220,8 +208,6 @@
         private System.Windows.Forms.TextBox MockID;
         private System.Windows.Forms.Label DemoID;
         private System.Windows.Forms.Button sendName;
-        private System.Windows.Forms.Label DemoText;
-        private System.Windows.Forms.Label ServerText;
     }
 }
 
