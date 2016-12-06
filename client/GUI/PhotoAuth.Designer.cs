@@ -81,6 +81,7 @@
             // 
             // photoMSG
             // 
+            this.photoMSG.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.photoMSG.AutoSize = true;
             this.photoMSG.BackColor = System.Drawing.Color.Transparent;
             this.photoMSG.Font = new System.Drawing.Font("Rockwell", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -92,6 +93,9 @@
             // 
             // userImage
             // 
+            this.userImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.userImage.BackColor = System.Drawing.Color.Transparent;
             this.userImage.Location = new System.Drawing.Point(271, 137);
             this.userImage.Name = "userImage";
@@ -101,14 +105,15 @@
             // 
             // takePic
             // 
+            this.takePic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.takePic.BackColor = System.Drawing.Color.Transparent;
             this.takePic.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.takePic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.takePic.FlatAppearance.BorderSize = 0;
             this.takePic.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.takePic.Location = new System.Drawing.Point(778, 475);
+            this.takePic.Location = new System.Drawing.Point(778, 430);
             this.takePic.Name = "takePic";
-            this.takePic.Size = new System.Drawing.Size(88, 45);
+            this.takePic.Size = new System.Drawing.Size(152, 90);
             this.takePic.TabIndex = 5;
             this.takePic.Text = "Recognize Face";
             this.takePic.UseVisualStyleBackColor = false;
@@ -116,6 +121,7 @@
             // 
             // listOfCams
             // 
+            this.listOfCams.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.listOfCams.FormattingEnabled = true;
             this.listOfCams.Location = new System.Drawing.Point(24, 165);
             this.listOfCams.Name = "listOfCams";
@@ -125,9 +131,10 @@
             // 
             // CountDown
             // 
+            this.CountDown.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.CountDown.BackColor = System.Drawing.Color.Transparent;
             this.CountDown.Font = new System.Drawing.Font("Rockwell", 72F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CountDown.Location = new System.Drawing.Point(724, 216);
+            this.CountDown.Location = new System.Drawing.Point(721, 165);
             this.CountDown.Name = "CountDown";
             this.CountDown.Size = new System.Drawing.Size(142, 211);
             this.CountDown.TabIndex = 7;
@@ -153,6 +160,7 @@
             this.Name = "PhotoAuth";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PhotoAuth";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.PhotoAuth_Load);
             this.fbground.ResumeLayout(false);
             this.fbground.PerformLayout();

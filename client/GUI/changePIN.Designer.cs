@@ -46,7 +46,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Transparent;
-			this.panel1.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
+            this.panel1.BackgroundImage = global::ATMClient.GUI.Properties.Resources.fbg_image;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.Controls.Add(this.bankIcon);
             this.panel1.Controls.Add(this.bankName);
@@ -188,6 +188,7 @@
             this.Name = "changePIN";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "changePIN";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.changePIN_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
