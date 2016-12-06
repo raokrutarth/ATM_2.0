@@ -157,6 +157,7 @@
             this.Controls.Add(this.userImage);
             this.Controls.Add(this.photoMSG);
             this.Controls.Add(this.fbground);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "PhotoAuth";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PhotoAuth";
