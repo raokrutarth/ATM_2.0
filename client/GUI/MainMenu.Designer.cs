@@ -215,6 +215,7 @@
             this.Controls.Add(this.DepositBtn);
             this.Controls.Add(this.WithdrawBtn);
             this.Controls.Add(this.fbground);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainMenu";

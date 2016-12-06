@@ -185,6 +185,7 @@
             this.Controls.Add(this.changePINtext);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "changePIN";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "changePIN";

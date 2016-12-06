@@ -130,6 +130,7 @@
             this.Controls.Add(this.CompMessage);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Confirmation";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Confirmation";

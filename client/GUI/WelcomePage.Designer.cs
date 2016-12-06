@@ -183,6 +183,7 @@
             this.Controls.Add(this.fbground);
             this.Controls.Add(this.moveOn);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "welcomePage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
