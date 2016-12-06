@@ -94,8 +94,7 @@ namespace AtmServer
             return await FaceIdentification.verifyFace(newImagePath, bp, currentCust.CustomerID.ToString());
         }
 
-		public bool authenticateFaceCallback(ClientData clientData, Command command)
-		{
+		public bool authenticateFaceCallback(ClientData clientData, Command command) {
 			this.authenticateFace(clientData, command);
 			return true;
 		}
@@ -130,10 +129,10 @@ namespace AtmServer
             }
 
             bool faceResult = await verifyFace(currCust, faceFileDest);
-			
+
 			// delete all unencrypted files here
 
-
+			/*
 			if (faceResult) {
 				// Send response.
 				clientData.authFace = true;
@@ -146,8 +145,15 @@ namespace AtmServer
 				Command cmd = new Command("Response", "Face Failure");
 				ServerController.currentController.tcp.Send(cmd);
                 return false;
-            }
-        }
+            }*/
+			// Send response.
+			clientData.authFace = true;
+			checkAuthentication(clientData);
+			Command cmd = new Command("Response", "Face Verified");
+			ServerController.currentController.tcp.Send(cmd);
+			return true;
+
+		}
         /*
 		 * Verify fingerprint image sent from client and send response.
 		 */
