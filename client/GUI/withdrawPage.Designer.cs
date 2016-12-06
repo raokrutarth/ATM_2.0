@@ -94,6 +94,7 @@
             // 
             // cashCount
             // 
+            this.cashCount.Enabled = false;
             this.cashCount.Font = new System.Drawing.Font("Rockwell", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cashCount.Location = new System.Drawing.Point(277, 201);
             this.cashCount.Name = "cashCount";
@@ -134,6 +135,7 @@
             this.clearButton.TabIndex = 7;
             this.clearButton.Text = "Clear";
             this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // withdrawButton
             // 
@@ -148,6 +150,7 @@
             this.withdrawButton.TabIndex = 8;
             this.withdrawButton.Text = "Withdraw";
             this.withdrawButton.UseVisualStyleBackColor = true;
+            this.withdrawButton.Click += new System.EventHandler(this.withdrawButton_Click);
             // 
             // hundredButton
             // 
