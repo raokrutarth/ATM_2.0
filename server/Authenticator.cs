@@ -18,7 +18,7 @@ namespace AtmServer
         public Authenticator()
         {
 			// Register TCP callbacks.
-			ServerController.currentController.RegisterCallback("authenticateAccount", getName);
+			ServerController.currentController.RegisterCallback("getName", getName);
 			ServerController.currentController.RegisterCallback("authenticatePIN", authenticatePIN);
 			ServerController.currentController.RegisterCallback("authenticateFace", authenticateFaceCallback);
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
