@@ -339,6 +339,7 @@
             this.Controls.Add(this.greetingText);
             this.Controls.Add(this.button0);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "PinPage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PIN Authentication";

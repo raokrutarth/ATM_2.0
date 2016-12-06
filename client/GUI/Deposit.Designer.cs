@@ -93,6 +93,7 @@
             this.ClientSize = new System.Drawing.Size(982, 553);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.fbground);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "DepositPage";
             this.Text = "Deposit";
             this.Load += new System.EventHandler(this.Deposit_Load);
