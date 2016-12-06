@@ -81,7 +81,7 @@
             // 
             // WithdrawBtn
             // 
-            this.WithdrawBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.WithdrawBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.WithdrawBtn.BackColor = System.Drawing.Color.Transparent;
             this.WithdrawBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.WithdrawBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -98,7 +98,7 @@
             // 
             // DepositBtn
             // 
-            this.DepositBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.DepositBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.DepositBtn.BackColor = System.Drawing.Color.Transparent;
             this.DepositBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.DepositBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -115,7 +115,7 @@
             // 
             // HelpBtn
             // 
-            this.HelpBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.HelpBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.HelpBtn.BackColor = System.Drawing.Color.Transparent;
             this.HelpBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.HelpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -132,7 +132,7 @@
             // 
             // AccSettingBtn
             // 
-            this.AccSettingBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.AccSettingBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.AccSettingBtn.BackColor = System.Drawing.Color.Transparent;
             this.AccSettingBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.AccSettingBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -150,7 +150,7 @@
             // 
             // CheckBalBtn
             // 
-            this.CheckBalBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.CheckBalBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CheckBalBtn.BackColor = System.Drawing.Color.Transparent;
             this.CheckBalBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.CheckBalBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -167,7 +167,7 @@
             // 
             // LogOutBtn
             // 
-            this.LogOutBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.LogOutBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LogOutBtn.BackColor = System.Drawing.Color.Transparent;
             this.LogOutBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.LogOutBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -184,7 +184,7 @@
             // 
             // changePINBtn
             // 
-            this.changePINBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.changePINBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.changePINBtn.BackColor = System.Drawing.Color.Transparent;
             this.changePINBtn.BackgroundImage = global::ATMClient.GUI.Properties.Resources.SideText_image;
             this.changePINBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -218,6 +218,7 @@
             this.Name = "MainMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainMenu";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.fbground.ResumeLayout(false);
             this.fbground.PerformLayout();

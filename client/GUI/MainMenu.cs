@@ -22,6 +22,11 @@ namespace ATM
         private void WithdrawBtn_Click(object sender, EventArgs e)
         {
 
+            Form form = new withdrawPage(atm);
+            form.Size = this.Size;
+            form.Location = new Point(0,0);/*new Size(700, 500);*/
+            form.Show();
+
         }
 
         private void DepositBtn_Click(object sender, EventArgs e)

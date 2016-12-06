@@ -13,7 +13,7 @@ namespace AtmServer {
 		// Client  socket.
 		public Socket workSocket = null;
 		// Size of receive buffer.
-		public const int BufferSize = 1024;
+		public const int BufferSize = 500000;
 		// Receive buffer.
 		public byte[] buffer = new byte[BufferSize];
 		// Received data string.
@@ -73,10 +73,6 @@ namespace AtmServer {
 		}
 
         public void StartListening() {
-            // Data buffer for incoming data.
-            byte[] bytes = new Byte[1024];
-
-
 			try
 			{
 				// Establish the local endpoint for the socket.

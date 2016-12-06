@@ -18,10 +18,12 @@ namespace AtmServer
         public Authenticator()
         {
 			// Register TCP callbacks.
-			ServerController.currentController.RegisterCallback("authenticateAccount", authenticateAccount);
+			ServerController.currentController.RegisterCallback("getName", authenticateAccount);
 			ServerController.currentController.RegisterCallback("authenticatePIN", authenticatePIN);
 			ServerController.currentController.RegisterCallback("authenticateFace", authenticateFace);
 			ServerController.currentController.RegisterCallback("authenticateFinger", authenticateFinger);
+			ServerController.currentController.RegisterCallback("authRequired", authRequired);
+			ServerController.currentController.RegisterCallback("setFaceImageSize", setFaceImageSize);
 			ServerController.currentController.RegisterCallback("setFingerImageSize", setFingerImageSize);
 		}
 
@@ -39,15 +41,12 @@ namespace AtmServer
 		 */
 		public bool authenticateAccount(ClientData clientData, Command command)
 		{
-			// Parse account number.
-			int accountNumber = Int32.Parse(command.data);
-
 			// Validate and store account number.
 			//TODO: validate account number here.
-			clientData.accountNumber = accountNumber;
+			//clientData.accountNumber = accountNumber;
 
 			// Send response.
-			Command cmd = new Command("authResponse", "ok");
+			Command cmd = new Command("authResponse", "Anthony Goeckner");
 			ServerController.currentController.tcp.Send(cmd);
 
 			return true;
@@ -65,9 +64,16 @@ namespace AtmServer
 			//TODO: validate PIN here.
 
 			// Send response.
-			Command cmd = new Command("authResponse", "ok");
+			Command cmd = new Command("authResponse", "PIN Verified");
 			ServerController.currentController.tcp.Send(cmd);
 
+			return true;
+		}
+
+		public bool authRequired(ClientData clientData, Command command)
+		{
+			Command cmd = new Command("authResponse", "Yes");
+			ServerController.currentController.tcp.Send(cmd);
 			return true;
 		}
 
@@ -86,7 +92,7 @@ namespace AtmServer
 			//TODO: this.verifyFace();
 
 			// Send response.
-			Command cmd = new Command("authResponse", "ok");
+			Command cmd = new Command("authResponse", "Face Verified");
 			ServerController.currentController.tcp.Send(cmd);
 
 			return true;
@@ -97,6 +103,18 @@ namespace AtmServer
 		 */
 		public bool authenticateFinger(ClientData clientData, Command command)
 		{
+
+			// FOR TESTING
+			Command c = new Command("authResponse", "Fingerprint Verified");
+			ServerController.currentController.tcp.Send(c);
+			return true;
+
+
+
+
+
+
+
 			// Parse bytes as image.
 			byte[] data = Encoding.ASCII.GetBytes(command.data);
 			ScanAPIDemo.MyBitmapFile bmp = new ScanAPIDemo.MyBitmapFile(clientData.fingerprintImageSize.Width,
@@ -142,6 +160,18 @@ namespace AtmServer
 			clientData.fingerprintImageSize.Width = Int32.Parse(lines[0]);
 			clientData.fingerprintImageSize.Height = Int32.Parse(lines[1]);
 			Console.WriteLine("Client is using fingerprint image size of {0}", clientData.fingerprintImageSize.ToString());
+			return true;
+		}
+
+		/*
+		 * Sets the expected size of received fingerprint images.
+		 */
+		public bool setFaceImageSize(ClientData clientData, Command command)
+		{
+			string[] lines = command.data.Split('\n');
+			clientData.faceImageSize.Width = Int32.Parse(lines[0]);
+			clientData.faceImageSize.Height = Int32.Parse(lines[1]);
+			Console.WriteLine("Client is using face image size of {0}", clientData.faceImageSize.ToString());
 			return true;
 		}
 	}
