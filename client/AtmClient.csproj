@@ -100,16 +100,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATMClient.cs" />
-    <Compile Include="ButtonCtrl.cs" />
-    <Compile Include="ButtonReader.cs" />
     <Compile Include="CameraDataReader.cs" />
     <Compile Include="CurrentUser.cs" />
     <Compile Include="FingerPrintDataReader.cs" />
+    <Compile Include="GUI\Deposit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Deposit.Designer.cs">
+      <DependentUpon>Deposit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\withdrawPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\withdrawPage.Designer.cs">
+      <DependentUpon>withdrawPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="HardwareReader.cs" />
     <Compile Include="MyBitmapFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ServerConnection.cs" />
-    <Compile Include="TouchScreenDataReader.cs" />
     <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,12 +169,14 @@
     <Compile Include="GUI\FingerAuthPage.Designer.cs">
       <DependentUpon>FingerAuthPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Program.cs" />
     <EmbeddedResource Include="GUI\changePIN.resx">
       <DependentUpon>changePIN.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Confirmation.resx">
       <DependentUpon>Confirmation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Deposit.resx">
+      <DependentUpon>Deposit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\PhotoAuth.resx">
       <DependentUpon>PhotoAuth.cs</DependentUpon>
@@ -187,6 +203,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="GUI\withdrawPage.resx">
+      <DependentUpon>withdrawPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="GUI\ClassDiagram1.cd" />
     <None Include="GUI\ClassDiagram2.cd" />
     <None Include="GUI\Properties\Settings.settings">
@@ -234,6 +257,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GUI\Resources\Card1.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\bbg.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\fbg_image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\SideText_image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\accept_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\cancel_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\number_pad.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

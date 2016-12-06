@@ -10,7 +10,7 @@ using ScanAPIHelper;
 
 namespace ATM
 {
-	class FingerPrintDataReader
+	public class FingerPrintDataReader
 	{
 		private bool connected;
 		private int interfaceNumber;
@@ -29,6 +29,7 @@ namespace ATM
 			this.scanner = null;
 			this.connected = false;
 			interfaceNumber = Device.BaseInterface;
+			bool notifiedWait = false;
 
 			try
 			{
@@ -44,6 +45,11 @@ namespace ATM
 					else if(!waitForDevice)
 					{
 						break;
+					}
+					if(!notifiedWait)
+					{
+						notifiedWait = true;
+						Console.WriteLine("Waiting for fingerprint scanner.");
 					}
 					System.Threading.Thread.Sleep(1000);
 				}
