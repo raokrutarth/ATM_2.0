@@ -6,7 +6,7 @@ namespace ATM
 	public class ATMClient
 	{
 		// Default connection information.
-		private const string ATM_SERVER_ADDRESS = "192.168.1.123";
+		private const string ATM_SERVER_ADDRESS = "atmserver.centralus.cloudapp.azure.com";
 		//private const string ATM_SERVER_ADDRESS = "192.168.1.81";
 		private const int ATM_SERVER_PORT = 11000;
 
