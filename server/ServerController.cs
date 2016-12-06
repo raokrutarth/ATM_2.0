@@ -44,6 +44,8 @@ namespace AtmServer
 				Command cmd = new Command("Response", response);
 				ServerController.currentController.tcp.Send(cmd);
 
+			} else if (command.command.Equals("logout")) {
+				this.tcp.logout();
 			} else {
 				Console.WriteLine("ERROR: Invalid message name received.");
 				Console.WriteLine("Name: {0} {1}", command.command, command.command.Length);
@@ -237,7 +239,7 @@ namespace AtmServer
 				s.tcp.StartListening();
 			}
 			
-			Console.ReadKey();
+			//Console.ReadKey();
         }
 
         public static bool IsDirectoryWritable(string dirPath, bool throwIfFails = false)
