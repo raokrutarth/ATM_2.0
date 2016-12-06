@@ -6,8 +6,8 @@ namespace ATM
 	public class ATMClient
 	{
 		// Default connection information.
-		private const string ATM_SERVER_ADDRESS = "atmserver.centralus.cloudapp.azure.com";
-		//private const string ATM_SERVER_ADDRESS = "10.186.55.45";
+		private const string ATM_SERVER_ADDRESS = "10.186.99.5";
+		//private const string ATM_SERVER_ADDRESS = "192.168.1.81";
 		private const int ATM_SERVER_PORT = 11000;
 
 		// Hard-coded values for demonstration.
@@ -60,11 +60,14 @@ namespace ATM
 				Console.WriteLine("Failed to connect to server. Retrying...");
 			}
 
-			// Send initial data, including image sizes.
-			System.Drawing.Size imgSize = drivers.fingerprintReader.imageSize;
-			string sizeString = imgSize.Width.ToString() + "\n" + imgSize.Height.ToString();
-			serverConnection.SendData("setFingerImageSize", sizeString);
+            // Send initial data, including image sizes.
+            //System.Drawing.Size imgSize = drivers.fingerprintReader.imageSize;
+            //string sizeString = imgSize.Width.ToString() + "\n" + imgSize.Height.ToString();
+            //
 
+
+            //serverConnection.SendData("setFingerImageSize", sizeString);
+            
 			// Send fingerprints as a test.
 			/*int index = 0;
 			while (true)
