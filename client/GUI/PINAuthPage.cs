@@ -33,8 +33,6 @@ namespace ATM
                     txtPIN.Clear();
                     ErrorMessage.Visible = true;
                     //Clear doesn't work?
-
-                    thePIN.Text = "";
                     return;
                 }
                 //disables text field making the user not able to input past 4th digit
@@ -59,7 +57,6 @@ namespace ATM
 					{
 						txtPIN.Clear();
 						WrongPINMessage.Visible = true;
-						thePIN.Text = "";
 						return;
 					}
                 }
@@ -93,6 +90,69 @@ namespace ATM
                     }
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            button1.Enabled = false;
+            txtPIN.Text += "1";
+            button1.Enabled = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            button2.Enabled = false;
+            txtPIN.Text += "2";
+            button2.Enabled = true;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            button3.Enabled = false;
+            txtPIN.Text += "3";
+            button3.Enabled = true;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            button4.Enabled = false;
+            txtPIN.Text += "4";
+            button4.Enabled = true;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            button5.Enabled = false;
+            txtPIN.Text += "5";
+            button5.Enabled = true;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            button6.Enabled = false;
+            txtPIN.Text += "6";
+            button6.Enabled = true;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            button7.Enabled = false;
+            txtPIN.Text += "7";
+            button7.Enabled = true;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            button8.Enabled = false;
+            txtPIN.Text += "8";
+            button8.Enabled = true;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            button9.Enabled = false;
+            txtPIN.Text += "9";
+            button9.Enabled = true;
         }
     }
 }
