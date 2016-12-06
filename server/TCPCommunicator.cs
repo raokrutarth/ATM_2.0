@@ -37,6 +37,12 @@ namespace AtmServer {
             this.data = String.Empty;
         }
 
+		public Command(string c) {
+			this.command = c;
+			this.data = String.Empty;
+			this.size = c.Length;
+		}
+
         public Command(string c, string d) {
             this.command = c;
             this.data = d;
@@ -51,30 +57,22 @@ namespace AtmServer {
 	}
 
     public class TCPCommunicator {
-		//private ServerController controller = new ServerController();
+		public static ManualResetEvent allDone = new ManualResetEvent(false); // Thread signal
 
-		// Thread signal.
-		public static ManualResetEvent allDone = new ManualResetEvent(false);
+		public Command currentCommand; //holds the current command data
 
-		//used for callback functions
-		//private Dictionary<string, TCPDataCallback> callbacks;
+		public Socket listener; //socket used for client connection
 		
-		//holds the current command data
-		public Command currentCommand;
-		
-		//socket used for client connection
-		public Socket listener;		
 		//constructor
 		public TCPCommunicator() {
-			//this.callbacks = new Dictionary<string, TCPDataCallback>();
 			this.currentCommand = new Command();
-			//ServerController.currentController.RegisterCallback("authenticatePIN", Send);
-			//ServerController.currentController.RegisterCallback("Send", Send);
 		}
 
         public void StartListening() {
-			try
-			{
+            // Data buffer for incoming data.
+            byte[] bytes = new Byte[1024];
+
+			try {
 				// Establish the local endpoint for the socket.
 				// The DNS name of the computer
 				// running the listener is "host.contoso.com".
@@ -88,14 +86,11 @@ namespace AtmServer {
 				// Create a TCP/IP socket.
 				this.listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-
 				// Bind the socket to the local endpoint and listen for incoming connections.
 				listener.Bind(localEndPoint);
 				listener.Listen(100);
 
-				while (true)
-				{
-
+				while (true) {
 					// Set the event to nonsignaled state.
 					allDone.Reset();
 
@@ -107,33 +102,25 @@ namespace AtmServer {
 					allDone.WaitOne();
 				}
 
-			}
-			catch (SocketException s) {
-				try
-				{
-					this.listener.Shutdown(SocketShutdown.Both);
-				}
-				catch (Exception e)
-				{
-					
-				}
+			} catch (SocketException s) {
+				Console.WriteLine("{0}", s.ToString());
+				this.listener.Shutdown(SocketShutdown.Both);
 				this.listener.Close();
-				StartListening();
-
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				Console.WriteLine(e.ToString());
 			}
 
             Console.WriteLine("\nPress ENTER to continue...");
-            Console.Read();
+            Console.ReadKey();
         }
 
         public void AcceptCallback(IAsyncResult ar) {
             // Signal the main thread to continue.
             allDone.Set();
-            Console.WriteLine("Setting up connection\n");
-            // Get the socket that handles the client request.
+
+			//Console.WriteLine("Setting up connection\n");
+            
+			// Get the socket that handles the client request.
             Socket listener = (Socket)ar.AsyncState;
             Socket handler = listener.EndAccept(ar);
 
@@ -146,10 +133,6 @@ namespace AtmServer {
 
         public void ReadCallback(IAsyncResult ar) {
             String content = String.Empty;
-			//Console.WriteLine("Reading Data");
-
-
-
 
 			try {
 
@@ -161,14 +144,11 @@ namespace AtmServer {
 				// Read data from the client socket. 
 				int bytesRead = handler.EndReceive(ar);
 
-				
-
 				if (bytesRead > 0) {
                     // There  might be more data, so store the data received so far.
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
 
-                    // Check for end-of-file tag. If it is not there, read 
-                    // more data.
+                    // Check for end-of-file tag. If it is not there, read more data.
                     content = state.sb.ToString();
 
                     if (this.currentCommand.size == 0 && content.Contains("\n")) {
@@ -192,7 +172,6 @@ namespace AtmServer {
                         this.decoder(state.clientData, state.sb.ToString(), this.currentCommand.size);
                         state.sb.Clear();
 						this.currentCommand = new Command();
-
 					}
 
                     handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
@@ -205,24 +184,8 @@ namespace AtmServer {
 
 				this.listener.Shutdown(SocketShutdown.Both);
 				this.listener.Close();
-				StartListening();
 			}
         }
-
-       /* public void Send(Socket handler, String data) {
-			// Calculate packet size.
-			int size = Encoding.ASCII.GetByteCount(data);
-			Console.WriteLine("Sending {0} bytes of data.", size);
-
-			// Prepend header to packet.
-			data = "$Size: " + size.ToString() + "\n" + data;
-
-			// Convert the string data to byte data using ASCII encoding.
-			byte[] byteData = Encoding.ASCII.GetBytes(data);
-
-            // Begin sending the data to the remote device.
-            handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
-        }*/
 
 		public bool Send(Command c) {
 			Socket handler = this.listener;
@@ -272,24 +235,20 @@ namespace AtmServer {
 
 			Console.WriteLine("Reveived command: {0}", this.currentCommand.command);
 			
+			if (this.currentCommand.command.Equals("logout")) {
+				this.logout();
+				return;
+			}
+
 			this.currentCommand.data = data.Substring(index, size - index + 1);
 			Console.WriteLine("data length: {0}", this.currentCommand.data.Length);
             ServerController.currentController.executeCommand(clientData, this.currentCommand);
 		}
-		/*
-		private void decoder(byte[] data, int size) {
-			string[] temp;
 
-			//begin decoding
-			//temp = data.Split('\n');
-			data.
-
-			this.currentCommand.command = temp[1];
-			this.currentCommand.size = size;
-			this.currentCommand.data = temp[2];
-
-			ServerController.currentController.executeCommand(this.currentCommand);
-		}*/
+		public void logout() {
+			this.listener.Shutdown(SocketShutdown.Both);
+			this.listener.Close();
+		}
 
     }
 }
