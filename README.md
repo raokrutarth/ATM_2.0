@@ -26,3 +26,7 @@ The client application runs on the ATM itself and displays the user interface.
 
 ## Server
 
+
+---
+
+Built by Krutarth Rao. Connect with me on [LinkedIn](https://www.linkedin.com/in/raokrutarth/).
